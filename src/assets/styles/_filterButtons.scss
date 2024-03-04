@@ -1,0 +1,23 @@
+.filter__btns {
+  @apply flex gap-2;
+
+  .btn {
+    @apply rounded-3xl py-2 px-4 border-2 border-gray-200 relative;
+
+    &:hover {
+      @apply bg-gray-100;
+    }
+
+    &.active {
+      @apply bg-slate-700 text-gray-100;
+    }
+  }
+
+  .select.active {
+    @apply bg-slate-700 text-gray-100;
+  }
+}
+
+.filter {
+  @apply text-sm font-medium;
+}

@@ -1,0 +1,51 @@
+.sidebar {
+  @apply bg-white px-8 flex flex-col gap-10 justify-between;
+
+  .nav-list {
+    @apply flex flex-col gap-2.5;
+    .nav-item {
+      &:visited,
+      &:link {
+        @apply flex items-center gap-3 text-gray-700 bg-white text-base font-medium px-6 py-2 transition-all rounded-xl;
+      }
+      & svg {
+        @apply w-6 h-6 text-gray-700 transition-all;
+      }
+
+      /* This works because react-router places the active class on the active NavLink */
+      &:hover,
+      &.active {
+        @apply bg-gray-100;
+      }
+
+      // &:hover svg,
+      // &:active svg {
+      //   @apply text-gray-300;
+      // }
+    }
+  }
+
+  .account-card {
+    @apply bg-gray-100 mb-6 rounded-2xl pt-12  justify-center items-center flex flex-col relative;
+
+    h1 {
+      @apply text-lg font-semibold text-gray-900;
+    }
+
+    h2 {
+      @apply text-base font-normal text-gray-700;
+    }
+
+    .avatar {
+      @apply h-20 rounded-full absolute inset-x-auto shadow-2xl;
+      top: -2.5rem;
+    }
+
+    .btns {
+      @apply text-2xl flex my-5 gap-2 text-gray-600;
+      .btn {
+        @apply bg-white p-4  rounded-full;
+      }
+    }
+  }
+}

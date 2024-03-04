@@ -1,0 +1,59 @@
+.pie-chart {
+  @apply flex flex-col font-medium text-slate-800;
+
+  .header {
+    @apply flex justify-between;
+
+    .title {
+      @apply text-xl;
+    }
+
+    .label {
+      @apply flex flex-row items-center gap-1 text-2xl items-start bg-gray-100 px-3 py-2 rounded-full;
+
+      .icon {
+        @apply text-3xl;
+      }
+
+      .percent {
+        @apply text-xs;
+      }
+    }
+  }
+
+  .plot {
+    @apply flex justify-center relative;
+
+    .inner-text {
+      @apply absolute bottom-7 right-1/2 translate-x-1/2;
+
+      h2 {
+        @apply text-gray-500 text-center text-base;
+      }
+
+      .container {
+        @apply flex gap-2 justify-center  items-center;
+
+        h1 {
+          @apply text-2xl;
+        }
+
+        .label {
+          @apply flex flex-row items-center gap-1 py-1 px-2 rounded-full bg-green-600 text-gray-100 text-sm;
+        }
+      }
+    }
+  }
+
+  .footer {
+    @apply flex flex-col justify-center text-center gap-4 relative;
+
+    p {
+      @apply px-4 text-base;
+    }
+
+    .btn {
+      @apply py-4 mx-4 bg-indigo-600 text-gray-100 rounded-full;
+    }
+  }
+}

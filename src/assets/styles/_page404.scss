@@ -1,0 +1,11 @@
+.page-404 {
+  @apply bg-gray-500 h-screen flex items-center justify-center p-20;
+
+  .container {
+    @apply bg-gray-100 border border-solid border-gray-300 rounded-md p-20 text-center;
+  }
+
+  h1 {
+    @apply text-5xl font-semibold mb-12;
+  }
+}

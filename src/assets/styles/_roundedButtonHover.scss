@@ -1,0 +1,17 @@
+.btn::before,
+.btn::after {
+  @apply rounded-full absolute bg-transparent z-10 w-0 h-0 opacity-0;
+  content: "";
+  transition: width 0.2s 0.15s linear, height 0.15s linear, opacity 0s 0.35s;
+}
+.btn::before {
+  @apply border-solid border-t border-r border-gray-400 top-0 right-0;
+}
+.btn::after {
+  @apply border-solid border-b border-l border-gray-400 bottom-0 left-0;
+}
+.btn:hover::before,
+.btn:hover::after {
+  @apply w-full h-full opacity-100;
+  transition: width 0.2s linear, height 0.15s 0.2s linear, opacity 0.3s;
+}

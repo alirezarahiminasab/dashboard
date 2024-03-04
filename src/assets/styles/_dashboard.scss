@@ -1,0 +1,48 @@
+.main {
+  &::-webkit-scrollbar {
+    @apply w-1;
+  }
+  &::-webkit-scrollbar-track {
+    @apply bg-gray-200 rounded-2xl;
+  }
+  &::-webkit-scrollbar-thumb {
+    @apply bg-gray-400 rounded-2xl;
+  }
+}
+
+.dashboard {
+  @apply grid grid-cols-12 gap-4 m-6;
+
+  .table {
+    @apply col-start-1 col-end-10 bg-white  rounded-3xl p-7;
+  }
+
+  .pie-chart {
+    @apply col-start-1 col-end-4 bg-white  rounded-3xl p-7;
+  }
+
+  .bar-chart {
+    @apply col-start-4 col-end-10 bg-white  rounded-3xl pt-7 px-7;
+  }
+
+  .profile {
+    @apply col-start-10 col-end-13 bg-white  rounded-3xl p-7 row-start-1 row-end-3;
+  }
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  @apply pr-4;
+  font-size: 18px;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.swiper-scrollbar-drag {
+  @apply bg-indigo-400;
+}

@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "styles/appLayout";
+@import "styles/page404";
+@import "styles/SideBar";
+@import "styles/header";
+@import "styles/dashboard";
+@import "styles/table";
+@import "styles/pieChart";
+@import "styles/barChart";
+@import "styles/filterButtons";
+@import "styles/filterMenu";
+@import "styles/barChartTest";
+@import "styles/profile";
+
+// Failed Try!!!
+// @import "styles/roundedButtonHover"; >> Codepen
+// @import "styles/slider"; >> swiper

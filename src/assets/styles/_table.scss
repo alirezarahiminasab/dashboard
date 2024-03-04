@@ -1,0 +1,24 @@
+.table {
+  @apply flex flex-col;
+
+  & > *:not(:last-child) {
+    @apply border-b-2 border-b-gray-200;
+  }
+
+  .filter {
+    @apply flex justify-between pb-4 gap-5;
+  }
+
+  .table__row {
+    @apply grid py-4;
+    grid-template-columns: 1.5fr 1.5fr 1.3fr 1.5fr 0.5fr;
+
+    & > * {
+      @apply justify-self-start flex items-center gap-2 text-gray-800;
+    }
+
+    .label {
+      @apply bg-green-800 rounded-3xl text-xs text-gray-200 p-1.5;
+    }
+  }
+}

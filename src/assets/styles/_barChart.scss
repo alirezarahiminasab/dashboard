@@ -1,0 +1,20 @@
+.bar-chart {
+  @apply flex flex-col font-medium text-slate-800;
+
+  .header {
+    @apply flex justify-between font-semibold text-xl border-b-2 pb-3 items-center;
+
+    .filter {
+      @apply flex justify-center  text-sm;
+    }
+  }
+
+  .plot {
+    @apply flex justify-center;
+  }
+
+  .recharts-bar-rectangle,
+  .recharts-rectangle {
+    @apply bg-yellow-300;
+  }
+}

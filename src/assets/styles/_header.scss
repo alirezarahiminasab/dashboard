@@ -1,0 +1,26 @@
+.header {
+  @apply flex items-center justify-between;
+
+  .search-bar {
+    @apply relative;
+
+    .search-field {
+      @apply pl-12 py-4 rounded-full bg-gray-100 w-96 border-2  border-gray-50   hover:border-gray-400 focus:border-gray-400;
+    }
+
+    .search-icon {
+      @apply absolute left-0 inset-y-0 flex items-center;
+
+      .search-icon__svg {
+        @apply h-6 w-6 ml-4 text-gray-600;
+      }
+    }
+  }
+
+  .btns {
+    @apply mr-9 text-2xl flex  gap-2 text-gray-600;
+    .btn {
+      @apply bg-gray-100 p-4  rounded-full;
+    }
+  }
+}
