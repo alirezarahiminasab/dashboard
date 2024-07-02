@@ -1,0 +1,14 @@
+.edumall-dark-scheme {
+	.tutor-styled-radio {
+		> span {
+			&:before {
+				background: #19222d !important;
+				border-color: #80868d !important;
+			}
+
+			&:after {
+				background: $secondary-color;
+			}
+		}
+	}
+}

@@ -1,0 +1,29 @@
+.edumall-dark-scheme {
+	.quantity {
+		.qty {
+			background: rgba(255, 255, 255, .1);
+			border-color: transparent;
+			color: #fff;
+		}
+
+		button {
+			&:before {
+				border-color: #80868d;
+			}
+
+			&:hover {
+				&:before {
+					border-color: $secondary-color;
+				}
+			}
+		}
+	}
+
+	.woocommerce-tabs .tabs:before {
+		background: $box-border;
+	}
+
+	.widget_shopping_cart_content .cart-footer {
+		border-color: $box-border;
+	}
+}

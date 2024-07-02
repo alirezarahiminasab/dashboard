@@ -1,0 +1,15 @@
+.tutor-screen-frontend-dashboard {
+  @apply p-0;
+
+  .footer-menu {
+    .header-profile-link {
+      svg {
+        @apply fill-[#C22E58];
+
+        path {
+          @apply stroke-none;
+        }
+      }
+    }
+  }
+}

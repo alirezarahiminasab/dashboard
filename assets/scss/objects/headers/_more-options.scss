@@ -1,0 +1,43 @@
+.header-more-tools-opened {
+  .page-header {
+    .header-right-inner {
+      .header-social-networks a,
+      .header-icon,
+      .wpml-ls-item-toggle {
+        color: $third-color;
+      }
+
+      .header-social-networks a,
+      .header-icon:hover {
+      }
+
+      .wpml-ls-slot-shortcode_actions:hover > .js-wpml-ls-item-toggle {
+      }
+
+      .mini-cart .mini-cart-icon {
+        &:after {
+          color: #fff;
+          background: $primary-color;
+        }
+      }
+
+      .tm-button {
+        &.style-flat {
+          color: #fff;
+
+          &:before {
+            background: $primary-color;
+          }
+
+          &:hover {
+            color: $third-color;
+
+            &:after {
+              background: $secondary-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,48 @@
+.withdraw-balance-row {
+	.amount {
+		font-size: 18px;
+	}
+}
+
+.open-withdraw-form-btn {
+	margin: 15px 0 0;
+}
+
+.tutor-earning-withdraw-form {
+	margin: 15px 0 0;
+}
+
+.withdraw-page-current-balance {
+	.decimals-separator {
+		font-size: 1em;
+	}
+}
+
+.withdraw-status {
+	display: inline-block;
+	font-size: 12px;
+	font-weight: 500;
+	border: 1px solid #eee;
+	border-radius: 5px;
+	padding: 2px 10px;
+	min-width: 100px;
+	text-align: center;
+
+	&.status-pending {
+		color: #ffc221;
+		background: #fffcf4;
+		border-color: #ffe7a6;
+	}
+
+	&.status-approved {
+		color: #6cbd7e;
+		background: #f7fbf8;
+		border-color: #c3e5ca;
+	}
+
+	&.status-rejected {
+		color: #da0e2b;
+		background: #fdf3f4;
+		border-color: #f8cfd5;
+	}
+}

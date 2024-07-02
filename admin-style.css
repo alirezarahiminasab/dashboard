@@ -1,0 +1,97 @@
+@font-face {
+  font-family: "IRANSansXFa";
+  font-style: normal;
+  font-weight: 100;
+  src:
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-Thin.woff")
+      format("woff"),
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-Thin.woff2")
+      format("woff2");
+}
+
+@font-face {
+  font-family: "IRANSansXFa";
+  font-style: normal;
+  font-weight: 200;
+  src:
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-UltraLight.woff")
+      format("woff"),
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-UltraLight.woff2")
+      format("woff2");
+}
+
+@font-face {
+  font-family: "IRANSansXFa";
+  font-style: normal;
+  font-weight: 300;
+  src:
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-Light.woff")
+      format("woff"),
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-Light.woff2")
+      format("woff2");
+}
+
+@font-face {
+  font-family: "IRANSansXFa";
+  font-style: normal;
+  font-weight: 500;
+  src:
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-Medium.woff")
+      format("woff"),
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-Medium.woff2")
+      format("woff2");
+}
+
+@font-face {
+  font-family: "IRANSansXFa";
+  font-style: normal;
+  font-weight: 600;
+  src:
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-DemiBold.woff")
+      format("woff"),
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-DemiBold.woff2")
+      format("woff2");
+}
+
+@font-face {
+  font-family: "IRANSansXFa";
+  font-style: normal;
+  font-weight: 800;
+  src:
+    url("fonts/woff/IRANSansX-ExtraBold.woff") format("woff"),
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-ExtraBold.woff2")
+      format("woff2");
+}
+
+@font-face {
+  font-family: "IRANSansXFa";
+  font-style: normal;
+  font-weight: 900;
+  src:
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-Black.woff")
+      format("woff"),
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-Black.woff2")
+      format("woff2");
+}
+
+@font-face {
+  font-family: "IRANSansXFa";
+  font-style: normal;
+  font-weight: bold;
+  src:
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-Bold.woff")
+      format("woff"),
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-Bold.woff2")
+      format("woff2");
+}
+
+@font-face {
+  font-family: "IRANSansXFa";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-Regular.woff")
+      format("woff"),
+    url("/wp-content/themes/edumall-child/assets/fonts/IranSansX(Pro)/IRANSansXFaNum-Regular.woff2")
+      format("woff2");
+}

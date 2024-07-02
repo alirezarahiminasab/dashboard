@@ -1,0 +1,17 @@
+.edumall-dark-scheme {
+	&.home-blog-special-layout {
+		.home-blog-by-cat-section {
+			background-image: linear-gradient(180deg, #031f42 14%, #020d1b 81%);
+
+			.tm-button {
+				color: $secondary-color;
+			}
+		}
+	}
+
+	.edumall-blog-carousel-01 {
+		.post-wrapper {
+			background: #19222d;
+		}
+	}
+}

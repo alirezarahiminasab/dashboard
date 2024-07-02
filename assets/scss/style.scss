@@ -1,0 +1,53 @@
+/*!
+Theme Name: Edumall
+Theme URI: https://edumall.thememove.com
+Author: ThemeMove
+Author URI: https://thememove.com
+Description: Edumall – Professional LMS Education Center WordPress Theme
+Version: 3.5.0
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: edumall
+Tags: editor-style, featured-images, microformats, post-formats, rtl-language-support, sticky-post, threaded-comments, translation-ready
+*/
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+# Settings
+# Tools
+# Vendor
+# Generic
+# Elements
+# Objects
+# Components
+# Trumps
+--------------------------------------------------------------*/
+@import "generic/normalize";
+/*
+Elements are rules for classless HTML tags.
+There can exist no classes at this layer, only further into our triangle.
+*/
+@import "elements/all";
+/*
+Objects are "formless", in other words invisible to the user, no cosmetics
+  Eg. wrappers, grid systems, etc.
+This is the first layer of classes and should be agnostically named
+  Eg. list-inline, ui-list, etc.
+*/
+@import "objects/all";
+/*
+Widgets
+*/
+@import "widgets/all";
+@import "gutenberg-block/all";
+/**
+* Modules
+*/
+@import "faq/all";
+/*
+Components are the stuff of UI. Eg. buttons, special titles, etc.
+These get much more explicitly named: eg. products-list, etc.
+*/
+@import "pages/all";
+@import "templates/all";
+@import "components/all";

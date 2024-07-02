@@ -1,0 +1,54 @@
+.payment {
+  @apply flex flex-col items-center gap-8 pt-12 pb-20 px-16;
+
+  &-title {
+    @apply flex flex-col items-center gap-2;
+
+    h3 {
+      @apply text-[color:var(--Success-500,#1DAB45)] text-center text-lg font-medium leading-[110%];
+    }
+  }
+
+  &-content {
+    &-item {
+      @apply flex flex-col items-center gap-10 border border-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] px-8 py-6 rounded-3xl border-solid;
+
+      &-info {
+        @apply flex flex-col items-center gap-4;
+
+        &-img {
+          img {
+            @apply w-[87px] h-[87px] rounded-2xl;
+          }
+        }
+
+        &-title {
+          @apply flex flex-col gap-2;
+
+          p {
+            @apply text-black text-center text-sm font-medium leading-[110%];
+
+            &:first-child {
+              @apply text-black text-center text-lg font-medium leading-[110%];
+            }
+          }
+        }
+      }
+
+      .price {
+        @apply self-center;
+
+        p {
+          @apply text-[color:var(--Primary-500,#C22E58)] text-center  text-base font-medium leading-[110%] #{!important};
+        }
+      }
+
+      &-link {
+        a {
+          @apply block [background:var(--Primary-500,#C22E58)] px-6 py-4 rounded-xl;
+          @apply text-[color:var(--Generic-White,#FFF)] text-center text-sm font-medium leading-[110%];
+        }
+      }
+    }
+  }
+}

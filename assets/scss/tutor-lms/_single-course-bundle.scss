@@ -1,0 +1,19 @@
+.tutor-bundle-author-list {
+	width: 340px;
+	max-width: 100%;
+	margin: 0;
+	padding: 30px;
+	border: 1px solid $box-white-border;
+	background: $box-white-background;
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+}
+
+.tutor-course-details-widget-title {
+	display: none;
+}
+
+.single-course-bundle {
+	.tutor-course-details-actions {
+		display: none;
+	}
+}

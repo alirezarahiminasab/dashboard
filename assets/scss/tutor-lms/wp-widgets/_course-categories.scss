@@ -1,0 +1,29 @@
+.edumall-wp-widget-course-categories {
+
+	li {
+		margin: 0 !important;
+	}
+
+	a {
+		display: block;
+		padding: 7px 0;
+		font-weight: 500;
+
+		.count {
+			font-weight: 400;
+			color: #9b9b9b;
+		}
+	}
+
+	.children {
+		a {
+			padding-left: 10px;
+		}
+
+		.children {
+			a {
+				padding-left: 20px;
+			}
+		}
+	}
+}

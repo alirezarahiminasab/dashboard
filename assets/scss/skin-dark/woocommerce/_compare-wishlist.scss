@@ -1,0 +1,13 @@
+.edumall-dark-scheme {
+	&.single-product .entry-summary {
+		.wishlist-btn,
+		.compare-btn {
+			&.style-02 {
+				a {
+					color: $secondary-color;
+					background: #031f42;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,259 @@
+.instructor-settings {
+  @apply bg-[#F3F3F4];
+
+  &-wrap {
+    @apply w-full flex flex-col gap-8 [background:var(--Generic-White,#FFF)] p-6 rounded-[32px_32px_0px_0px];
+  }
+  &-back {
+    @apply flex items-center gap-2 px-6 py-3 bg-[#F3F3F4];
+
+    h3 {
+      @apply text-[color:var(--Generic-Black,#121212)] text-center text-sm font-normal;
+    }
+  }
+
+  &-form {
+    @apply flex flex-col gap-6;
+
+    &-group {
+      @apply flex flex-col gap-2 relative;
+
+      label {
+        @apply text-[color:var(--Primary-500,#121212)] text-sm font-medium;
+        font-family: $main-font;
+      }
+
+      sup {
+        @apply text-[#C22E58];
+      }
+
+      input {
+        @apply border border-[color:var(--Neutral-500,#ADB5BD)] [background:var(--Generic-White,#FFF)] p-3 rounded-lg border-solid;
+        @apply text-[color:var(--Generic-Black,#121212)] text-right text-sm font-medium;
+        font-family: $main-font;
+
+        &:focus {
+          @apply border border-[color:var(--Neutral-500,#ADB5BD)];
+        }
+
+        &::placeholder {
+          @apply text-[color:var(--Neutral-500,#ADB5BD)] text-sm font-normal;
+          font-family: $main-font;
+        }
+      }
+
+      textarea {
+        @apply border border-[color:var(--Neutral-500,#ADB5BD)] [background:var(--Generic-White,#FFF)] px-3 py-4 rounded-lg border-solid;
+        font-family: $main-font;
+
+        &::placeholder {
+          @apply text-[color:var(--Neutral-500,#ADB5BD)] text-sm font-normal;
+          font-family: $main-font;
+        }
+      }
+
+      &.instructor-username {
+        .instructor-username-input {
+          @apply relative;
+
+          svg {
+            @apply hidden absolute left-4 top-0 bottom-0 m-auto;
+          }
+        }
+      }
+
+      &.instructor-profile-pic {
+        @apply gap-4;
+
+        #instructor_profile_cover_photo_editor {
+          @apply flex flex-col gap-4;
+
+          .profile-picture {
+            @apply w-28 h-28 rounded-full [background:rgba(0,0,0,0.20)];
+          }
+
+          #instructor_profile_area {
+            @apply p-9 [background:rgba(0,0,0,0.20)] rounded-full w-fit cursor-pointer;
+
+            img {
+              @apply flex justify-center items-center w-fit border border-[color:var(--Generic-Black,#121212)] p-3 rounded-lg border-solid;
+            }
+          }
+
+          .user-edit-buttons {
+            @apply gap-2 hidden;
+
+            &.active {
+              @apply flex;
+            }
+
+            label {
+              @apply flex justify-center items-center border border-[color:var(--Primary-500,#C22E58)] p-3 rounded-lg border-solid cursor-pointer;
+              @apply text-[color:var(--Primary-500,#C22E58)] text-center text-xs font-normal;
+            }
+          }
+
+          #instructor_photo_dialogue_box {
+            @apply hidden;
+          }
+        }
+      }
+
+      &.instructor-story-text {
+        @apply flex flex-col gap-2;
+
+        .instructor-story-links {
+          @apply flex justify-center items-center [background:var(--Generic-Background,#F3F3F4)] rounded-lg;
+
+          a {
+            @apply flex w-1/2 justify-center items-center gap-2 [background:var(--Primary-500,#F3F3F4)] px-4 py-2 rounded-lg;
+            @apply text-[color:var(--Neutral-600,#6C757D)] text-center text-xs font-normal;
+
+            &.active {
+              @apply text-[color:var(--Generic-White,#FFF)] text-center text-xs font-normal [background:var(--Primary-500,#C22E58)];
+            }
+          }
+        }
+
+        .instructor-story-box {
+          @apply hidden relative;
+
+          &-limit {
+            @apply flex absolute bottom-4 left-3;
+          }
+
+          &.active {
+            @apply flex;
+
+            label {
+              @apply flex;
+            }
+          }
+        }
+      }
+
+      &.instructor-story-video {
+        @apply flex flex-col gap-2;
+
+        .story-video {
+          label {
+            @apply flex w-full flex-col justify-center items-center gap-3 border border-[color:var(--Generic-Black,#121212)] [background:var(--Generic-White,#FFF)] px-14 py-6 rounded-lg border-dashed cursor-pointer;
+          }
+
+          h4 {
+            @apply text-[color:var(--Generic-Black,#121212)] text-right text-sm font-medium;
+          }
+
+          p {
+            @apply text-[color:var(--Neutral-700,#495057)] text-center text-[10px] font-normal;
+          }
+        }
+
+        .story-video-upload {
+          @apply hidden flex-col gap-3 border border-[color:var(--Generic-Black,#121212)] [background:var(--Generic-White,#FFF)] rounded-lg border-solid p-3 relative;
+
+          .story-video-upload-close {
+            @apply w-4 h-4 absolute top-3 left-3 cursor-pointer;
+          }
+
+          .story-video-upload-info {
+            @apply flex items-center gap-1;
+
+            &-icon {
+              @apply border border-[color:var(--Neutral-500,#ADB5BD)] p-1 rounded-lg border-solid;
+            }
+
+            &-meta {
+              @apply flex flex-col items-start gap-2;
+
+              p {
+                @apply text-black text-center text-xs font-normal;
+              }
+            }
+          }
+
+          .story-video-upload-progress {
+            @apply flex items-center gap-3 min-h-[1rem] w-full relative rounded-full overflow-hidden;
+
+            .progress-wrap {
+              @apply w-5/6 h-2 [background:var(--Neutral-500,#ADB5BD)] rounded-full overflow-hidden;
+
+              .progress {
+                @apply h-2 bg-[#015372] w-0 overflow-hidden rounded-full;
+              }
+            }
+
+            .progress-text {
+              @apply absolute left-0 bottom-0 text-black text-xs font-normal leading-[100%];
+            }
+          }
+        }
+
+        #instructor_story_video_file {
+          @apply hidden;
+        }
+      }
+
+      &.instructor-tags {
+        .instructor-tags-input {
+          @apply relative;
+
+          a {
+            @apply absolute left-3 top-0 bottom-0 m-auto h-fit;
+            @apply text-[color:var(--Primary-500,#C22E58)] text-right text-sm font-medium;
+          }
+        }
+
+        .instructor-tags-wrap {
+          @apply flex flex-wrap items-center gap-2;
+
+          &-value {
+            @apply flex justify-center items-center gap-2 [background:var(--Neutral-200,#E9ECEF)] p-3 rounded-lg;
+
+            p {
+              @apply text-[color:var(--Neutral-900,#212529)] text-xs font-normal;
+            }
+
+            img {
+              @apply cursor-pointer;
+            }
+          }
+        }
+      }
+
+      &.instructor-submit-wrap {
+        @apply self-end;
+
+        button {
+          @apply [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg border-0;
+          @apply text-[color:var(--Generic-White,#FFF)] text-center text-sm font-medium;
+        }
+      }
+    }
+  }
+
+  .loader {
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #4e4e4e;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

@@ -1,0 +1,185 @@
+.main-header {
+  @apply flex justify-between items-center gap-4 px-6 py-3 z-50 relative bg-white;
+
+  &-instructor {
+    a {
+      @apply flex justify-center items-center border border-[color:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg border-solid;
+      @apply text-[color:var(--Primary-500,#C22E58)] text-xs font-normal leading-[110%];
+    }
+  }
+
+  &-logo {
+    @apply absolute w-fit h-8 left-0 right-0 top-0 bottom-0 m-auto;
+
+    a {
+      @apply h-full;
+
+      img {
+        @apply block w-full h-full #{!important};
+      }
+    }
+  }
+
+  &-components {
+    @apply flex gap-4;
+
+    img {
+      @apply w-6 h-6;
+    }
+  }
+}
+
+.search-wrap {
+  @apply hidden flex-col gap-8 fixed top-0 bottom-0 left-0 right-0 bg-[#F3F3F4] z-[99999] overflow-y-auto;
+
+  &.active {
+    @apply flex;
+  }
+
+  &-input {
+    @apply flex items-center gap-3 border-b-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] px-6 py-2 border-b border-solid relative;
+    font-family: $main-font;
+
+    img {
+      @apply cursor-pointer;
+    }
+
+    input {
+      @apply border border-[color:var(--Neutral-500,#ADB5BD)] [background:var(--Generic-White,#FFF)] p-3 rounded-lg border-solid outline-0;
+
+      &::placeholder {
+        @apply text-[color:var(--Neutral-500,#ADB5BD)] text-right text-sm font-normal leading-[110%];
+        font-family: $main-font;
+      }
+
+      &:focus {
+        @apply border-[color:var(--Neutral-500,#121212)] border border-solid outline-0;
+        font-family: $main-font;
+      }
+    }
+
+    &-close {
+      @apply hidden absolute left-9 z-50;
+    }
+  }
+
+  &-result {
+    @apply flex flex-col gap-6 px-6;
+
+    &-item {
+      @apply flex flex-col gap-4;
+
+      header {
+        h5 {
+          @apply text-[color:var(--Generic-Black,#121212)] text-sm font-medium leading-[110%];
+        }
+      }
+
+      footer {
+        @apply flex flex-col gap-4 py-2;
+
+        .search-result-wrap {
+          @apply flex gap-2;
+
+          &-thumb {
+            @apply w-10 h-10 rounded-[4px_0px_4px_4px] overflow-hidden;
+
+            img {
+              @apply w-full h-full;
+            }
+          }
+
+          &-info {
+            @apply flex flex-col gap-3;
+
+            a {
+              @apply text-[color:var(--Generic-Black,#121212)] text-sm font-normal leading-[110%];
+            }
+
+            p {
+              @apply text-[color:var(--Neutral-600,#6C757D)] text-xs font-normal leading-[110%];
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .search-loader {
+    color: #3f3f3f;
+    font-size: 32px;
+    align-self: center;
+    text-indent: -9999em;
+    overflow: hidden;
+    width: 1em;
+    height: 1em;
+    border-radius: 50%;
+    position: relative;
+    transform: translateZ(0);
+    animation:
+      mltShdSpin 1.7s infinite ease,
+      round 1.7s infinite ease;
+  }
+
+  @keyframes mltShdSpin {
+    0% {
+      box-shadow:
+        0 -0.83em 0 -0.4em,
+        0 -0.83em 0 -0.42em,
+        0 -0.83em 0 -0.44em,
+        0 -0.83em 0 -0.46em,
+        0 -0.83em 0 -0.477em;
+    }
+    5%,
+    95% {
+      box-shadow:
+        0 -0.83em 0 -0.4em,
+        0 -0.83em 0 -0.42em,
+        0 -0.83em 0 -0.44em,
+        0 -0.83em 0 -0.46em,
+        0 -0.83em 0 -0.477em;
+    }
+    10%,
+    59% {
+      box-shadow:
+        0 -0.83em 0 -0.4em,
+        -0.087em -0.825em 0 -0.42em,
+        -0.173em -0.812em 0 -0.44em,
+        -0.256em -0.789em 0 -0.46em,
+        -0.297em -0.775em 0 -0.477em;
+    }
+    20% {
+      box-shadow:
+        0 -0.83em 0 -0.4em,
+        -0.338em -0.758em 0 -0.42em,
+        -0.555em -0.617em 0 -0.44em,
+        -0.671em -0.488em 0 -0.46em,
+        -0.749em -0.34em 0 -0.477em;
+    }
+    38% {
+      box-shadow:
+        0 -0.83em 0 -0.4em,
+        -0.377em -0.74em 0 -0.42em,
+        -0.645em -0.522em 0 -0.44em,
+        -0.775em -0.297em 0 -0.46em,
+        -0.82em -0.09em 0 -0.477em;
+    }
+    100% {
+      box-shadow:
+        0 -0.83em 0 -0.4em,
+        0 -0.83em 0 -0.42em,
+        0 -0.83em 0 -0.44em,
+        0 -0.83em 0 -0.46em,
+        0 -0.83em 0 -0.477em;
+    }
+  }
+
+  @keyframes round {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

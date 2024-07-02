@@ -1,0 +1,71 @@
+.elementor-widget-tm-register-form {
+	.form-label {
+		display: block;
+		font-size: 13px;
+		font-weight: $heading-font-weight;
+		text-transform: uppercase;
+		letter-spacing: 1px;
+		margin: 0 0 6px;
+	}
+
+	.form-group {
+		margin: 0 0 15px;
+	}
+
+	.form-input-group {
+		position: relative;
+	}
+
+	.form-icon {
+		position: absolute;
+		top: 13px;
+		left: 15px;
+		font-size: 14px;
+		color: #9b9b9b;
+		min-width: 20px;
+	}
+
+	.form-submit {
+		margin: 25px 0 0;
+		display: flex;
+	}
+
+	.button-submit {
+		opacity: 1 !important;
+	}
+
+	.icons-on {
+		input {
+			padding-left: 42px !important;
+		}
+	}
+
+	.labels-off {
+		.form-label {
+			display: none !important;
+		}
+	}
+
+	.form-response-messages {
+		display: none;
+		margin-bottom: 20px;
+		margin-top: 20px;
+
+		&.error {
+			color: $error-color;
+		}
+
+		&.success {
+			color: $success-color;
+		}
+
+		a {
+			font-weight: $heading-font-weight;
+			color: $heading-color;
+
+			&:hover {
+				color: $primary-color;
+			}
+		}
+	}
+}

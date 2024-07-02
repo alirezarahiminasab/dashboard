@@ -1,0 +1,138 @@
+.tutor-dashboard-user-setting {
+  @apply bg-[#F3F3F4];
+
+  .dashboard-settings-profile-form {
+    @apply flex flex-col rounded-[32px_32px_0px_0px] bg-white p-6;
+
+    .dashboard-content-box {
+      @apply p-0 m-0 border-0;
+
+      label {
+        @apply text-[color:var(--Primary-500,#121212)] text-right text-sm font-medium leading-[110%];
+        font-family: $main-font;
+      }
+
+      input {
+        @apply border border-[color:var(--Neutral-500,#ADB5BD)] [background:var(--Generic-White,#FFF)] p-3 rounded-lg border-solid m-0;
+        @apply text-[color:var(--Generic-Black,#121212)] text-xs font-normal leading-[110%];
+      }
+
+      #user_profile_cover_photo_editor {
+        @apply flex items-center flex-col gap-4;
+
+        .profile-picture {
+          @apply w-28 h-28 rounded-full [background:rgba(0,0,0,0.20)];
+        }
+
+        #user_profile_area {
+          @apply p-9 [background:rgba(0,0,0,0.20)] rounded-[16px_0px_16px_16px] w-fit cursor-pointer;
+
+          img {
+            @apply flex justify-center items-center w-fit border border-[color:var(--Generic-Black,#121212)] p-3 rounded-lg border-solid;
+          }
+        }
+
+        .user-edit-buttons {
+          @apply gap-2 hidden;
+
+          &.active {
+            @apply flex;
+          }
+
+          label {
+            @apply flex justify-center items-center border border-[color:var(--Primary-500,#C22E58)] p-3 rounded-lg border-solid cursor-pointer;
+            @apply text-[color:var(--Primary-500,#C22E58)] text-center text-xs font-normal;
+          }
+        }
+
+        #user_photo_dialogue_box {
+          @apply hidden;
+        }
+      }
+
+      .tutor-form-group {
+        @apply flex flex-col gap-2 mb-6;
+
+        label {
+          @apply m-0;
+        }
+
+        &.tutor-profile-username {
+          .tutor-profile-username-wrap {
+            @apply relative;
+
+            svg {
+              @apply hidden absolute left-4 top-0 bottom-0 m-auto;
+            }
+          }
+        }
+
+        &.favorites {
+          @apply border border-[color:var(--Neutral-500,#ADB5BD)] [background:var(--Generic-White,#FFF)] rounded-lg border-solid;
+
+          label {
+            @apply flex justify-center items-center shrink-0 [background:var(--Generic-Background,#F3F3F4)] py-4;
+          }
+
+          .favorites-items {
+            @apply flex flex-col gap-6 pt-4 pb-6 px-6;
+
+            p {
+              @apply text-[color:var(--Primary-500,#121212)] text-center text-xs font-normal leading-[160%];
+              strong {
+                @apply text-[color:var(--Primary-500,#C22E58)] text-center text-xs font-normal leading-[160%] underline;
+              }
+            }
+
+            &-wrap {
+              @apply grid grid-cols-2 gap-4;
+
+              a {
+                @apply flex justify-center items-center border border-[color:var(--Neutral-600,#6C757D)] [background:var(--Neutral-100,#F8F9FA)] px-6 py-4 rounded-lg border-solid;
+                @apply text-[color:var(--Neutral-600,#6C757D)] text-sm font-medium leading-[110%];
+
+                &.active {
+                  @apply [background:var(--Neutral-100,#fff)] border-[color:var(--Primary-500,#C22E58)] text-[color:var(--Neutral-600,#C22E58)];
+                }
+              }
+            }
+          }
+        }
+
+        &.tutor-form-submit {
+          @apply mx-0 mb-0 pt-4;
+
+          button {
+            @apply flex justify-center items-center gap-2 [background:var(--Primary-500,#C22E58)] px-6 py-4 rounded-lg border-0 outline-0;
+            @apply text-[color:var(--Generic-White,#FFF)] text-center text-sm font-medium leading-[110%];
+          }
+        }
+      }
+    }
+  }
+
+  .loader {
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #4e4e4e;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+}

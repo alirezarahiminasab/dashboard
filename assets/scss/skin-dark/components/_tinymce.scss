@@ -1,0 +1,33 @@
+.edumall-dark-scheme {
+	div.mce-panel {
+		background: $box-white-background;
+	}
+
+	.mce-panel.mce-menu {
+		border-color: $box-white-border;
+	}
+
+	.mce-menu .mce-menu-item:hover,
+	.mce-menu .mce-menu-item.mce-selected,
+	.mce-menu .mce-menu-item:focus,
+	.mce-menu .mce-menu-item.mce-active.mce-menu-item-normal,
+	.mce-menu .mce-menu-item.mce-active.mce-menu-item-preview {
+		background: rgba(255, 255, 255, 0.1);
+	}
+
+	.mce-edit-area {
+		body {
+			background: none;
+		}
+	}
+
+	#tinymce {
+		background: none;
+	}
+
+	div.mce-toolbar-grp,
+	div.mce-statusbar,
+	.wp-editor-container {
+		border-color: $box-border;
+	}
+}

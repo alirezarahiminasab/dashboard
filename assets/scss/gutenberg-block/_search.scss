@@ -1,0 +1,15 @@
+.wp-block-search {
+  margin: 0 0 30px;
+
+  label {
+    display: none;
+  }
+
+  .wp-block-search__input {
+    width: auto;
+  }
+
+  .wp-block-search__button {
+    flex-shrink: 0;
+  }
+}

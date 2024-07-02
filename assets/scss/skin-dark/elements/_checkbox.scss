@@ -1,0 +1,25 @@
+.edumall-dark-scheme {
+	input[type='checkbox'] {
+		&:before {
+			background: #19222D;
+			border-color: #80868d;
+		}
+
+		&:hover {
+			&:before {
+				border-color: $secondary-color;
+			}
+		}
+
+		&:checked {
+			&:before {
+				background: $secondary-color;
+				border-color: transparent;
+			}
+
+			&:after {
+				color: $third-color;
+			}
+		}
+	}
+}

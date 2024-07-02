@@ -1,0 +1,18 @@
+.edumall-widget-star-rating {
+	.rating-wrap {
+		display: flex;
+		flex-wrap: wrap;
+	}
+
+	.rating-score {
+		margin: 0 6px 0 0;
+	}
+
+	.rating-count {
+		color: $text-lighten-color;
+	}
+
+	.rating-info {
+		margin: 2px 0 0;
+	}
+}

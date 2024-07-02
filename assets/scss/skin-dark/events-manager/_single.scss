@@ -1,0 +1,19 @@
+.edumall-dark-scheme {
+	.entry-countdown.tp_event_counter {
+		.countdown-amount {
+			color: $secondary-color;
+		}
+
+		.countdown-period {
+			color: #fff;
+		}
+	}
+
+	.entry-event-share .share-list a {
+		border-color: $box-separator;
+	}
+
+	.entry-event-contact-info .meta-label {
+		color: #80868d;
+	}
+}

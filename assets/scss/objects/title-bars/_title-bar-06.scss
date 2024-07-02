@@ -1,0 +1,21 @@
+.page-title-bar-06 {
+  .page-breadcrumb {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    width: 100%;
+  }
+
+  .page-title-bar-inner {
+    > .container {
+      > .row {
+        min-height: 190px;
+      }
+    }
+  }
+
+  .page-title-bar-heading {
+    /*padding: 31px 0 0;*/
+    max-width: 470px;
+  }
+}

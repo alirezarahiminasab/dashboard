@@ -1,0 +1,18 @@
+.edumall-dark-scheme {
+	input[type='radio'] {
+		&:before {
+			background: #19222D;
+			border-color: #80868d;
+		}
+
+		&:after {
+			background: $secondary-color;
+		}
+
+		&:hover {
+			&:before {
+				border-color: $secondary-color;
+			}
+		}
+	}
+}

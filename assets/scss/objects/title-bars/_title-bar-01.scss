@@ -1,0 +1,16 @@
+.page-title-bar-01 {
+
+	.heading {
+		text-align: center;
+	}
+
+	.page-title-bar-inner {
+		> .container {
+			max-width: 970px;
+		}
+	}
+
+	.page-title-bar-heading {
+		padding: 31px 0 0;
+	}
+}

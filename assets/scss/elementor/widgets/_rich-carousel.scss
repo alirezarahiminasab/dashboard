@@ -1,0 +1,41 @@
+.edumall-rich-carousel {
+	.swiper-slide {
+		// Fix elementor override style.
+		overflow: visible !important;
+	}
+
+	.title {
+		margin: 0;
+		font-size: 20px;
+	}
+
+	.description-wrap {
+		margin-top: 10px;
+	}
+
+	.slide-image + .slide-content {
+		margin: 20px 0 0;
+	}
+
+	.slide-button {
+		&.left-icon {
+			.button-icon {
+				margin-right: 5px;
+			}
+		}
+
+		&.right-icon {
+			.button-icon {
+				margin-left: 5px;
+			}
+		}
+	}
+}
+
+.edumall-rich-carousel-style-01 {
+	.slide-image {
+		img {
+			border-radius: 5px;
+		}
+	}
+}

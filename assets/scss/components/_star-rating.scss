@@ -1,0 +1,85 @@
+.tm-star-rating {
+  @apply flex gap-[2px];
+
+  .tm-star-full {
+    @apply text-[8px] font-black;
+    color: $star-full-color;
+    font-family: "Font Awesome 5 Pro";
+
+    &:before {
+      content: "\f005";
+    }
+  }
+
+  &.style-01 {
+    .tm-star-half {
+      &:before {
+        position: absolute;
+        content: "\f089";
+        color: $star-full-color;
+      }
+
+      &:after {
+        content: "\10f089";
+        color: #ccc;
+        opacity: 1;
+      }
+    }
+
+    .tm-star-empty {
+      color: #ccc;
+
+      &:before {
+        content: "\f005";
+      }
+    }
+  }
+
+  &.style-02 {
+    .tm-star-half {
+      &:before {
+        position: absolute;
+        content: "\f5c0";
+        color: $star-full-color;
+      }
+
+      &:after {
+        content: "\10f5c0";
+        color: #ababab;
+        opacity: 1;
+      }
+    }
+
+    .tm-star-empty {
+      color: #ababab;
+
+      &:before {
+        content: "\f005";
+      }
+    }
+  }
+
+  &.style-03 {
+    .tm-star-half {
+      &:before {
+        position: absolute;
+        content: "\f5c0";
+        color: $star-full-color;
+      }
+
+      &:after {
+        content: "\10f5c0";
+        color: $star-full-color;
+        opacity: 1;
+      }
+    }
+
+    .tm-star-empty {
+      color: $star-full-color;
+
+      &:before {
+        content: "\f005";
+      }
+    }
+  }
+}

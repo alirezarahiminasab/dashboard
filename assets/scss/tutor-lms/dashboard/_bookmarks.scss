@@ -1,0 +1,154 @@
+.bookmarks {
+  @apply bg-[#F3F3F4];
+
+  &-title {
+    @apply flex items-center gap-2 px-6 py-3;
+
+    h3 {
+      @apply text-[color:var(--Generic-Black,#121212)] text-right text-sm font-normal leading-[110%];
+    }
+  }
+
+  &-wrap {
+    @apply flex flex-col gap-6 [background:var(--Generic-White,#FFF)] p-6 rounded-[32px_32px_0px_0px];
+  }
+
+  &-links {
+    @apply flex;
+
+    ul {
+      @apply flex [background:var(--Neutral-200,#E9ECEF)] w-full m-0 p-0 rounded-lg;
+
+      li {
+        @apply m-0 w-1/2;
+
+        a {
+          @apply flex items-center justify-center h-full;
+          @apply text-[color:var(--Neutral-600,#6C757D)] text-xs font-normal leading-[110%];
+
+          &.active {
+            @apply [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg;
+            @apply text-[color:var(--Generic-White,#FFF)] text-xs font-normal leading-[110%];
+          }
+        }
+      }
+    }
+  }
+
+  &-posts {
+    @apply flex flex-col gap-6;
+
+    &-item {
+      @apply flex flex-col gap-4 border border-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] rounded-[16px_0px_16px_16px] border-solid overflow-hidden;
+
+      figure {
+        @apply h-[210px] overflow-hidden relative;
+
+        img {
+          @apply w-full;
+        }
+
+        .bookmark {
+          @apply flex justify-center items-center gap-2 absolute bottom-0 left-8 p-2 rounded-[8px_8px_0px_0px] bg-white cursor-pointer;
+
+          img {
+            @apply hidden w-6 h-6;
+
+            &.active {
+              @apply block;
+            }
+          }
+        }
+      }
+
+      &-info {
+        @apply flex flex-col gap-3 px-3 pb-4;
+      }
+
+      &-title {
+        h4 {
+          @apply text-[color:var(--Generic-Black,#121212)] text-base font-medium leading-[110%];
+        }
+      }
+
+      &-author {
+        @apply flex items-center gap-2;
+
+        img {
+          @apply w-6 h-6 rounded-[4px_0px_4px_4px];
+        }
+
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-sm font-normal leading-[110%];
+        }
+      }
+
+      &-categories {
+        @apply flex gap-2 items-center;
+
+        img {
+          @apply w-6 h-6;
+        }
+
+        p {
+          @apply inline text-[color:var(--Generic-Black,#121212)] text-xs font-normal leading-[110%];
+
+          &:not(:last-child)::after {
+            content: "،";
+          }
+        }
+      }
+    }
+  }
+
+  &-instructors {
+    @apply flex flex-col gap-6;
+
+    &-item {
+      @apply flex items-center gap-3 relative border border-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] p-3 rounded-2xl border-solid;
+
+      figure {
+        @apply w-14 h-14 rounded-full overflow-hidden;
+      }
+
+      &-info {
+        @apply flex flex-col gap-4 justify-between;
+
+        h4 {
+          @apply text-[color:var(--Generic-Black,#121212)] text-xs font-medium leading-[110%];
+        }
+
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-xs font-normal leading-[110%];
+        }
+      }
+    }
+
+    .bookmark {
+      @apply absolute left-3 top-3 cursor-pointer;
+
+      img {
+        @apply hidden w-6 h-6;
+
+        &.active {
+          @apply block;
+        }
+      }
+    }
+  }
+
+  &-empty {
+    @apply flex items-center flex-col gap-8;
+
+    &-header {
+      p {
+        @apply text-[color:var(--Generic-Black,#121212)] text-center text-lg font-medium leading-[160%];
+      }
+    }
+
+    a {
+      @apply flex justify-center items-center gap-2 [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg;
+      @apply text-[color:var(--Generic-White,#FFF)] text-center text-sm font-medium leading-[110%];
+    }
+  }
+}

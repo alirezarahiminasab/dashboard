@@ -1,0 +1,49 @@
+.top-bar-04 {
+	.top-bar-user-links {
+		.link-wrap {
+			margin-left: -10px;
+			margin-right: -10px;
+		}
+
+		a {
+			display: inline-block;
+			padding: 0 10px;
+
+			+ a {
+				position: relative;
+
+				&:before {
+					content: '/';
+					position: absolute;
+					left: -3px;
+					top: 50%;
+					height: auto;
+					width: auto;
+					background: none !important;
+					transform: translateY(-50%);
+				}
+			}
+		}
+	}
+
+	.top-bar-right {
+		.top-bar-wrap {
+			div {
+				+ div {
+					position: relative;
+
+					&:before {
+						content: '';
+						position: absolute;
+						left: 0;
+						top: 50%;
+						transform: translateY(-50%);
+						width: 1px;
+						height: 20px;
+						background: rgba(255, 255, 255, .4);
+					}
+				}
+			}
+		}
+	}
+}

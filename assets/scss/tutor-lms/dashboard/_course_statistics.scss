@@ -1,0 +1,111 @@
+.course-statistics {
+  @apply bg-[#F5F5F5];
+
+  &-wrap {
+    @apply flex flex-col items-start gap-4 shrink-0 [background:var(--Generic-White,#FFF)] p-6 rounded-[32px_32px_0px_0px];
+  }
+
+  &-header {
+    @apply self-end;
+  }
+
+  &-sort-btn {
+    @apply flex justify-center items-center border border-[color:var(--Generic-Black,#121212)] rounded-lg border-solid;
+
+    span:nth-child(2) {
+      @apply flex gap-2 items-center p-3 border-r-[color:var(--Neutral-900,#212529)] border-r border-solid;
+    }
+
+    span:first-child {
+      @apply p-3;
+    }
+  }
+
+  &-footer {
+    @apply flex flex-col w-full border border-[color:var(--Neutral-400,#CED4DA)] rounded-lg border-solid overflow-hidden;
+
+    &-title {
+      @apply grid grid-cols-3 items-center [background:var(--Neutral-200,#E9ECEF)];
+
+      span {
+        @apply col-span-1 px-3 py-4;
+
+        &:nth-child(2) {
+          border-left: 1px #ced4da solid;
+          border-right: 1px #ced4da solid;
+        }
+
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-xs font-medium leading-[110%];
+        }
+      }
+    }
+
+    &-item {
+      @apply grid grid-cols-3;
+
+      &:nth-child(2n + 1) {
+        @apply [background:var(--Neutral-100,#F8F9FA)];
+      }
+
+      span {
+        @apply px-3 py-4;
+
+        &:nth-child(2) {
+          border-left: 1px #ced4da solid;
+          border-right: 1px #ced4da solid;
+        }
+
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-xs font-normal leading-[110%];
+        }
+      }
+    }
+  }
+
+  &-sort {
+    @apply fixed top-0 bottom-0 left-0 right-0 z-[90] hidden;
+
+    &-bg {
+      @apply absolute top-0 bottom-0 left-0 right-0 bg-[#121212] opacity-60;
+    }
+
+    &-wrap {
+      @apply absolute bottom-0 w-full translate-y-full z-50;
+
+      &-header {
+        @apply flex items-center justify-between px-6 py-4 rounded-[24px_24px_0px_0px] bg-white border-b-[color:var(--Neutral-400,#CED4DA)] border-b border-solid;
+
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-center text-sm font-medium;
+        }
+
+        .sort-header {
+          &-logo {
+            @apply absolute left-0 right-0 m-auto w-8 h-8;
+          }
+
+          &-close {
+            @apply cursor-pointer;
+          }
+        }
+      }
+
+      &-radio {
+        @apply flex flex-col bg-white;
+
+        span:not(.loader) {
+          @apply flex items-center gap-2 py-3 px-6;
+
+          input[type="radio"]:after {
+            @apply bg-[#C22E58];
+          }
+
+          p {
+            @apply text-[color:var(--Generic-Black,#121212)] text-center text-sm font-normal;
+          }
+        }
+      }
+    }
+  }
+}

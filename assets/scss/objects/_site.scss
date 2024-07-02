@@ -1,0 +1,13 @@
+.boxed {
+  margin: 0 auto;
+  max-width: 1200px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.06);
+}
+
+.site {
+  @apply flex flex-col h-full;
+
+  .content-wrapper {
+    @apply flex flex-col justify-between flex-grow;
+  }
+}

@@ -1,0 +1,102 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $main-font !important;
+  clear: both;
+}
+
+p {
+  font-family: $main-font !important;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+dfn,
+cite,
+em {
+  font-family: $main-font !important;
+  font-style: italic;
+}
+
+address {
+  font-family: $main-font !important;
+  margin: 0 0 1.5em;
+}
+
+pre {
+  font-family: $main-font !important;
+  font-size: 15px;
+  overflow: auto;
+  margin-bottom: 1.6em;
+  padding: 1.6em;
+  max-width: 100%;
+  background: #eee;
+  font-family: "Courier 10 Pitch", Courier, monospace;
+  line-height: 1.6;
+  white-space: pre-wrap; /* css-3 */
+  white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+  white-space: -pre-wrap; /* Opera 4-6 */
+  white-space: -o-pre-wrap; /* Opera 7 */
+  word-wrap: break-word;
+}
+
+code,
+kbd,
+tt,
+var {
+  font-family: $main-font !important;
+  font-size: 15px;
+  font-family: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+}
+
+code {
+  font-family: $main-font !important;
+  background: #f3f4f5;
+}
+
+abbr,
+acronym {
+  font-family: $main-font !important;
+  border-bottom: 1px dotted #666;
+  cursor: help;
+}
+
+mark,
+ins {
+  font-family: $main-font !important;
+  background: none;
+  text-decoration: none;
+}
+
+big {
+  font-family: $main-font !important;
+  font-size: 125%;
+}
+
+blockquote,
+q {
+  font-family: $main-font !important;
+  quotes: "" "";
+
+  &:before,
+  &:after {
+    content: "";
+  }
+}
+
+blockquote {
+  font-family: $main-font !important;
+  margin: 36px 0 34px 48px !important;
+  padding: 0 0 0 20px;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.78;
+  border: 0;
+  border-left: 4px solid $primary-color;
+  max-width: 660px;
+}
