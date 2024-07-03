@@ -1,0 +1,41 @@
+.rtl {
+    .tutor-pagination {
+        ul.tutor-pagination-numbers {
+            .page-numbers {
+                &.prev {
+                    .tutor-icon-angle-left:before {
+                        content: "";
+                    }
+                }
+
+                &.next {
+                    .tutor-icon-angle-right:before {
+                        content: "";
+                    }
+                }
+            }
+        }
+    }
+
+    .tutor-form-select-option span {
+        text-align: right;
+    }
+
+    .tutor-form-icon:not(.tutor-form-icon-reverse) ~ .tutor-form-control {
+        padding-right: 10px;
+    }
+
+    .tutor-google-meet-api-banner .tutor-clipboard-input-field .tutor-form-control {
+        padding-right: 10px !important;
+        padding-left: 75px;
+    }
+
+    .tutor-google-meet-api-banner .tutor-clipboard-input-field .tutor-btn {
+        right: auto;
+        left: 4px;
+    }
+
+    .tutor-table tr td:not(.tutor-text-left):not(.tutor-text-center):not(.tutor-text-right) {
+        text-align: right;
+    }
+}

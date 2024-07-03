@@ -1,0 +1,89 @@
+.edumall-dark-scheme {
+    .header-dark {
+        .light-logo {
+            display: block;
+        }
+    }
+
+    .header-dark {
+        .header-search-form .search-submit {
+            color: #fff;
+
+            &:hover {
+                background: #fff;
+                color: $primary-color;
+            }
+        }
+    }
+
+    &.header-more-tools-opened .header-right-inner {
+        background: var(--edumall-color-box-white-background);
+        background-color: var(--edumall-color-box-white-background);
+        border-color: var(--edumall-color-box-white-background);
+        -webkit-box-shadow: 0 0 26px rgba(3, 31, 66, 0.85);
+        -moz-box-shadow: 0 0 26px rgba(3, 31, 66, 0.85);
+        box-shadow: 0 0 26px rgba(3, 31, 66, 0.85);
+    }
+
+    .header-category-menu {
+        .header-category-dropdown-wrap {
+            ul {
+                li {
+                    a {
+                        color: #fff;
+                    }
+
+                    &:hover {
+                        > a {
+                            color: $secondary-color;
+                            background: rgba(255, 255, 255, 0.1);
+                        }
+                    }
+                }
+            }
+        }
+
+        ul.course-list > li + li a.course-wrapper:before {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        ul.course-placeholder {
+            .course-thumbnail-placeholder {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .course-title-placeholder {
+                background: rgba(255, 255, 255, 0.2);
+            }
+
+            .course-price-placeholder {
+                background: rgba(255, 255, 255, 0.1)
+            }
+        }
+    }
+
+    .notification-list .notification-placeholder {
+        .notification-avatar {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .notification-content {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    }
+
+    .header-04 .header-right:before,
+    .header-user-links-box:before,
+    .header-category-menu:before,
+    .header-user-buttons .inner:before {
+        background: rgba(255, 255, 255, 0.25);
+    }
+
+    .notification-list .notification-status {
+        background: $secondary-color;
+    }
+
+    .notification-list .notification-content a:hover {
+        color: $secondary-color;
+    }
+}

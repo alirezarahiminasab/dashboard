@@ -1,0 +1,142 @@
+.edumall-dark-scheme {
+    .dashboard-nav-content .ps-container {
+        > .ps-scrollbar-y-rail {
+            background: rgba(255, 255, 255, .1);
+
+            > .ps-scrollbar-y {
+                background: rgba(255, 255, 255, .2);
+            }
+        }
+    }
+
+    .tutor-dashboard-header-wrap {
+        border-color: transparent;
+    }
+
+    .dashboard-header-toggle-menu {
+        color: $secondary-color;
+    }
+
+    .tutor-dashboard-permalinks {
+        li {
+            a {
+                &:hover {
+                    background: rgba(255, 255, 255, 0.1);
+                }
+            }
+        }
+    }
+
+    .dashboard-table {
+        th {
+            background: $box-border;
+        }
+    }
+
+    .tutor-dashboard-content-inner {
+        .tutor-progress-bar {
+            background: #2b3643;
+        }
+
+        .tutor-mycourse-wrap {
+            border-color: $box-white-border;
+        }
+    }
+
+    .withdraw-status {
+        &.status-rejected,
+        &.status-pending,
+        &.status-approved {
+            border-color: transparent;
+            background: rgba(0, 0, 0, .7);
+        }
+    }
+
+    .withdraw-history-table-wrap .withdraw-method-name,
+    .withdrawals-history tbody td {
+        color: #fff;
+    }
+
+    .withdraw-method-select-wrap {
+        .withdraw-method-select {
+            label {
+                background: rgba(255, 255, 255, .1);
+                border-color: rgba(255, 255, 255, .1);
+                color: #fff;
+            }
+
+            input:checked + label,
+            &:hover label {
+                border-color: $form-focus-border;
+                background: $form-focus-background;
+                box-shadow: none;
+                color: $secondary-color;
+            }
+        }
+    }
+
+    .tutor-offcanvas .tutor-offcanvas-main {
+        background: var(--edumall-color-box-white-background);
+    }
+
+    .tutor-frontend-dashboard-qna-header {
+        .tutor-color-black,
+        .tutor-color-secondary {
+            color: $heading-color;
+        }
+    }
+
+    .tutor-dashboard-content {
+        table tr:nth-child(2n) td {
+            background: #f5f5f5;
+        }
+    }
+
+    .tutor-pagination {
+        justify-content: center;
+
+        ul.tutor-pagination-numbers .page-numbers {
+            color: $heading-color;
+
+            &.current {
+                color: $primary-color;
+            }
+        }
+    }
+
+    .tutor-notification-element.notification-read .element-content .message,
+    .tutor-notification-element.notification-read .element-content .message > * {
+        color: #fff;
+    }
+
+    .tutor-table.tutor-quiz-attempt-details {
+        .tutor-color-black {
+            color: #222;
+        }
+    }
+
+    .frontend-dashboard-qna-table-instructor {
+        .tutor-color-secondary {
+            color: #222;
+        }
+    }
+
+    .tutor-google-meet-credential-form.tutor-option-single-item .item-wrapper,
+    .tutor-google-meet-credential-form.tutor-option-single-item .drag-drop-zone {
+        background-color: var(--edumall-color-box-white-background) !important;
+    }
+
+    .tutor-accordion-item,
+    .tutor-card-list-item {
+        background-color: var(--edumall-color-box-white-background);
+    }
+
+    .tutor-analytics-graph .tutor-color-secondary {
+        color: #222;
+    }
+
+    .tutor-analytics-graph .tutor-color-black,
+    .tutor-analytics-graph .amount{
+        color: #000;
+    }
+}

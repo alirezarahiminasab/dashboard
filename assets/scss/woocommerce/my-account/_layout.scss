@@ -1,0 +1,146 @@
+.my-account-profile {
+	display: flex;
+	align-items: center;
+	margin: 0 0 60px;
+
+	.my-avatar {
+		flex-shrink: 0;
+		margin: 0 25px 0 0;
+
+		img {
+			border-radius: 50%;
+		}
+	}
+
+	.welcome-text {
+		font-weight: $heading-font-weight;
+		color: #9b9b9b;
+		margin-bottom: 5px;
+	}
+
+	.fn {
+		font-size: 18px;
+		margin-bottom: 0;
+	}
+}
+
+.woocommerce-MyAccount-navigation {
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		border-radius: 5px;
+		border: 1px solid $box-border;
+	}
+
+	li {
+		margin: -1px -1px 0;
+
+		&:first-child {
+			a {
+				border-radius: 5px 5px 0 0;
+			}
+		}
+
+		&:last-child {
+			a {
+				border-radius: 0 0 5px 5px;
+			}
+		}
+
+		a {
+			display: block;
+			padding: 13px 30px;
+			font-size: 16px;
+			font-weight: 500;
+			border-top: 1px solid $box-border;
+			color: inherit;
+		}
+	}
+
+	.is-active a,
+	a:hover {
+		color: #fff;
+	}
+}
+
+.woocommerce-MyAccount-content {
+	padding-left: 30px;
+
+	a {
+		font-weight: 500;
+	}
+
+	.title {
+		border-bottom: 1px solid $box-border;
+		padding-bottom: 10px;
+		margin-bottom: 19px;
+
+		> h3 {
+			display: inline-block;
+			vertical-align: middle;
+			font-size: 20px;
+			line-height: 1.6;
+			margin: 0;
+		}
+	}
+
+	.woocommerce-column__title,
+	form > h3 {
+		display: inline-block;
+		vertical-align: middle;
+		font-size: 20px;
+		line-height: 1.6;
+		border-bottom: 1px solid $box-border;
+		padding-bottom: 10px;
+		margin-bottom: 19px;
+	}
+
+	.woocommerce-Address-title {
+		a {
+			display: inline-block;
+			vertical-align: middle;
+			width: 24px;
+			height: 24px;
+			position: relative;
+			font-size: 0;
+			margin: 0 0 0 6px;
+
+			&:before {
+				@extend %FontAwesomeRegular;
+				content: '\f303';
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				font-size: 15px;
+			}
+		}
+	}
+
+	address {
+		font-style: normal;
+	}
+
+	button[type=submit] {
+		min-width: 240px;
+	}
+
+	.edit-account {
+		.button {
+			margin: 30px 0 0;
+		}
+	}
+}
+
+@include media-breakpoint-down(md) {
+	.woocommerce-MyAccount-content {
+		padding: 0;
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.woocommerce-MyAccount-navigation {
+		margin: 0 0 40px;
+	}
+}

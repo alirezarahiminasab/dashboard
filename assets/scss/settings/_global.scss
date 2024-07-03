@@ -1,0 +1,59 @@
+/**
+ * Dynamic Variables
+ */
+$primary-color: var(--edumall-color-primary);
+$secondary-color: var(--edumall-color-secondary);
+$third-color: var(--edumall-color-third);
+$text-color: var(--edumall-color-text);
+$text-bit-lighten-color: var(--edumall-color-text-bit-lighten);
+$text-lighten-color: var(--edumall-color-text-lighten);
+$heading-color: var(--edumall-color-heading);
+$link-color: var(--edumall-color-link);
+$link-hover-color: var(--edumall-color-link-hover);
+$body-font-family: var(--edumall-typography-body-font-family);
+$body-font-weight: var(--edumall-typography-body-font-weight);
+$body-font-size: var(--edumall-typography-body-font-size);
+$body-line-height: var(--edumall-typography-body-line-height);
+$body-letter-spacing: var(--edumall-typography-body-letter-spacing);
+$heading-font-family: var(--edumall-typography-headings-font-family);
+$heading-font-weight: var(--edumall-typography-headings-font-weight);
+$heading-line-height: var(--edumall-typography-headings-line-height);
+$heading-letter-spacing: var(--edumall-typography-headings-letter-spacing);
+
+// Form Colors
+$form-text: var(--edumall-color-form-text);
+$form-border: var(--edumall-color-form-border);
+$form-background: var(--edumall-color-form-background);
+$form-focus-text: var(--edumall-color-form-focus-text);
+$form-focus-border: var(--edumall-color-form-focus-border);
+$form-focus-background: var(--edumall-color-form-focus-background);
+
+// Sub menu
+$sub-menu-background: var(--edumall-color-sub-menu-background);
+$sub-menu-border: var(--edumall-color-sub-menu-border);
+
+// Box
+$box-white-background: var(--edumall-color-box-white-background);
+$box-white-border: var(--edumall-color-box-white-border);
+$box-separator: var(--edumall-color-box-fill-separator);
+
+$box-grey-background: var(--edumall-color-box-grey-background);
+
+$box-light-grey-background: var(--edumall-color-box-light-grey-background);
+
+$box-border: var(--edumall-color-box-border);
+$box-border-lighten: var(--edumall-color-box-border-lighten);
+
+// Alert
+$success-color: #6cbd7e;
+$error-color: #d9534f;
+$warning-color: #ff9800;
+$info-color: #2196f3;
+
+// Star
+$star-full-color: #f7c04d;
+
+// Form
+$form-input-height: 52px;
+$form-input-radius: 5px;
+$form-input-font-size: 14px;

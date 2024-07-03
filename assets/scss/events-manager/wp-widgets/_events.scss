@@ -1,0 +1,55 @@
+.edumall-wp-widget-events {
+	.event-item {
+		+ .event-item {
+			border-top: 1px solid $box-separator;
+			padding-top: 20px;
+			margin-top: 20px;
+		}
+	}
+
+	.edumall-box {
+		display: flex;
+		align-items: flex-start;
+	}
+
+	.event-thumbnail {
+		position: relative;
+		flex-shrink: 0;
+		border-radius: 5px;
+		overflow: hidden;
+		margin: 0 17px 0 0;
+		max-width: 45%;
+	}
+
+	.event-title {
+		font-size: 14px;
+		line-height: 26px;
+		margin: 0;
+	}
+
+	.event-category {
+		font-size: 11px;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		color: $text-lighten-color;
+		margin: 0 0 5px;
+
+		a {
+			color: inherit;
+
+			&:hover {
+				color: $primary-color;
+			}
+		}
+	}
+
+	.event-date {
+		margin: 7px 0 0;
+		color: #9b9b9b;
+	}
+
+	.event-price {
+		margin: 0 0 5px;
+	}
+}

@@ -1,0 +1,176 @@
+.tm-social-networks {
+	line-height: 0;
+
+	ul {
+		@extend %clearfix;
+		display: inline-block;
+		padding: 0;
+		margin: 0 -8px;
+	}
+
+	li {
+		margin: 0;
+	}
+
+	// Fix wp 4.7 widget.
+	br {
+		display: none;
+	}
+
+	.item {
+		list-style-type: none;
+	}
+
+	.link {
+		display: inline-block;
+		padding: 5px 8px;
+		transition: none;
+	}
+
+	.link-icon,
+	.link-text {
+		@extend %NormalTransition;
+	}
+
+	&.layout-list {
+		display: block;
+	}
+
+	&.layout-inline {
+		.item {
+			display: inline-block;
+		}
+	}
+
+	&.layout-two-columns {
+
+		ul {
+			margin: 0 -10px;
+			width: 100%;
+		}
+
+		.item {
+			display: block;
+			float: left;
+			width: 50%;
+		}
+
+		.link {
+			padding: 5px 10px;
+		}
+	}
+
+	&.style-icons {
+		font-size: 16px;
+	}
+
+	&.style-large-icons {
+		font-size: 20px;
+
+		ul {
+			margin: 0 -13px;
+		}
+
+		.link {
+			padding: 5px 13px;
+		}
+	}
+
+	&.style-flat-rounded-icon {
+
+		ul {
+			margin: -10px;
+		}
+
+		li {
+			float: left;
+			margin: 10px;
+		}
+
+		.item {
+			&:hover {
+				.link {
+					color: #fff;
+				}
+			}
+		}
+
+		.link {
+			font-size: 20px;
+			display: block;
+			text-align: center;
+			height: 55px;
+			width: 55px;
+			color: #fff;
+			border-radius: 50%;
+			position: relative;
+		}
+
+		.link-icon {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	&.style-solid-rounded-icon {
+
+		ul {
+			margin: -10px;
+		}
+
+		li {
+			float: left;
+			margin: 10px;
+		}
+
+		.item {
+			&:hover {
+				.link {
+					color: #fff;
+					border-color: transparent;
+				}
+			}
+		}
+
+		.link {
+			font-size: 20px;
+			display: block;
+			text-align: center;
+			height: 55px;
+			width: 55px;
+			background: transparent;
+			color: #696969;
+			border: 1px solid #e0e0e0;
+			border-radius: 50%;
+			position: relative;
+		}
+
+		.link-icon {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+	}
+
+	&.style-icon-title {
+		.link-icon {
+			font-size: 16px;
+			min-width: 16px;
+			margin-right: 10px;
+		}
+	}
+
+	&.style-title {
+		line-height: 1.2;
+
+		.link{
+			line-height: 1;
+			padding: 0;
+			margin-left: 8px;
+			margin-right: 8px;
+		}
+	}
+}

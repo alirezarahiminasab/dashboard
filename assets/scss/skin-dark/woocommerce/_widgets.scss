@@ -1,0 +1,41 @@
+.edumall-dark-scheme {
+	.widget_product_categories {
+		li {
+			a {
+				&:before {
+					border-color: #80868d;
+				}
+
+				&:after {
+					color: $third-color;
+				}
+			}
+
+			&.current-cat {
+				> a:before {
+					background: $secondary-color;
+				}
+			}
+		}
+	}
+
+	.widget_price_filter {
+		.price_slider_wrapper {
+			.ui-widget-content {
+				background-color: #2b3643;
+			}
+		}
+
+		.price_slider_amount {
+			.button {
+				color: $secondary-color;
+				background: #020d1b;
+				
+				&:hover {
+					color: #fff;
+					background: $primary-color;
+				}
+			}
+		}
+	}
+}

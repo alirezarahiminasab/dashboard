@@ -1,0 +1,163 @@
+.tutor-login-form-wrapper {
+    padding: 0 !important;
+}
+
+.user-form-box {
+    background: #fff;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+    border-radius: 5px;
+    padding: 31px 50px 27px;
+    width: 470px;
+    margin: 0 auto;
+    max-width: 100%;
+
+    &.user-register-form {
+        width: 670px;
+    }
+}
+
+.user-form-wrap {
+    form {
+        padding: 0 !important;
+    }
+
+    .form-header {
+        text-align: center;
+        margin: 0 0 19px;
+    }
+
+    .form-title {
+        font-size: 32px;
+        line-height: 1.5;
+        margin: 0 0 8px;
+    }
+
+    .form-description {
+        a {
+            color: $heading-color;
+            font-weight: $heading-font-weight;
+
+            &:after {
+                background: currentColor;
+            }
+        }
+    }
+
+    .form-row {
+        margin-bottom: 25px !important;
+
+        label {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: $heading-font-weight;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0 0 7px;
+
+            &.form-label-checkbox {
+                font-size: 14px;
+                font-weight: 400;
+                text-transform: none;
+                letter-spacing: 0;
+            }
+        }
+    }
+
+    .form-input-password {
+        position: relative;
+
+        .btn-pw-toggle {
+            @extend %FontAwesomeRegular;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            left: auto;
+            background: none !important;
+            box-shadow: none !important;
+            padding: 0 15px !important;
+            border: 0;
+            font-size: 14px;
+            color: $text-color;
+
+            &:hover {
+                color: $primary-color;
+            }
+
+            &:before {
+                content: '\f06e';
+            }
+        }
+
+        &.show-pw {
+            .btn-pw-toggle {
+                &:before {
+                    content: '\f070';
+                }
+            }
+        }
+    }
+
+    #tutor-registration-form {
+        .form-input-password {
+            .btn-pw-toggle {
+                right: 15px;
+            }
+        }
+    }
+
+    .forgot-password-link {
+        color: $heading-color;
+
+        &:after {
+            background: currentColor;
+        }
+    }
+
+    button[type='submit'] {
+        width: 100%;
+    }
+}
+
+.tutor-login-modal {
+    .tutor-modal-window {
+        max-width: 500px !important;
+        padding: 0 15px;
+    }
+
+    .tutor-modal-body {
+        padding: 31px 50px 27px;
+    }
+}
+
+@include media-breakpoint-down(sm) {
+    .tutor-login-modal {
+        .tutor-modal-body {
+            padding: 21px 20px 17px;
+        }
+    }
+
+    .user-form-box {
+        padding: 31px 20px 27px;
+    }
+}
+
+@include media-breakpoint-down(xs) {
+    .user-form-wrap {
+        .form-title {
+            font-size: 26px;
+        }
+
+        .form-row {
+            margin-bottom: 15px !important;
+
+            .col-xs-12 {
+                margin-bottom: 15px;
+
+                &:last-child {
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+}

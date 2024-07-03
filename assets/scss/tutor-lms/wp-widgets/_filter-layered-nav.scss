@@ -1,0 +1,141 @@
+.edumall-wp-widget-course-filter {
+	.filter-pseudo-link {
+		display: none;
+	}
+
+	ul {
+		a {
+			display: inline-block;
+			font-size: 14px;
+			font-weight: $heading-font-weight;
+			line-height: 26px;
+		}
+
+		> li:not(.disabled) {
+			a {
+				&:hover:before {
+					border-color: $primary-color;
+				}
+			}
+		}
+
+		> li.disabled {
+			a {
+				cursor: auto;
+				color: $link-color;
+
+				&:before {
+					opacity: .5;
+				}
+			}
+		}
+
+		&.filter-checkbox-list {
+			a {
+				position: relative;
+				padding-left: 30px;
+
+				&:before,
+				&:after {
+					@extend %NormalTransition;
+					content: '';
+					position: absolute;
+					width: 18px;
+					height: 18px;
+					border-radius: 3px;
+					top: 4px;
+					left: 0;
+				}
+
+				&:before {
+					border: 1px solid #cacaca;
+					background: #fff;
+				}
+
+				&:after {
+					@extend %FontAwesomeRegular;
+					content: '\f00c';
+					font-size: 14px;
+					line-height: 18px;
+					text-align: center;
+					transform: scale(0, 0);
+					color: #fff;
+					background: $primary-color;
+				}
+			}
+
+			.chosen {
+				> a {
+					&:before {
+						border-color: transparent;
+					}
+
+					&:after {
+						transform: scale(1, 1);
+					}
+				}
+			}
+		}
+
+		&.filter-radio-list {
+			a {
+				position: relative;
+				padding-left: 30px;
+
+				&:before,
+				&:after {
+					@extend %NormalTransition;
+					content: '';
+					position: absolute;
+					top: 4px;
+					left: 0;
+					width: 18px;
+					height: 18px;
+					border-radius: 50%;
+				}
+
+				&:before {
+					border: 1px solid #cacaca;
+					background: #fff;
+				}
+
+				&:after {
+					opacity: 0;
+					width: 10px;
+					height: 10px;
+					background: $primary-color;
+					transform: translate(4px, 4px);
+				}
+			}
+
+			.chosen {
+				> a {
+					&:after {
+						opacity: 1;
+					}
+				}
+			}
+		}
+
+		&.show-display-inline {
+			li {
+				display: inline-block;
+				margin: 0 20px 10px 0;
+			}
+		}
+
+		&.show-display-list {
+			li {
+				+ li {
+					margin: 14px 0 0;
+				}
+			}
+		}
+
+		&.show-items-count-off {
+			.count {
+				display: none;
+			}
+		}
+	}
+}

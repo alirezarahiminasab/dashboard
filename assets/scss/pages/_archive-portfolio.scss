@@ -1,0 +1,22 @@
+.tm-grid-portfolio-main {
+	.modern-grid {
+		grid-template-columns: repeat(3, 1fr);
+		grid-gap: 30px;
+	}
+}
+
+@include media-breakpoint-down(lg) {
+	.tm-grid-portfolio-main {
+		.modern-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+}
+
+@include media-breakpoint-down(sm) {
+	.tm-grid-portfolio-main {
+		.modern-grid {
+			grid-template-columns: repeat(1, 1fr);
+		}
+	}
+}

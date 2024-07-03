@@ -1,0 +1,32 @@
+.edumall-dark-scheme {
+	.edumall-wp-widget-course-filter {
+		ul {
+			&.filter-checkbox-list {
+				a {
+					&:before {
+						border-color: #80868d;
+						background: $box-white-background;
+					}
+
+					&:after {
+						color: $third-color;
+						background: $secondary-color;
+					}
+				}
+			}
+
+			&.filter-radio-list {
+				a {
+					&:before {
+						border-color: #80868d;
+						background: $box-white-background;
+					}
+
+					&:after {
+						background: $secondary-color;
+					}
+				}
+			}
+		}
+	}
+}

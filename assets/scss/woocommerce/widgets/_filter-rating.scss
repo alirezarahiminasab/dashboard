@@ -1,0 +1,45 @@
+.widget_rating_filter {
+	ul {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		list-style: none outside;
+
+		li {
+			@extend %clearfix;
+			padding: 0 0 1px;
+			list-style: none;
+
+			a {
+				padding: 1px 0;
+			}
+
+			&.chosen {
+				a {
+					&:before {
+						@extend %FontAwesomeSolid;
+						content: '\f057';
+						color: #a00;
+						margin-right: .618em;
+					}
+				}
+			}
+		}
+	}
+
+	.star-rating {
+		float: none;
+		display: inline-block;
+		width: auto;
+		font-family: inherit;
+		overflow: visible;
+
+		&:before {
+			display: none;
+		}
+	}
+
+	.tm-star-rating {
+		font-size: 15px;
+	}
+}

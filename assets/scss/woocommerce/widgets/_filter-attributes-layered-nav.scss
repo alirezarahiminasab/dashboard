@@ -1,0 +1,117 @@
+.edumall-wp-widget-product-layered-nav {
+	.filter-pseudo-link {
+		display: none;
+	}
+
+	ul {
+		.term-name {
+			font-weight: $heading-font-weight;
+		}
+
+		&.show-display-inline {
+			li {
+				display: inline-block;
+				margin: 0 10px 10px 0;
+			}
+		}
+
+		&.show-display-check-list {
+			a {
+				position: relative;
+				padding-left: 30px;
+				font-size: 14px;
+				font-weight: $heading-font-weight;
+
+				&:before,
+				&:after {
+					@extend %NormalTransition;
+					content: '';
+					position: absolute;
+					width: 18px;
+					height: 18px;
+					border-radius: 3px;
+				}
+
+				&:before {
+					border: 1px solid #cacaca;
+					top: 1px;
+					left: 0;
+				}
+
+				&:after {
+					@extend %FontAwesomeRegular;
+					content: '\f00c';
+					font-size: 14px;
+					transform: scale(0, 0);
+					top: 3px;
+					left: 2px;
+					color: #fff;
+				}
+			}
+
+			.chosen {
+				> a {
+					&:before {
+						border-color: transparent;
+					}
+
+					&:after {
+						transform: scale(1, 1);
+					}
+				}
+			}
+		}
+
+		&.show-labels-off {
+			li {
+				.term-name {
+					display: none;
+				}
+			}
+		}
+
+		&.show-labels-on {
+			li.swatch-color {
+				.filter-swatch:before,
+				.filter-swatch:after {
+					display: none;
+				}
+			}
+		}
+
+		&.list-swatch-color {
+			margin-left: -9px;
+			margin-right: -9px;
+
+			li.swatch-color {
+				padding-left: 9px;
+				padding-right: 9px;
+				margin: 0 0 17px;
+			}
+		}
+
+		li.swatch-color {
+			.filter-swatch {
+				display: inline-block;
+				vertical-align: top;
+				height: 25px;
+				width: 25px;
+				border-radius: 50%;
+				border: 1px solid #ccc;
+			}
+		}
+
+		li.swatch-image {
+			img {
+				@extend %NormalTransition;
+				height: 20px;
+				width: 20px;
+				border-radius: 50%;
+
+				+ .term-name {
+					margin-left: 10px;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,24 @@
+.tutor-modal {
+	// Higher header in create course.
+	z-index: 99999 !important;
+}
+
+.tutor-modal-header {
+	border-color: $box-white-border;
+}
+
+.tutor-modal-content {
+	background: $box-white-background;
+}
+
+.tutor-modal-footer {
+	border-color: $box-white-border;
+}
+
+.tutor-modal-steps {
+	ul {
+		li {
+			margin: 0 !important;
+		}
+	}
+}

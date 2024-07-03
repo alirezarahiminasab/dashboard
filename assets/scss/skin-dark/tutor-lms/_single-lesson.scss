@@ -1,0 +1,23 @@
+.edumall-dark-scheme {
+    .tutor-tabs-btn-group a {
+        background: rgba(255, 255, 255, .2);
+    }
+
+    .tutor-tabs-btn-group a.active,
+    .tutor-sidebar-tabs-content {
+        background: rgba(255, 255, 255, .1);
+    }
+
+    .tutor-dashboard-content .tutor-quiz-attempt-history-table-wrap table thead tr,
+    .single-quiz-page.tutor-quiz-attempt-history-table-wrap table thead tr {
+        background: var(--edumall-color-box-white-background);
+    }
+
+    .tutor-quiz-meta {
+        background: var(--edumall-color-box-white-background);
+    }
+
+    .tutor-nav:not(.tutor-nav-pills):not(.tutor-nav-tabs) {
+        border-bottom: 1px solid rgba(255, 255, 255, .2);
+    }
+}

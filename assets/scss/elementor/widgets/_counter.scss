@@ -1,0 +1,78 @@
+.tm-counter {
+	@extend %NormalTransition;
+	width: 100%;
+
+	.icon {
+		font-size: 48px;
+		line-height: 1;
+	}
+
+	.counter-number-wrap {
+		display: inline-flex;
+		font-size: 20px;
+		line-height: 1;
+		font-weight: 700;
+		color: $primary-color;
+	}
+
+	.heading-wrap {
+		margin: 5px 0 0;
+	}
+
+	.counter-heading {
+		font-size: 14px;
+		line-height: 24px;
+		color: $heading-color;
+		margin: 0;
+	}
+
+	/*.counter-media {
+		margin: 0 0 15px;
+	}*/
+}
+
+.edumall-counter-style-01 {
+	.tm-counter {
+		padding: 28px 30px 25px;
+		border-radius: 8px;
+
+		&:hover {
+			background: #fff;
+			box-shadow: 0 29px 53px rgba(0, 0, 0, .08);
+		}
+	}
+}
+
+.edumall-counter-style-02 {
+	.tm-counter {
+		padding: 31px 30px;
+		border-radius: 8px;
+
+		&:hover {
+			background: #fff;
+			box-shadow: 0 10px 50px rgba(0, 0, 0, .08);
+		}
+
+		/*.counter-media {
+			margin: 0 0 21px;
+		}*/
+
+		.icon {
+			font-size: 80px;
+		}
+
+		.counter-number-wrap {
+			font-size: 34px;
+			font-weight: 500;
+		}
+
+		.heading-wrap {
+			margin: 11px 0 0;
+		}
+
+		.counter-heading {
+			font-size: 15px;
+			line-height: 26px;
+		}
+	}
+}

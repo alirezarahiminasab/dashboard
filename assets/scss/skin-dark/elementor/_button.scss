@@ -1,0 +1,35 @@
+.edumall-dark-scheme {
+	.tm-button {
+		&.button-grey {
+			&.style-flat {
+				color: $secondary-color;
+
+				&:before {
+					background-color: #19222d;
+				}
+
+				&:hover {
+					color: #fff;
+				}
+			}
+
+			&.style-thick-border {
+				border-color: $box-border;
+			}
+		}
+
+		&.button-grey-white {
+			&.style-flat {
+				color: $secondary-color;
+
+				&:before {
+					background-color: #19222d;
+				}
+
+				&:hover {
+					color: $primary-color;
+				}
+			}
+		}
+	}
+}

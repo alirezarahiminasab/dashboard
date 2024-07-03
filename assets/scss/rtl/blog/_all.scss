@@ -1,0 +1,35 @@
+.rtl {
+    .edumall-blog-caption-style-01 .post-read-more .fa-long-arrow-right:before {
+        content: "\f177";
+    }
+
+    .comment-nav-links li .next,
+    .comment-nav-links li .prev,
+    .page-numbers li .next,
+    .page-numbers li .prev,
+    .page-pagination li .next,
+    .page-pagination li .prev {
+        .fa-angle-double-left:before, .fa-angles-left:before {
+            content: "\f101";
+        }
+
+        .fa-angle-double-right:before, .fa-angles-right:before {
+            content: "\f100";
+        }
+    }
+
+    .wp-block-quote {
+        border-left: 0;
+        padding-left: 0;
+    }
+
+    .blog-nav-links {
+        .prev h6:before {
+            content: "\f105";
+        }
+
+        .next h6:before {
+            content: "\f104";
+        }
+    }
+}

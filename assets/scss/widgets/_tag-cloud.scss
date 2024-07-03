@@ -1,0 +1,26 @@
+.widget {
+	.tagcloud {
+		@extend %clearfix;
+		margin: -5px;
+
+		a {
+			display: block;
+			float: left;
+			font-size: 13px !important;
+			line-height: 24px;
+			font-weight: 500;
+			padding: 4px 15px;
+			border-radius: 3px;
+			background: #f5f5f5;
+			color: #ababab;
+			border: 0;
+			margin: 5px;
+			overflow: hidden;
+
+			&:hover {
+				color: #fff;
+				background: $primary-color !important;
+			}
+		}
+	}
+}

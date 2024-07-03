@@ -1,0 +1,13 @@
+.top-bar-06 {
+    .top-bar-text {
+        .link-transition-02 {
+            margin-left: 15px;
+
+            &:after,
+            &:before {
+                background-color: currentColor;
+                bottom: 1px;
+            }
+        }
+    }
+}

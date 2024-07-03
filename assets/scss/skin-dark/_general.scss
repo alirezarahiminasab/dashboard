@@ -1,0 +1,16 @@
+// Woo + tutor price style
+
+// Regular Price
+.edumall-dark-scheme {
+	.price,
+	.amount,
+	.tr-price,
+	.woosw-content-item--price {
+		color: #fff;
+	}
+
+	// Sale Price
+	ins .amount {
+		color: #fff;
+	}
+}

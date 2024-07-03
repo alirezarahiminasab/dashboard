@@ -1,0 +1,43 @@
+.edumall-widget-course-search-form {
+	&.style-01 {
+		form {
+			position: relative;
+		}
+
+		.search-field {
+			height: 68px;
+			background: #fff;
+			box-shadow: 0 0 10px rgba(0, 0, 0, .1);
+			padding-right: 60px !important;
+		}
+
+		.search-submit {
+			position: absolute;
+			top: 0;
+			right: 0;
+			height: 100%;
+			padding: 0;
+			border: 0;
+			width: 60px;
+			text-align: center;
+			box-shadow: none;
+			transform: none;
+			background: transparent;
+			color: $primary-color;
+		}
+
+		.search-btn-text {
+			display: none;
+		}
+
+		.search-btn-icon {
+			@extend %FontAwesomeSolid;
+			content: '\f002';
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			font-size: 20px;
+		}
+	}
+}

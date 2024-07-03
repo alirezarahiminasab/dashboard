@@ -1,0 +1,53 @@
+body {
+    color: $text-color;
+}
+
+h1, h2, h3, h4, h5, h6, caption, th, blockquote, fieldset legend, .heading, .heading-color {
+    color: $heading-color;
+}
+
+a {
+    color: $link-color;
+
+    &:hover,
+    &:focus {
+        color: $link-hover-color;
+    }
+}
+
+input[type='text'],
+input[type='email'],
+input[type='url'],
+input[type='password'],
+input[type='search'],
+input[type='number'],
+input[type='tel'],
+select,
+textarea,
+.tutor-option-field textarea,
+.tutor-option-field input[type=text],
+.tutor-option-field input[type=number],
+.tutor-option-field input[type="pas.tutor-dashboard-content-innersword"],
+.tutor-form-group textarea,
+.tutor-form-group input[type=text],
+.tutor-form-group input[type=number],
+.tutor-form-group input[type=password] {
+    color: $form-text;
+    border-color: $form-border;
+    background-color: $form-background;
+}
+
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='url']:focus,
+input[type='password']:focus,
+input[type='search']:focus,
+input[type='number']:focus,
+input[type='tel']:focus,
+textarea:focus, select:focus,
+select:focus,
+textarea:focus {
+    color: $form-focus-text;
+    border-color: $form-focus-border;
+    background-color: $form-focus-background;
+}

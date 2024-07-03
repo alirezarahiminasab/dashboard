@@ -1,0 +1,23 @@
+.rtl {
+    .header-category-menu .header-category-dropdown-wrap ul li > a .toggle-sub-menu:before {
+        content: "\f104" !important;
+    }
+
+    &.desktop-menu .sm-simple .simple-menu .toggle-sub-menu:before {
+        content: "\f104";
+    }
+
+    &.desktop-menu .sm-simple .children {
+        left: 0 !important;
+        right: 0 !important;
+
+        > li > .children {
+            left: auto !important;
+            right: 100% !important;
+        }
+    }
+
+    &.desktop-menu .sm-simple:not(.sm-vertical) .has-mega-menu .mega-menu {
+        margin-left: 0 !important;
+    }
+}

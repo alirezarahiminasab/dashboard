@@ -1,0 +1,229 @@
+.edumall-dark-scheme {
+    .wishlist-button-01 {
+        color: $secondary-color !important;
+
+        &:before {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        &:hover {
+            color: #fff !important;
+        }
+    }
+
+    .single-course-nav {
+        &.style-01 {
+            background: #0231b8;
+
+            li {
+                a {
+                    color: #80868d;
+
+                    &:hover {
+                        color: $secondary-color;
+                    }
+                }
+
+                &.active a {
+                    color: $secondary-color;
+                    border-color: $secondary-color;
+                }
+            }
+        }
+
+        &.style-02 {
+            background: #031f42;
+
+            li {
+                a {
+                    color: #80868d;
+                }
+            }
+
+            a:hover,
+            li.active a {
+                color: #fff;
+                background: var(--edumall-color-primary);
+            }
+        }
+    }
+
+    .tutor-price-preview-box {
+        .course-price-badge {
+            color: $secondary-color;
+            border-color: rgba(238, 238, 238, .1);
+        }
+    }
+
+    .prerequisites-course-lists {
+        li:first-child {
+            background: none;
+        }
+
+        .prerequisites-course-item {
+            &:hover {
+                color: $secondary-color;
+            }
+        }
+    }
+
+    .tutor-course-header-categories {
+        color: $secondary-color;
+
+        a {
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
+
+    .tutor-course-topics-contents {
+        .tutor-course-title {
+            h4 {
+                color: $secondary-color;
+            }
+        }
+    }
+
+    .tutor-course-status {
+        .tutor-progress-bar {
+            background: #2b3643;
+        }
+    }
+
+    .tutor-single-course-lead-meta .lead-meta-item + .lead-meta-item:before {
+        background: rgba(255, 255, 255, .2);
+    }
+
+    .course-rating-meter .rating-meter-bar {
+        background: #19222d;
+    }
+
+    .course-ratings-average-wrap {
+        background: #19222d;
+
+        .course-avg-rating {
+            color: #fff;
+        }
+    }
+
+    &.single-courses {
+        .single_add_to_cart_button {
+            color: $third-color;
+            background: $secondary-color;
+            border-color: $secondary-color;
+
+            &:hover {
+                color: #fff;
+                background: $primary-color;
+                border-color: $primary-color;
+            }
+        }
+
+        .tm-button.wishlist-button-02 {
+            color: $secondary-color;
+
+            &:hover {
+                color: $primary-color;
+            }
+        }
+
+        &.single-course-01 {
+            .tutor-course-top-info {
+                background-color: #031f42;
+            }
+
+            .tutor-course-top-info.course-top-info-light {
+                background-color: #0231b8;
+            }
+        }
+
+        &.single-course-02 {
+            background-color: #031f42;
+
+            .tutor-full-width-course-body {
+                background: #031f42;
+            }
+
+            .tutor-single-course-main-content {
+                .tutor-single-course-segment {
+                    background: #020d1b;
+                }
+            }
+
+            .tutor-price-preview-box {
+                background: #020d1b;
+
+                .tutor-meta-top > div + div {
+                    border-color: #222c37;
+                }
+            }
+
+            .tutor-single-course-sidebar {
+                .widget {
+                    background: #020d1b;
+                }
+            }
+
+            .edumall-wp-widget-courses .course-item + .course-item {
+                border-color: #222c37;
+            }
+        }
+    }
+
+    .tutor-option-field textarea:focus,
+    .tutor-option-field input:not([type=submit]):focus,
+    .tutor-form-group textarea:focus,
+    .tutor-form-group input:not([type=submit]):focus {
+        background-color: var(--edumall-color-box-white-background);
+    }
+
+    .edumall-modal .button-close-modal {
+        background-color: var(--edumall-color-box-white-background);
+    }
+
+    .tutor-qna-single-question .tutor-qa-reply {
+        background-color: rgba(0, 0, 0, 0);
+    }
+
+    .tutor-qna-single-question:not([data-context=backend-dashboard-qna-single]) .tutor-qna-left .tutor-qna-text,
+    .tutor-qna-single-question:not([data-context=backend-dashboard-qna-single]) .tutor-qna-right .tutor-qna-text {
+        color: #fff;
+    }
+
+    .tutor-attachments-wrap {
+        border-bottom-color: rgba(255, 255, 255, .2);
+    }
+
+    .tutor-gradebook-finalgrade {
+        background-color: var(--edumall-color-box-grey-background);
+        border-color: var(--edumall-color-box-grey-background);
+    }
+
+    #tutor-certificate-showcase .tutor-cs-text > div {
+        background-color: var(--edumall-color-box-grey-background);
+    }
+
+    #tutor-certificate-showcase .tutor-cs-text {
+        background: -webkit-gradient(linear, left top, right top, from(rgba(255, 255, 255, .3)), to(var(--edumall-color-box-grey-background)));
+        background: linear-gradient(to right, rgba(255, 255, 255, .3), var(--edumall-color-box-grey-background));
+    }
+
+    #tutor-assignment-wrap.tutor-submit-assignment .tutor-assignment-submission .tutor-assignment-body .tutor-assignment-attachment {
+        background-color: var(--edumall-color-box-grey-background);
+    }
+
+    .tutor-bg-white,
+    .tutor_admin_answers_list_wrap .tutor-question-content {
+        background-color: var(--edumall-color-box-grey-background);
+    }
+
+    .tutor_admin_answers_list_wrap {
+        .tutor_individual_answer {
+            padding: 10px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+        }
+    }
+}

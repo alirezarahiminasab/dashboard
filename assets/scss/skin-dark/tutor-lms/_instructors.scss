@@ -1,0 +1,35 @@
+.edumall-dark-scheme {
+	.loop-instructor-job.no-job-title:after {
+		background: rgba(255, 255, 255, .2);
+	}
+
+    .tutor-form-label {
+        color: #fff;
+    }
+
+    &.tutor-screen-course-builder .tutor-video-upload-wrap .video_source_wrap_html5,
+    &.tutor-screen-course-builder .tutor-video-upload-wrap .video_source_wrap_html5 .video-metabox-source-html5-upload{
+        background-color: var(--edumall-color-box-white-background);
+
+        .tutor-color-black {
+            color: #fff;
+        }
+    }
+
+    &.tutor-screen-course-builder #tutor-course-content-builder-root #tutor-course-content-wrap .tutor-topics-wrap,
+    &.tutor-screen-course-builder #tutor-course-content-builder-root #tutor-course-topics .tutor-topics-wrap {
+        color: #222;
+    }
+
+    .tutor-form-check label {
+        color: #fff;
+    }
+
+    .tutor-google-meet-create-wrap .tutor-color-secondary {
+        color: var(--edumall-color-text);
+    }
+
+    .tutor-input-group-addon {
+        background-color: var(--edumall-color-box-white-background);
+    }
+}

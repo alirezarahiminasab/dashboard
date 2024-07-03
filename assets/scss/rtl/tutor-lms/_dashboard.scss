@@ -1,0 +1,33 @@
+.rtl {
+    .tutor-offcanvas.is-active .tutor-offcanvas-main {
+        z-index: 999999;
+    }
+
+    .tutor-notification-tab .tab-body {
+        padding: 0 0 0 20px;
+    }
+
+    .tutor-notification-element .element-content .message {
+        text-align: right;
+    }
+
+    .tutor-offcanvas-main .tutor-dropdown-item {
+        display: flex;
+        align-items: center;
+    }
+
+    .dashboard-nav-content .ps-container > .ps-scrollbar-y-rail {
+        right: auto !important;
+        left: 0 !important;
+    }
+
+    .tutor-notification-element .element-content .header .meta {
+        flex-direction: row-reverse;
+    }
+
+    .notification-footer {
+        .fa-angle-right:before {
+            content: "\f104";
+        }
+    }
+}

@@ -1,0 +1,21 @@
+.edumall-dark-scheme {
+	.edumall-zoom-meetings {
+		.edumall-box {
+			background: $box-grey-background;
+		}
+
+		.zvc-loop-zoom-id .label {
+			color: #80868d;
+		}
+	}
+
+	.dpn-zvc-timer {
+		.dpn-zvc-timer-cell-number {
+			color: $secondary-color;
+		}
+
+		.dpn-zvc-timer-cell-string {
+			color: #fff;
+		}
+	}
+}

@@ -1,0 +1,15 @@
+.edumall-dark-scheme {
+	.popular-topic-link {
+		color: $text-color;
+		background: $box-light-grey-background;
+	}
+
+    .tutor-form-select-dropdown {
+        border-color: #2b3643;
+        background-color: #2b3643;
+
+        .tutor-form-select-option:hover, .tutor-form-select-option.is-active {
+            background: #3e4d5e;
+        }
+    }
+}

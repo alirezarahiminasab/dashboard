@@ -1,0 +1,101 @@
+body.edumall-dark-scheme {
+	&.buddypress {
+		&.groups,
+		&.members,
+		&.directory.activity {
+			background: #020c18;
+		}
+	}
+
+	.edumall-bp-box {
+		.bp-feedback {
+			background: rgba(255, 255, 255, .1);
+		}
+
+		.subnav-wrap {
+			background: rgba(255, 255, 255, .1);
+		}
+	}
+
+	.activity-list .load-more,
+	.activity-list .load-newest {
+		a {
+			color: #fff;
+		}
+
+		a:hover {
+			color: $secondary-color;
+		}
+	}
+
+	.buddypress-wrap .activity-comments .acomment-content-inner {
+		background: rgba(255, 255, 255, .1);
+	}
+
+	.blogs-list .generic-button .friendship-button, .blogs-list button,
+	.members-list .generic-button .friendship-button, .members-list button,
+	.members-group-list .generic-button .friendship-button, .members-group-list button,
+	.members-friends-list .generic-button .friendship-button, .members-friends-list button,
+	.friends-request-list .generic-button .friendship-button, .friends-request-list button,
+	.blogs-list .generic-button .button,
+	.groups-list .groups-meta .generic-button .group-button {
+		background: rgba(255, 255, 255, .1);
+		border: transparent;
+	}
+
+	.bp-navs.tabbed-links .button-tabs {
+		border-color: $box-border;
+	}
+
+	.bp-navs {
+		.selected > a,
+		.current > a {
+			color: $secondary-color !important;
+		}
+	}
+
+	#drag-drop-area {
+		background: rgba(255, 255, 255, .1);
+		border-color: rgba(255, 255, 255, .2);
+	}
+
+	&.buddypress .mpp-dropzone {
+		background: rgba(255, 255, 255, .1);
+		border-color: rgba(255, 255, 255, .2);
+	}
+
+	&.groups.group-create.group-cover-image #header-cover-image {
+		background-color: rgba(255, 255, 255, .1);
+	}
+
+	#header-cover-image {
+		background-color: rgba(255, 255, 255, .1);
+	}
+
+	&.bp-user .entry-member-social-links a {
+		background: rgba(255, 255, 255, .1);
+	}
+
+	#buddypress p.warning,
+	&.users_page_bp-profile-edit.modal-open #TB_ajaxContent p.warning,
+	&.profile_page_bp-profile-edit.modal-open #TB_ajaxContent p.warning {
+		background: none;
+		color: #fff;
+	}
+
+	.buddypress-wrap .bp-tables-wrapper table th {
+		background: rgba(255, 255, 255, .1);
+	}
+
+	.groups-list .item-avatar {
+		background-color: rgba(255, 255, 255, .1);
+	}
+
+	.entry-group-status {
+		background-color: rgba(255, 255, 255, .1);
+	}
+
+	.single-headers-nav .subnav-filters select {
+		background: $form-background;
+	}
+}

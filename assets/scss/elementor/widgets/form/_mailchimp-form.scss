@@ -1,0 +1,90 @@
+.edumall-mailchimp-form {
+	input[type='email'] {
+		&::-webkit-input-placeholder {
+			color: inherit;
+		}
+
+		&:-moz-placeholder {
+			color: inherit;
+		}
+
+		&::-moz-placeholder {
+			color: inherit;
+		}
+
+		&:-ms-input-placeholder {
+			color: inherit;
+		}
+	}
+
+	.button-icon {
+		@extend %FontAwesomeLight;
+
+		&:before {
+			content: '\f178';
+		}
+	}
+}
+
+.edumall-mailchimp-form-style-01,
+.edumall-mailchimp-form-style-02 {
+	form {
+		position: relative;
+	}
+
+	.form-group {
+		margin: 0;
+	}
+
+	input[type='email'] {
+		padding-right: 130px !important;
+		min-height: 60px;
+		border-width: 2px;
+	}
+
+	.button-submit {
+		border: 0 !important;
+		border-radius: 5px;
+		position: absolute;
+		top: 50%;
+		transform: translate(0, -50%);
+		right: 6px;
+		padding: 0 29px;
+		box-shadow: none;
+		height: 48px;
+		line-height: 48px;
+	}
+
+	.button-icon {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+
+	.button-icon {
+		display: none;
+	}
+}
+
+.edumall-mailchimp-form-style-02 {
+	.button-text {
+		display: none;
+	}
+
+	.button-icon {
+		display: block;
+		font-size: 25px;
+		color: #000;
+		@extend %NormalTransition;
+	}
+
+	.button-submit {
+		background-color: transparent;
+		&:hover {
+			.button-icon {
+				color: $primary-color;
+			}
+		}
+	}
+}
