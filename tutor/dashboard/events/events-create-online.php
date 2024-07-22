@@ -337,10 +337,9 @@ endif;
                     <span class="dash-line"></span>
 
 
-                    
-                    <div class="card-type1" data-id="${cardId}">
+                    <div id="base-card-template" class="card-type1" style="display: none;">
                         <div class="flex justify-between p-3">
-                            <p ref="event-create-session-title">${sessionTitleValue}</p>
+                            <p ref="event-create-session-title"></p>
                             <span>
                             <img class="h-fit edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
                             <img class="h-fit delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
@@ -350,7 +349,7 @@ endif;
                             <div class="column">
                             <span>
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/3d-cube-scan.png'?>" alt="">
-                                <p ref="event-create-session-platform">${sessionPlatformValue}</p>
+                                <p ref="event-create-session-platform"></p>
                             </span>
                             <span>
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/toggle-off-circle.png'?>" alt="">
@@ -360,15 +359,17 @@ endif;
                             <div class="column">
                             <span>
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
-                                <p ref="event-create-session-start-date">${sessionDateValue} - ${sessionStartTimeValue}</p>
+                                <p ref="event-create-session-start-date"></p>
                             </span>
                             <span>
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
-                                <p ref="event-create-session-finish-date">${sessionDateValue} - ${sessionFinishTimeValue}</p>
+                                <p ref="event-create-session-finish-date"></p>
                             </span>
                             </div>
                         </div>
                     </div>
+
+                    
                 </div>
 
             </div>

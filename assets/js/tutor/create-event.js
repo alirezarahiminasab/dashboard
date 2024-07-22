@@ -12,10 +12,12 @@ import moment from "moment-jalaali";
   class CardManager {
     constructor() {
       this.cards = [];
+      this.counter = 0;
     }
 
     addCard(card) {
-      card.id = this.cards.length + 1;
+      this.counter++;
+      card.id = this.counter;
       this.cards.push(card);
       return card.id;
     }
@@ -43,6 +45,8 @@ import moment from "moment-jalaali";
   class EdumallCreateEvent {
     constructor() {
       this.cardManager = new CardManager();
+      this.editingCardId = null; // To track the card being edited
+
       this.companionLogoImage = {};
       this.coverImage = {};
       this.tags = [];
@@ -179,6 +183,12 @@ import moment from "moment-jalaali";
           );
         }
 
+        // Add card data to the form data
+        formData.append(
+          "cards",
+          JSON.stringify(_this.cardManager.getAllCards())
+        );
+
         $.ajax({
           url: ajax_object.ajax_url,
           type: "POST",
@@ -226,25 +236,22 @@ import moment from "moment-jalaali";
         // showCloseBtn: false,
       });
     }
+    // TODO
 
     setActiveSection(sectionName) {
       const sections = [
         "eventSessions",
         "eventSessionsForm",
         "eventSessionsFull",
-        "eventCompanions",
-        "eventCompanionsForm",
-        "eventCompanionsFull",
-        "eventTickets",
-        "eventTicketsFull",
       ];
       sections.forEach((section) => {
         this.elements[section].removeClass("active");
       });
       this.elements[sectionName].addClass("active");
     }
+    // TODO
 
-    addSessionCard() {
+    addOrUpdateSessionCard() {
       const sessionForm = this.elements.eventSessionsForm;
 
       const sessionTitleValue = sessionForm
@@ -282,45 +289,51 @@ import moment from "moment-jalaali";
         sessionFinishTimeValue,
       };
 
-      const cardId = this.cardManager.addCard(cardData);
+      if (this.editingCardId) {
+        // Update existing card
+        this.cardManager.updateCard(this.editingCardId, cardData);
+        const cardElement = $(`.card-type1[data-id="${this.editingCardId}"]`);
+        cardElement
+          .find('[ref="event-create-session-title"]')
+          .text(sessionTitleValue);
+        cardElement
+          .find('[ref="event-create-session-platform"]')
+          .text(sessionPlatformValue);
+        cardElement
+          .find('[ref="event-create-session-start-date"]')
+          .text(`${sessionDateValue} - ${sessionStartTimeValue}`);
+        cardElement
+          .find('[ref="event-create-session-finish-date"]')
+          .text(`${sessionDateValue} - ${sessionFinishTimeValue}`);
+      } else {
+        // Create new card
+        const cardId = this.cardManager.addCard(cardData);
 
-      const card = $(`
-        <div class="card-type1" data-id="${cardId}">
-          <div class="flex justify-between p-3">
-            <p ref="event-create-session-title">${sessionTitleValue}</p>
-            <span>
-              <img class="h-fit edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
-              <img class="h-fit delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
-            </span>
-          </div>
-          <div class="more">
-            <div class="column">
-              <span>
-                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/3d-cube-scan.png'?>" alt="">
-                <p ref="event-create-session-platform">${sessionPlatformValue}</p>
-              </span>
-              <span>
-                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/toggle-off-circle.png'?>" alt="">
-                <p>فعال</p>
-              </span>
-            </div>
-            <div class="column">
-              <span>
-                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
-                <p ref="event-create-session-start-date">${sessionDateValue} - ${sessionStartTimeValue}</p>
-              </span>
-              <span>
-                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
-                <p ref="event-create-session-finish-date">${sessionDateValue} - ${sessionFinishTimeValue}</p>
-              </span>
-            </div>
-          </div>
-        </div>
-      `);
+        const newCard = $("#base-card-template").clone();
+        newCard.attr("data-id", cardId);
+        newCard
+          .find('[ref="event-create-session-title"]')
+          .text(sessionTitleValue);
+        newCard
+          .find('[ref="event-create-session-platform"]')
+          .text(sessionPlatformValue);
+        newCard
+          .find('[ref="event-create-session-start-date"]')
+          .text(`${sessionDateValue} - ${sessionStartTimeValue}`);
+        newCard
+          .find('[ref="event-create-session-finish-date"]')
+          .text(`${sessionDateValue} - ${sessionFinishTimeValue}`);
+        newCard.removeAttr("id"); // remove the id attribute from the cloned element
+        newCard.show(); // show the cloned card
 
-      this.elements.eventSessionsFull.append(card);
+        this.elements.eventSessionsFull.append(newCard);
+      }
+
+      // Reset form and editing state
+      this.editingCardId = null;
+      sessionForm.find("input, select").val("");
+      this.setActiveSection("eventSessionsFull");
     }
-
     // TODO
 
     handleSessions() {
@@ -329,17 +342,18 @@ import moment from "moment-jalaali";
       const sessionFull = this.elements.eventSessionsFull;
 
       createSession.on("click", ".event-create-extract-content", () => {
+        this.editingCardId = null; // Reset editing state
         this.setActiveSection("eventSessionsForm");
       });
 
       sessionFull.on("click", ".event-create-add-content", () => {
+        this.editingCardId = null; // Reset editing state
         this.setActiveSection("eventSessionsForm");
         sessionForm.find("input, select").val(""); // Clear form fields
       });
 
       sessionForm.on("click", ".btn-submit", (e) => {
-        this.addSessionCard();
-        this.setActiveSection("eventSessionsFull");
+        this.addOrUpdateSessionCard();
       });
 
       sessionForm.on("click", ".btn-cancel", () => {
@@ -353,6 +367,8 @@ import moment from "moment-jalaali";
       sessionFull.on("click", ".edit-card", (e) => {
         const cardId = $(e.currentTarget).closest(".card-type1").data("id");
         const cardData = this.cardManager.getCard(cardId);
+
+        this.editingCardId = cardId;
 
         sessionForm
           .find(`[name="event-create-session-title"]`)
@@ -377,6 +393,11 @@ import moment from "moment-jalaali";
         const cardId = $(e.currentTarget).closest(".card-type1").data("id");
         this.cardManager.deleteCard(cardId);
         $(e.currentTarget).closest(".card-type1").remove();
+
+        // Check if all cards are deleted
+        if (sessionFull.find(".card-type1").length <= 1) {
+          this.setActiveSection("eventSessions");
+        }
       });
     }
 
