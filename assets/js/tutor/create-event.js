@@ -42,6 +42,7 @@ import moment from "moment-jalaali";
 
   class EdumallCreateEvent {
     constructor() {
+      this.cardManager = new CardManager();
       this.companionLogoImage = {};
       this.coverImage = {};
       this.tags = [];
@@ -226,8 +227,6 @@ import moment from "moment-jalaali";
       });
     }
 
-    // TODO
-
     setActiveSection(sectionName) {
       const sections = [
         "eventSessions",
@@ -246,8 +245,6 @@ import moment from "moment-jalaali";
     }
 
     addSessionCard() {
-      // Get form values
-      const sessionFull = this.elements.eventSessionsFull;
       const sessionForm = this.elements.eventSessionsForm;
 
       const sessionTitleValue = sessionForm
@@ -266,107 +263,120 @@ import moment from "moment-jalaali";
         .find(`[name="event-create-session-finish-time"]`)
         .val();
 
-      // Create card element
-      const card = $(`
-            <div class="card-type1">
-                <div class="flex justify-between p-3">
-                    <p ref="event-create-session-title">${sessionTitleValue}</p>
-                    <span>
-                        <img class="h-fit" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
-                        <img class="h-fit" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
-                    </span>
-                </div>
-                <div class="more">
-                    <div class="column">
-                        <span>
-                            <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/3d-cube-scan.png'?>" alt="">
-                            <p ref="event-create-session-platform">${sessionPlatformValue}</p>
-                        </span>
-                        <span>
-                            <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/toggle-off-circle.png'?>" alt="">
-                            <p>فعال</p>
-                        </span>
-                    </div>
-                    <div class="column">
-                        <span>
-                            <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
-                            <p ref="event-create-session-start-date">${sessionDateValue} - ${sessionStartTimeValue}</p>
-                        </span>
-                        <span>
-                            <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
-                            <p ref="event-create-session-finish-date">${sessionDateValue} - ${sessionFinishTimeValue}</p>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        `);
+      if (
+        !sessionTitleValue ||
+        !sessionPlatformValue ||
+        !sessionDateValue ||
+        !sessionStartTimeValue ||
+        !sessionFinishTimeValue
+      ) {
+        alert("Please fill in all required fields.");
+        return;
+      }
 
-      // Append card to the sessions full div
-      // $(".event-create-section-inner.event-create-sessions-full").append(card);
-      sessionFull.append(card);
+      const cardData = {
+        sessionTitleValue,
+        sessionPlatformValue,
+        sessionDateValue,
+        sessionStartTimeValue,
+        sessionFinishTimeValue,
+      };
+
+      const cardId = this.cardManager.addCard(cardData);
+
+      const card = $(`
+        <div class="card-type1" data-id="${cardId}">
+          <div class="flex justify-between p-3">
+            <p ref="event-create-session-title">${sessionTitleValue}</p>
+            <span>
+              <img class="h-fit edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
+              <img class="h-fit delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
+            </span>
+          </div>
+          <div class="more">
+            <div class="column">
+              <span>
+                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/3d-cube-scan.png'?>" alt="">
+                <p ref="event-create-session-platform">${sessionPlatformValue}</p>
+              </span>
+              <span>
+                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/toggle-off-circle.png'?>" alt="">
+                <p>فعال</p>
+              </span>
+            </div>
+            <div class="column">
+              <span>
+                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
+                <p ref="event-create-session-start-date">${sessionDateValue} - ${sessionStartTimeValue}</p>
+              </span>
+              <span>
+                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
+                <p ref="event-create-session-finish-date">${sessionDateValue} - ${sessionFinishTimeValue}</p>
+              </span>
+            </div>
+          </div>
+        </div>
+      `);
+
+      this.elements.eventSessionsFull.append(card);
     }
+
+    // TODO
 
     handleSessions() {
       const createSession = this.elements.eventSessions;
       const sessionForm = this.elements.eventSessionsForm;
       const sessionFull = this.elements.eventSessionsFull;
 
-      // const sessionTitle = sessionFull.find(
-      //   `[ref="event-create-session-title"]`
-      // );
-      // const sessionPlatform = sessionFull.find(
-      //   `[ref="event-create-session-platform"]`
-      // );
-      // const sessionStartDate = sessionFull.find(
-      //   `[ref="event-create-session-start-date"]`
-      // );
-      // const sessionFinishDate = sessionFull.find(
-      //   `[ref="event-create-session-finish-date"]`
-      // );
-
-      // sessionForm.find(`[name="event-create-session-title"]`).val();
-      // sessionForm.find(`[name="event-create-platform"]`).val();
-      // sessionForm.find(`[name="event-create-session-date"]`).val();
-      // sessionForm.find(`[name="event-create-session-start-time"]`).val();
-      // sessionForm.find(`[name="event-create-session-finish-time"]`).val();
-
-      createSession.on("click", ".event-create-extract-content", function () {
-        createSession.removeClass("active");
-        sessionFull.removeClass("active");
-        sessionForm.addClass("active");
+      createSession.on("click", ".event-create-extract-content", () => {
+        this.setActiveSection("eventSessionsForm");
       });
 
-      sessionFull.on("click", ".event-create-add-content", function () {
-        createSession.removeClass("active");
-        sessionFull.removeClass("active");
-        sessionForm.addClass("active");
+      sessionFull.on("click", ".event-create-add-content", () => {
+        this.setActiveSection("eventSessionsForm");
+        sessionForm.find("input, select").val(""); // Clear form fields
       });
 
-      const _this = this;
-      sessionForm.on("click", ".btn-submit", function () {
-        _this.addSessionCard();
-        // sessionTitle.val(
-        //   sessionFull.find(`[name="event-create-session-title"]`).val()
-        // );
-        // sessionPlatform.val(
-        //   sessionFull.find(`[name="event-create-platform"]`).val()
-        // );
-        // sessionStartDate.val(
-        //   sessionFull.find(`[name="event-create-session-start-date"]`).val()
-        // );
-        // sessionFinishDate.val(
-        //   sessionFull.find(`[name="event-create-session-finish-date"]`).val()
-        // );
-
-        sessionForm.removeClass("active");
-        sessionFull.addClass("active");
-        createSession.removeClass("active");
+      sessionForm.on("click", ".btn-submit", (e) => {
+        this.addSessionCard();
+        this.setActiveSection("eventSessionsFull");
       });
 
-      sessionForm.on("click", ".btn-cancel", function () {
-        sessionForm.removeClass("active");
-        sessionFull.removeClass("active");
-        createSession.addClass("active");
+      sessionForm.on("click", ".btn-cancel", () => {
+        if (sessionFull.find(".card-type1").length > 0) {
+          this.setActiveSection("eventSessionsFull");
+        } else {
+          this.setActiveSection("eventSessions");
+        }
+      });
+
+      sessionFull.on("click", ".edit-card", (e) => {
+        const cardId = $(e.currentTarget).closest(".card-type1").data("id");
+        const cardData = this.cardManager.getCard(cardId);
+
+        sessionForm
+          .find(`[name="event-create-session-title"]`)
+          .val(cardData.sessionTitleValue);
+        sessionForm
+          .find(`[name="event-create-platform"]`)
+          .val(cardData.sessionPlatformValue);
+        sessionForm
+          .find(`[name="event-create-session-date"]`)
+          .val(cardData.sessionDateValue);
+        sessionForm
+          .find(`[name="event-create-session-start-time"]`)
+          .val(cardData.sessionStartTimeValue);
+        sessionForm
+          .find(`[name="event-create-session-finish-time"]`)
+          .val(cardData.sessionFinishTimeValue);
+
+        this.setActiveSection("eventSessionsForm");
+      });
+
+      sessionFull.on("click", ".delete-card", (e) => {
+        const cardId = $(e.currentTarget).closest(".card-type1").data("id");
+        this.cardManager.deleteCard(cardId);
+        $(e.currentTarget).closest(".card-type1").remove();
       });
     }
 

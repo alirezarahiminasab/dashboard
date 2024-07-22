@@ -337,6 +337,38 @@ endif;
                     <span class="dash-line"></span>
 
 
+                    
+                    <div class="card-type1" data-id="${cardId}">
+                        <div class="flex justify-between p-3">
+                            <p ref="event-create-session-title">${sessionTitleValue}</p>
+                            <span>
+                            <img class="h-fit edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
+                            <img class="h-fit delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
+                            </span>
+                        </div>
+                        <div class="more">
+                            <div class="column">
+                            <span>
+                                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/3d-cube-scan.png'?>" alt="">
+                                <p ref="event-create-session-platform">${sessionPlatformValue}</p>
+                            </span>
+                            <span>
+                                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/toggle-off-circle.png'?>" alt="">
+                                <p>فعال</p>
+                            </span>
+                            </div>
+                            <div class="column">
+                            <span>
+                                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
+                                <p ref="event-create-session-start-date">${sessionDateValue} - ${sessionStartTimeValue}</p>
+                            </span>
+                            <span>
+                                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
+                                <p ref="event-create-session-finish-date">${sessionDateValue} - ${sessionFinishTimeValue}</p>
+                            </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
@@ -615,5 +647,6 @@ endif;
 
 <?php do_action('tutor_load_template_after', 'dashboard.create-course', null); ?>
 
-<?php
-get_footer();
+<?php get_footer();?>
+
+<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>
