@@ -11,10 +11,10 @@
 } */
 
 .tutor-dashboard-header-wrap {
-  @apply bg-white;
+  @apply bg-[#3b3bc9];
 
   .tutor-dashboard-header {
-    @apply flex flex-col items-start gap-6 p-6 rounded-[0px_0px_32px_32px] bg-[#C22E58];
+    @apply flex flex-col items-start gap-6 p-6 rounded-[0px_32px_32px_32px] bg-[#C22E58];
   }
 
   .tutor-dashboard-breadcrumb {

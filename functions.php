@@ -121,6 +121,7 @@ include(dirname(__FILE__) . "/inc/custom-taxonomies.php");
 include(dirname(__FILE__) . "/inc/custom-filters.php");
 include(dirname(__FILE__) . "/inc/custom-search.php");
 include(dirname(__FILE__) . "/inc/course-extend.php");
+include(dirname(__FILE__) . "/inc/event-class.php");
 include(dirname(__FILE__) . "/inc/dequeue-scripts.php");
 include(dirname(__FILE__) . "/inc/user-custom-query.php");
 include(dirname(__FILE__) . "/inc/instructor-dashboard.php");

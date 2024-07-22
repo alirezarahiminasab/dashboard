@@ -94,7 +94,7 @@ $courses_archive_url = get_post_type_archive_link('courses');
 
                         ?>
                             <div class="swiper-slide home-free-content-slider-wrap-item">
-                                <a href="<?php echo get_the_permalink() ?>">
+                                <a href="<?php  echo get_the_permalink() ?>">
                                     <div class="pics">
                                         <span class="pics-author">
                                             <img src="<?php echo !empty($profile_photo_id) ? $profile_photo_id : $profile_placeholder ?>" alt="">

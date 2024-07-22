@@ -1,9 +1,10 @@
 body {
   @apply w-full m-auto;
+  max-width: 1440px;
 
-  @media (min-width: theme("screens.tablet")) {
-    @apply w-1/3 m-auto #{!important};
-  }
+  // @media (min-width: theme("screens.desktop")) {
+  //   @apply w-1/3 m-auto #{!important};
+  // }
 }
 
 .page-mobile-main-menu {

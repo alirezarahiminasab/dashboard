@@ -101,7 +101,7 @@ function add_instructor_menu_items()
             'title'    => __('Events', 'edumall-child'),
             'auth_cap' => tutor()->instructor_role,
             'icon'     => 'instructor-event-icon',
-            'active'  => false,
+            'active'  => true,
             'sub_menu' => array(
                 'events-create-online' => ['icon' => 'instructor-create', 'title' => 'ایجاد رویداد آنلاین جدید'],
                 'events-create-personal' => ['icon' => 'instructor-create', 'title' => 'ایجاد رویداد حضوری جدید'],
