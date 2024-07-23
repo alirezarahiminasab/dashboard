@@ -90,13 +90,13 @@ class Events
 
             $event_create_start_dateTime = $_POST['event-create-start-dateTime']; 
             $event_create_finish_dateTime = $_POST['event-create-finish-dateTime']; 
-            $event_create_session_start_dateTime = $_POST['event-create-session-start-dateTime']; 
-            $event_create_session_finish_dateTime = $_POST['event-create-session-finish-dateTime']; 
+            // $event_create_session_start_dateTime = $_POST['event-create-session-start-dateTime']; 
+            // $event_create_session_finish_dateTime = $_POST['event-create-session-finish-dateTime']; 
             $event_create_sale_start_dateTime = $_POST['event-create-sale-start-dateTime']; 
             $event_create_sale_finish_dateTime = $_POST['event-create-sale-finish-dateTime']; 
 
-            $event_create_session_title = $_POST['event-create-session-title']; 
-            $event_create_platform_link = $_POST['event-create-platform-link']; 
+            // $event_create_session_title = $_POST['event-create-session-title']; 
+            // $event_create_platform_link = $_POST['event-create-platform-link']; 
             $event_create_ticket_title = $_POST['event-create-ticket-title']; 
             $event_create_ticket_number = $_POST['event-create-ticket-number']; 
             $event_create_ticket_price = $_POST['event-create-ticket-price']; 
@@ -104,12 +104,25 @@ class Events
             
             $event_create_category = $_POST['event-create-category']; 
             $event_create_description = $_POST['event-create-description']; 
-            $event_create_session_description = $_POST['event-create-session-description']; 
-            $event_create_platform = $_POST['event-create-platform']; 
+            // $event_create_session_description = $_POST['event-create-session-description']; 
+            // $event_create_platform = $_POST['event-create-platform']; 
             
-            // $testt = __DIR__ . '\\event-module\\sample.php';
-            // $testt =  '/event-module/sample.php';
 
+            // Get the session cards data
+            $cards = json_decode(stripslashes($_POST['cards']), true);
+
+            $sessions = [];
+            foreach ($cards as $card) {
+                $sessions[] = [
+                    "title" => $card['sessionTitleValue'],
+                    "description" => $card['sessionDescription'],
+                    "startDateTime" => $card['sessionStartUnix'],
+                    "finishDateTime" => $card['sessionFinishUnix'],
+                    "platform" => $card['sessionPlatformValue'],
+                    "classUrl" => $card['sessionClassUrl']
+                ];
+            }            
+            
             $data = [
                 "title" => $event_create_title,
                 "category" => $event_create_category,
@@ -122,26 +135,7 @@ class Events
                 // "province": "تهران",
                 // "city": "تهران",
             
-                "sessions" => [
-                  [
-                    "title" => $event_create_session_title,
-                    "description" => $event_create_session_description,
-                    "startDateTime" => $event_create_session_start_dateTime,
-                    "finishDateTime" => $event_create_session_finish_dateTime,
-                    "platform" => $event_create_platform,
-                    "classUrl" => $event_create_platform_link,
-                    //     "location" => "تهران",
-                    // "locationTitle" => "پارادایس هاب"
-                  ],
-                  [
-                    "title" => $event_create_session_title,
-                    "description" => $event_create_session_description,
-                    "startDateTime" => $event_create_session_start_dateTime,
-                    "finishDateTime" => $event_create_session_finish_dateTime,
-                    "platform" => $event_create_platform,
-                    "classUrl" => $event_create_platform_link,
-                  ]
-                ],
+                "sessions" => $sessions,
                 "tickets" => [
                   [
                     "count" => $event_create_ticket_number,

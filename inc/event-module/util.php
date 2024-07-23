@@ -5,9 +5,9 @@ use Firebase\JWT\Key;
 
 class EventUtil
 {
-    public static $endpoint = 'http://127.0.0.1:3000/';
+    // public static $endpoint = 'http://127.0.0.1:3000/';
     // public static $endpoint = 'https://hanil.liara.run/';
-    // public static $endpoint = 'http://events.services.hanil.life/';
+    public static $endpoint = 'http://events.services.hanil.life/';
     private static $privateKey;
 
     // Initialize the private key in a static block or static method

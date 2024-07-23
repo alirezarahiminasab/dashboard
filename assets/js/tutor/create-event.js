@@ -1,6 +1,5 @@
 import toast from "../toast";
 import gsap from "gsap";
-// import moment from "moment";
 import moment from "moment-jalaali";
 
 (function ($) {
@@ -13,6 +12,12 @@ import moment from "moment-jalaali";
     constructor() {
       this.cards = [];
       this.counter = 0;
+    }
+
+    dateTime2unix(date, time) {
+      return date && time
+        ? moment(`${date} ${time}`, "jYYYY-jMM-jDD HH:mm").unix()
+        : null;
     }
 
     addCard(card) {
@@ -38,13 +43,23 @@ import moment from "moment-jalaali";
     }
 
     getAllCards() {
-      return this.cards;
+      return this.cards.map((card) => ({
+        ...card,
+        sessionStartUnix: this.dateTime2unix(
+          card.sessionDateValue,
+          card.sessionStartTimeValue
+        ),
+        sessionFinishUnix: this.dateTime2unix(
+          card.sessionDateValue,
+          card.sessionFinishTimeValue
+        ),
+      }));
     }
   }
 
-  class EdumallCreateEvent {
+  class CreateEvent extends CardManager {
     constructor() {
-      this.cardManager = new CardManager();
+      super();
       this.editingCardId = null; // To track the card being edited
 
       this.companionLogoImage = {};
@@ -110,6 +125,7 @@ import moment from "moment-jalaali";
         //   console.log(field.name + ": " + field.value);
         // });
         const field = (name) => _formData.find((x) => x.name === name).value;
+
         const dateTime2unix = (date) =>
           date ? moment(date, "jYYYY-jMM-jDD HH:mm").unix() : date;
 
@@ -184,10 +200,7 @@ import moment from "moment-jalaali";
         }
 
         // Add card data to the form data
-        formData.append(
-          "cards",
-          JSON.stringify(_this.cardManager.getAllCards())
-        );
+        formData.append("cards", JSON.stringify(_this.getAllCards()));
 
         $.ajax({
           url: ajax_object.ajax_url,
@@ -269,7 +282,12 @@ import moment from "moment-jalaali";
       const sessionFinishTimeValue = sessionForm
         .find(`[name="event-create-session-finish-time"]`)
         .val();
-
+      const sessionDescription = sessionForm
+        .find(`[name="event-create-session-description"]`)
+        .val();
+      const sessionClassUrl = sessionForm
+        .find(`[name="event-create-platform-link"]`)
+        .val();
       if (
         !sessionTitleValue ||
         !sessionPlatformValue ||
@@ -287,11 +305,13 @@ import moment from "moment-jalaali";
         sessionDateValue,
         sessionStartTimeValue,
         sessionFinishTimeValue,
+        sessionDescription,
+        sessionClassUrl,
       };
 
       if (this.editingCardId) {
         // Update existing card
-        this.cardManager.updateCard(this.editingCardId, cardData);
+        this.updateCard(this.editingCardId, cardData);
         const cardElement = $(`.card-type1[data-id="${this.editingCardId}"]`);
         cardElement
           .find('[ref="event-create-session-title"]')
@@ -305,9 +325,15 @@ import moment from "moment-jalaali";
         cardElement
           .find('[ref="event-create-session-finish-date"]')
           .text(`${sessionDateValue} - ${sessionFinishTimeValue}`);
+        cardElement
+          .find('[ref="event-create-session-description"]')
+          .text(sessionDescription);
+        cardElement
+          .find('[ref="event-create-platform-link"]')
+          .text(sessionClassUrl);
       } else {
         // Create new card
-        const cardId = this.cardManager.addCard(cardData);
+        const cardId = this.addCard(cardData);
 
         const newCard = $("#base-card-template").clone();
         newCard.attr("data-id", cardId);
@@ -323,6 +349,12 @@ import moment from "moment-jalaali";
         newCard
           .find('[ref="event-create-session-finish-date"]')
           .text(`${sessionDateValue} - ${sessionFinishTimeValue}`);
+        newCard
+          .find('[ref="event-create-session-description"]')
+          .text(sessionDescription);
+        newCard
+          .find('[ref="event-create-platform-link"]')
+          .text(sessionClassUrl);
         newCard.removeAttr("id"); // remove the id attribute from the cloned element
         newCard.show(); // show the cloned card
 
@@ -349,7 +381,7 @@ import moment from "moment-jalaali";
       sessionFull.on("click", ".event-create-add-content", () => {
         this.editingCardId = null; // Reset editing state
         this.setActiveSection("eventSessionsForm");
-        sessionForm.find("input, select").val(""); // Clear form fields
+        sessionForm.find("input, select, textarea").val(""); // Clear form fields
       });
 
       sessionForm.on("click", ".btn-submit", (e) => {
@@ -366,7 +398,7 @@ import moment from "moment-jalaali";
 
       sessionFull.on("click", ".edit-card", (e) => {
         const cardId = $(e.currentTarget).closest(".card-type1").data("id");
-        const cardData = this.cardManager.getCard(cardId);
+        const cardData = this.getCard(cardId);
 
         this.editingCardId = cardId;
 
@@ -385,13 +417,19 @@ import moment from "moment-jalaali";
         sessionForm
           .find(`[name="event-create-session-finish-time"]`)
           .val(cardData.sessionFinishTimeValue);
+        sessionForm
+          .find(`[name="event-create-session-description"]`)
+          .val(cardData.sessionDescription);
+        sessionForm
+          .find(`[name="event-create-platform-link"]`)
+          .val(cardData.sessionClassUrl);
 
         this.setActiveSection("eventSessionsForm");
       });
 
       sessionFull.on("click", ".delete-card", (e) => {
         const cardId = $(e.currentTarget).closest(".card-type1").data("id");
-        this.cardManager.deleteCard(cardId);
+        this.deleteCard(cardId);
         $(e.currentTarget).closest(".card-type1").remove();
 
         // Check if all cards are deleted
@@ -825,5 +863,5 @@ import moment from "moment-jalaali";
     new FormValidator("#myForm");
   });
 
-  const EdumallCreateEventInit = new EdumallCreateEvent();
+  const CreateEventInit = new CreateEvent();
 })(jQuery);
