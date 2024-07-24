@@ -62,7 +62,7 @@ import moment from "moment-jalaali";
         ),
       }));
     }
-
+    //TODO
     /////////////////////////////Companion/////////////////////////////
     addCompanion(companion) {
       this.companionCounter++;
@@ -134,7 +134,6 @@ import moment from "moment-jalaali";
       this.editingCompanionId = null;
       this.editingTicketId = null;
 
-      this.companionLogoImage = {};
       this.coverImage = {};
       this.tags = [];
       this.elements = {
@@ -153,15 +152,16 @@ import moment from "moment-jalaali";
         eventCompanions: $(".event-create-companions"),
         eventCompanionsForm: $(".event-create-companions-form"),
         eventCompanionsFull: $(".event-create-companions-full"),
-        eventTickets: $(".event-create-tickets"),
+        eventTicketsForm: $(".event-create-tickets"),
         eventTicketsFull: $(".event-create-tickets-full"),
+        eventCompanionLogoInput: $(".event-create-logo-input"),
+        eventCompanionLogoUploaded: $(".event-create-logo-uploaded"),
       };
 
       this.timer = null;
 
       this.handleInputCounter();
       this.handleCover();
-      this.handleLogo();
       this.handleTags();
       this.handleCreateGoals();
       this.handleInputPrice();
@@ -323,13 +323,14 @@ import moment from "moment-jalaali";
     }
 
     categories = {
-      ticket: ["eventTickets", "eventTicketsForm", "eventTicketsFull"],
+      ticket: ["eventTicketsForm", "eventTicketsFull"],
       session: ["eventSessions", "eventSessionsForm", "eventSessionsFull"],
       companion: [
         "eventCompanions",
         "eventCompanionsForm",
         "eventCompanionsFull",
       ],
+      logo: ["eventCompanionLogoInput", "eventCompanionLogoUploaded"],
     };
 
     setActiveSection(sectionName) {
@@ -351,6 +352,14 @@ import moment from "moment-jalaali";
 
         // Activate the specified section
         this.elements[sectionName].addClass("active");
+      }
+
+      if (sectionName === "eventCompanionLogoInput") {
+        // Clear the file input and remove the uploaded image
+        const defaultImg = $("#base-companion-card-template img").attr("src");
+        $(".event-create-logo-uploaded-file").attr("src", defaultImg);
+        $(".event-create-logo-uploaded-file").attr("fileName", "");
+        $("#event-create-logo").val("");
       }
     }
 
@@ -530,14 +539,16 @@ import moment from "moment-jalaali";
       });
     }
     // SECTION
-
     addOrUpdateCompanionCard() {
       const companionForm = this.elements.eventCompanionsForm;
 
       const companionName = companionForm
         .find(`[name="event-create-companion-name"]`)
         .val();
-      const companionLogo = this.companionLogoImage;
+      const companionLogo = $(".event-create-logo-uploaded-file").attr("src");
+      const companionLogoName = $(".event-create-logo-uploaded-file").attr(
+        "fileName"
+      );
 
       if (!companionName) {
         alert("Please fill in companionName fields.");
@@ -546,7 +557,8 @@ import moment from "moment-jalaali";
 
       const companionData = {
         companionName,
-        companionLogo: companionLogo.data || "default-logo-path", // Use default logo if not provided
+        companionLogo,
+        companionLogoName, //check this later in ajax
       };
 
       if (this.editingCompanionId) {
@@ -560,7 +572,7 @@ import moment from "moment-jalaali";
           .text(companionName);
         cardElement
           .find('img[ref="event-create-companion-logo"]')
-          .attr("src", companionData.companionLogo);
+          .attr("src", companionLogo);
       } else {
         const companionId = this.addCompanion(companionData);
 
@@ -571,7 +583,7 @@ import moment from "moment-jalaali";
           .text(companionName);
         newCard
           .find('img[ref="event-create-companion-logo"]')
-          .attr("src", companionData.companionLogo);
+          .attr("src", companionLogo);
         newCard.removeAttr("id"); // remove the id attribute from the cloned element
         newCard.show(); // show the cloned card
 
@@ -584,21 +596,39 @@ import moment from "moment-jalaali";
       this.companionLogoImage = {};
       this.setActiveSection("eventCompanionsFull");
     }
+    // TODO
 
     handleCompanions() {
       const createCompanion = this.elements.eventCompanions;
       const companionForm = this.elements.eventCompanionsForm;
       const companionFull = this.elements.eventCompanionsFull;
 
+      /////////////////////////////createCompanion/////////////////////////////
       createCompanion.on("click", ".event-create-extract-content", () => {
         this.editingCompanionId = null;
+        this.setActiveSection("eventCompanionLogoInput");
         this.setActiveSection("eventCompanionsForm");
       });
 
-      companionFull.on("click", ".event-create-add-content", () => {
-        this.editingCompanionId = null;
-        this.setActiveSection("eventCompanionsForm");
-        companionForm.find("input").val("");
+      /////////////////////////////companionForm/////////////////////////////
+      companionForm.on("change", "#event-create-logo", (event) => {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+
+          reader.onload = (e) => {
+            $(".event-create-logo-uploaded-file").attr("src", e.target.result);
+            $(".event-create-logo-uploaded-file").attr("fileName", file.name);
+            this.setActiveSection("eventCompanionLogoUploaded");
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
+      companionForm.on("click", ".event-create-logo-uploaded a", (e) => {
+        e.preventDefault();
+
+        this.setActiveSection("eventCompanionLogoInput");
       });
 
       companionForm.on("click", ".btn-submit", (e) => {
@@ -612,6 +642,14 @@ import moment from "moment-jalaali";
           this.setActiveSection("eventCompanions");
         }
       });
+      /////////////////////////////companionFull/////////////////////////////
+      companionFull.on("click", ".event-create-add-content", () => {
+        this.editingCompanionId = null;
+
+        this.setActiveSection("eventCompanionLogoInput");
+        this.setActiveSection("eventCompanionsForm");
+        companionForm.find("input").val("");
+      });
 
       companionFull.on("click", ".edit-card", (e) => {
         const companionId = $(e.currentTarget)
@@ -624,8 +662,23 @@ import moment from "moment-jalaali";
         companionForm
           .find(`[name="event-create-companion-name"]`)
           .val(companionData.companionName);
-        //___
-        this.companionLogoImage = companionData.companionLogo;
+
+        // Preload the logo if exists
+        $(".event-create-logo-uploaded-file").attr(
+          "src",
+          companionData.companionLogo
+        );
+        $(".event-create-logo-uploaded-file").attr(
+          "fileName",
+          companionData.companionLogoName
+        );
+
+        if (companionData.companionLogoName === "") {
+          this.setActiveSection("eventCompanionLogoInput");
+        } else {
+          this.setActiveSection("eventCompanionLogoUploaded");
+        }
+
         this.setActiveSection("eventCompanionsForm");
       });
 
@@ -641,11 +694,10 @@ import moment from "moment-jalaali";
         }
       });
     }
-
     // SECTION
 
     addOrUpdateTicketCard() {
-      const ticketForm = this.elements.eventTickets;
+      const ticketForm = this.elements.eventTicketsForm;
 
       const ticketTitle = ticketForm
         .find(`[name="event-create-ticket-title"]`)
@@ -698,19 +750,19 @@ import moment from "moment-jalaali";
     // TODO
 
     handleTickets() {
-      const createTicket = this.elements.eventTickets;
+      const ticketForm = this.elements.eventTicketsForm;
       const ticketFull = this.elements.eventTicketsFull;
 
-      ticketFull.on("click", ".event-create-add-content", () => {
-        this.editingTicketId = null;
-        this.setActiveSection("eventTicketsFull");
-      });
-
-      createTicket.on("click", ".btn-submit", (e) => {
+      ticketForm.on("click", ".btn-submit", (e) => {
         this.addOrUpdateTicketCard();
       });
 
-      createTicket.on("click", ".btn-cancel", () => {
+      ticketForm.on("click", ".btn-cancel", () => {
+        this.setActiveSection("eventTicketsFull");
+      });
+
+      ticketFull.on("click", ".event-create-add-content", () => {
+        this.editingTicketId = null;
         this.setActiveSection("eventTicketsFull");
       });
 
@@ -832,7 +884,6 @@ import moment from "moment-jalaali";
       });
     }
 
-    //TODO
     handleCover() {
       this.elements.eventTopic.on("change", "#event-create-cover", (event) => {
         const file = event.target.files[0];
@@ -868,48 +919,7 @@ import moment from "moment-jalaali";
       );
     }
 
-    handleLogo() {
-      this.elements.eventCompanionsForm.on(
-        "change",
-        "#event-create-logo",
-        (event) => {
-          const file = event.target.files[0];
-          if (file) {
-            const reader = new FileReader();
-
-            reader.onload = (e) => {
-              $(".event-create-logo-uploaded-file").attr(
-                "src",
-                e.target.result
-              );
-
-              this.companionLogoImage.data = e.target.result;
-              this.companionLogoImage.fileName = file.name;
-
-              $(".event-create-logo-input").removeClass("active");
-              $(".event-create-logo-uploaded").addClass("active");
-            };
-            reader.readAsDataURL(file);
-          }
-        }
-      );
-
-      this.elements.eventCompanionsForm.on(
-        "click",
-        ".event-create-logo-uploaded a",
-        (e) => {
-          e.preventDefault();
-
-          // Clear the file input and remove the uploaded image
-          this.companionLogoImage = {};
-
-          $(".event-create-logo-uploaded-file").attr("src", "");
-          $("#event-create-logo").val("");
-          $(".event-create-logo-input").addClass("active");
-          $(".event-create-logo-uploaded").removeClass("active");
-        }
-      );
-    }
+    //TODO
 
     handleTags() {
       const _this = this;

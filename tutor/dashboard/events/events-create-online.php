@@ -618,28 +618,10 @@ endif;
 
                     <span class="dash-line"></span>
 
-                    <!-- <div class="card-type2">
-
-                        <div class="flex justify-between p-3">
-                            <span>
-                                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/Rectangle 1742.png'?>" alt="">
-                                <p>
-                                    هانیل
-                                </p>
-                            </span>
-
-                            <span>
-                                <img class="with-black-border" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
-                                <img class="with-pink-border" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
-                            </span>
-                        </div>
-                    </div> -->
-
-
                     <div id="base-companion-card-template" class="card-type2" style="display: none;">
                         <div class="flex justify-between p-3">
                             <span>
-                                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/Rectangle 1742.png'?>" alt="">
+                                <img src="<?php echo tutor()->url . 'assets/images/placeholder.svg'?>" class="rounded-full" ref="event-create-companion-logo">
                                 <p ref="event-create-companion-name"></p>
                             </span>
                             <span>
