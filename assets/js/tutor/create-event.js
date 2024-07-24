@@ -11,14 +11,21 @@ import moment from "moment-jalaali";
   class CardManager {
     constructor() {
       this.cards = [];
+      this.companions = [];
+      this.tickets = [];
       this.counter = 0;
+      this.companionCounter = 0;
+      this.ticketCounter = 0;
     }
-
     dateTime2unix(date, time) {
       return date && time
         ? moment(`${date} ${time}`, "jYYYY-jMM-jDD HH:mm").unix()
         : null;
     }
+
+    //////////////////////////Session/////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
 
     addCard(card) {
       this.counter++;
@@ -55,12 +62,77 @@ import moment from "moment-jalaali";
         ),
       }));
     }
+
+    /////////////////////////////Companion/////////////////////////////
+    addCompanion(companion) {
+      this.companionCounter++;
+      companion.id = this.companionCounter;
+      this.companions.push(companion);
+      return companion.id;
+    }
+
+    updateCompanion(id, updatedCompanion) {
+      const index = this.companions.findIndex(
+        (companion) => companion.id === id
+      );
+      if (index !== -1) {
+        this.companions[index] = {
+          ...this.companions[index],
+          ...updatedCompanion,
+        };
+      }
+    }
+
+    deleteCompanion(id) {
+      this.companions = this.companions.filter(
+        (companion) => companion.id !== id
+      );
+    }
+
+    getCompanion(id) {
+      return this.companions.find((companion) => companion.id === id);
+    }
+
+    getAllCompanions() {
+      return this.companions;
+    }
+
+    /////////////////////////////Ticket/////////////////////////////
+    addTicket(ticket) {
+      this.ticketCounter++;
+      ticket.id = this.ticketCounter;
+      this.tickets.push(ticket);
+      return ticket.id;
+    }
+
+    updateTicket(id, updatedTicket) {
+      const index = this.tickets.findIndex((ticket) => ticket.id === id);
+      if (index !== -1) {
+        this.tickets[index] = { ...this.tickets[index], ...updatedTicket };
+      }
+    }
+
+    deleteTicket(id) {
+      this.tickets = this.tickets.filter((ticket) => ticket.id !== id);
+    }
+
+    getTicket(id) {
+      return this.tickets.find((ticket) => ticket.id === id);
+    }
+
+    getAllTickets() {
+      return this.tickets;
+    }
   }
+
+  // SECTION
 
   class CreateEvent extends CardManager {
     constructor() {
       super();
       this.editingCardId = null; // To track the card being edited
+      this.editingCompanionId = null;
+      this.editingTicketId = null;
 
       this.companionLogoImage = {};
       this.coverImage = {};
@@ -249,21 +321,40 @@ import moment from "moment-jalaali";
         // showCloseBtn: false,
       });
     }
-    // TODO
+
+    categories = {
+      ticket: ["eventTickets", "eventTicketsForm", "eventTicketsFull"],
+      session: ["eventSessions", "eventSessionsForm", "eventSessionsFull"],
+      companion: [
+        "eventCompanions",
+        "eventCompanionsForm",
+        "eventCompanionsFull",
+      ],
+    };
 
     setActiveSection(sectionName) {
-      const sections = [
-        "eventSessions",
-        "eventSessionsForm",
-        "eventSessionsFull",
-      ];
-      sections.forEach((section) => {
-        this.elements[section].removeClass("active");
-      });
-      this.elements[sectionName].addClass("active");
-    }
-    // TODO
+      let category = null;
 
+      // Determine the category of the sectionName
+      for (const [key, sections] of Object.entries(this.categories)) {
+        if (sections.includes(sectionName)) {
+          category = key;
+          break;
+        }
+      }
+
+      if (category) {
+        // Deactivate all sections within the same category
+        this.categories[category].forEach((section) => {
+          this.elements[section].removeClass("active");
+        });
+
+        // Activate the specified section
+        this.elements[sectionName].addClass("active");
+      }
+    }
+
+    // SECTION
     addOrUpdateSessionCard() {
       const sessionForm = this.elements.eventSessionsForm;
 
@@ -438,56 +529,272 @@ import moment from "moment-jalaali";
         }
       });
     }
+    // SECTION
+
+    addOrUpdateCompanionCard() {
+      const companionForm = this.elements.eventCompanionsForm;
+
+      const companionName = companionForm
+        .find(`[name="event-create-companion-name"]`)
+        .val();
+      const companionLogo = this.companionLogoImage;
+
+      if (!companionName) {
+        alert("Please fill in companionName fields.");
+        return;
+      }
+
+      const companionData = {
+        companionName,
+        companionLogo: companionLogo.data || "default-logo-path", // Use default logo if not provided
+      };
+
+      if (this.editingCompanionId) {
+        this.updateCompanion(this.editingCompanionId, companionData);
+
+        const cardElement = $(
+          `.card-type2[data-id="${this.editingCompanionId}"]`
+        );
+        cardElement
+          .find('p[ref="event-create-companion-name"]')
+          .text(companionName);
+        cardElement
+          .find('img[ref="event-create-companion-logo"]')
+          .attr("src", companionData.companionLogo);
+      } else {
+        const companionId = this.addCompanion(companionData);
+
+        const newCard = $("#base-companion-card-template").clone();
+        newCard.attr("data-id", companionId);
+        newCard
+          .find('p[ref="event-create-companion-name"]')
+          .text(companionName);
+        newCard
+          .find('img[ref="event-create-companion-logo"]')
+          .attr("src", companionData.companionLogo);
+        newCard.removeAttr("id"); // remove the id attribute from the cloned element
+        newCard.show(); // show the cloned card
+
+        this.elements.eventCompanionsFull.append(newCard);
+      }
+
+      // Reset form and editing state
+      this.editingCompanionId = null;
+      companionForm.find("input").val("");
+      this.companionLogoImage = {};
+      this.setActiveSection("eventCompanionsFull");
+    }
 
     handleCompanions() {
       const createCompanion = this.elements.eventCompanions;
       const companionForm = this.elements.eventCompanionsForm;
       const companionFull = this.elements.eventCompanionsFull;
 
-      createCompanion.on("click", ".event-create-extract-content", function () {
-        createCompanion.removeClass("active");
-        companionFull.removeClass("active");
-        companionForm.addClass("active");
+      createCompanion.on("click", ".event-create-extract-content", () => {
+        this.editingCompanionId = null;
+        this.setActiveSection("eventCompanionsForm");
       });
 
-      companionFull.on("click", ".event-create-add-content", function () {
-        createCompanion.removeClass("active");
-        companionFull.removeClass("active");
-        companionForm.addClass("active");
+      companionFull.on("click", ".event-create-add-content", () => {
+        this.editingCompanionId = null;
+        this.setActiveSection("eventCompanionsForm");
+        companionForm.find("input").val("");
       });
 
-      companionForm.on("click", ".btn-submit", function () {
-        companionForm.removeClass("active");
-        companionFull.addClass("active");
-        createCompanion.removeClass("active");
+      companionForm.on("click", ".btn-submit", (e) => {
+        this.addOrUpdateCompanionCard();
       });
 
-      companionForm.on("click", ".btn-cancel", function () {
-        companionForm.removeClass("active");
-        companionFull.removeClass("active");
-        createCompanion.addClass("active");
+      companionForm.on("click", ".btn-cancel", () => {
+        if (companionFull.find(".card-type2").length > 1) {
+          this.setActiveSection("eventCompanionsFull");
+        } else {
+          this.setActiveSection("eventCompanions");
+        }
+      });
+
+      companionFull.on("click", ".edit-card", (e) => {
+        const companionId = $(e.currentTarget)
+          .closest(".card-type2")
+          .data("id");
+        const companionData = this.getCompanion(companionId);
+
+        this.editingCompanionId = companionId;
+
+        companionForm
+          .find(`[name="event-create-companion-name"]`)
+          .val(companionData.companionName);
+        //___
+        this.companionLogoImage = companionData.companionLogo;
+        this.setActiveSection("eventCompanionsForm");
+      });
+
+      companionFull.on("click", ".delete-card", (e) => {
+        const companionId = $(e.currentTarget)
+          .closest(".card-type2")
+          .data("id");
+        this.deleteCompanion(companionId);
+        $(e.currentTarget).closest(".card-type2").remove();
+
+        if (companionFull.find(".card-type2").length < 2) {
+          this.setActiveSection("eventCompanions");
+        }
       });
     }
+
+    // SECTION
+
+    addOrUpdateTicketCard() {
+      const ticketForm = this.elements.eventTickets;
+
+      const ticketTitle = ticketForm
+        .find(`[name="event-create-ticket-title"]`)
+        .val();
+      const ticketNumber = ticketForm
+        .find(`[name="event-create-ticket-number"]`)
+        .val();
+      const ticketPrice = ticketForm
+        .find(`[name="event-create-ticket-price"]`)
+        .val();
+      const saleStartDate = ticketForm
+        .find(`[name="event-create-sale-start-date"]`)
+        .val();
+      const saleFinishDate = ticketForm
+        .find(`[name="event-create-sale-finish-date"]`)
+        .val();
+
+      if (
+        !ticketTitle ||
+        !ticketNumber ||
+        !ticketPrice ||
+        !saleStartDate ||
+        !saleFinishDate
+      ) {
+        alert("Please fill in all required fields.");
+        return;
+      }
+
+      const ticketData = {
+        ticketTitle,
+        ticketNumber,
+        ticketPrice,
+        saleStartDate,
+        saleFinishDate,
+      };
+
+      if (this.editingTicketId) {
+        this.updateTicket(this.editingTicketId, ticketData);
+        // Update UI card...
+      } else {
+        const ticketId = this.addTicket(ticketData);
+        // Create new UI card...
+      }
+
+      // Reset form and editing state
+      this.editingTicketId = null;
+      ticketForm.find("input").val("");
+      this.setActiveSection("eventTicketsFull");
+    }
+    // TODO
 
     handleTickets() {
       const createTicket = this.elements.eventTickets;
       const ticketFull = this.elements.eventTicketsFull;
 
-      ticketFull.on("click", ".event-create-add-content", function () {
-        createTicket.addClass("active");
-        ticketFull.removeClass("active");
+      ticketFull.on("click", ".event-create-add-content", () => {
+        this.editingTicketId = null;
+        this.setActiveSection("eventTicketsFull");
       });
 
-      createTicket.on("click", ".btn-submit", function () {
-        ticketFull.addClass("active");
-        createTicket.removeClass("active");
+      createTicket.on("click", ".btn-submit", (e) => {
+        this.addOrUpdateTicketCard();
       });
 
-      createTicket.on("click", ".btn-cancel", function () {
-        ticketFull.addClass("active");
-        createTicket.removeClass("active");
+      createTicket.on("click", ".btn-cancel", () => {
+        this.setActiveSection("eventTicketsFull");
+      });
+
+      ticketFull.on("click", ".edit-card", (e) => {
+        const ticketId = $(e.currentTarget).closest(".card-type1").data("id");
+        const ticketData = this.getTicket(ticketId);
+
+        this.editingTicketId = ticketId;
+
+        ticketFull
+          .find(`[name="event-create-ticket-title"]`)
+          .val(ticketData.ticketTitle);
+        ticketFull
+          .find(`[name="event-create-ticket-number"]`)
+          .val(ticketData.ticketNumber);
+        ticketFull
+          .find(`[name="event-create-ticket-price"]`)
+          .val(ticketData.ticketPrice);
+        ticketFull
+          .find(`[name="event-create-sale-start-date"]`)
+          .val(ticketData.saleStartDate);
+        ticketFull
+          .find(`[name="event-create-sale-finish-date"]`)
+          .val(ticketData.saleFinishDate);
+        this.setActiveSection("eventTicketsForm");
+      });
+
+      ticketFull.on("click", ".delete-card", (e) => {
+        const ticketId = $(e.currentTarget).closest(".card-type1").data("id");
+        this.deleteTicket(ticketId);
+        $(e.currentTarget).closest(".card-type1").remove();
+        this.setActiveSection("eventTicketsFull");
       });
     }
+
+    // handleCompanions() {
+    //   const createCompanion = this.elements.eventCompanions;
+    //   const companionForm = this.elements.eventCompanionsForm;
+    //   const companionFull = this.elements.eventCompanionsFull;
+
+    //   createCompanion.on("click", ".event-create-extract-content", function () {
+    //     createCompanion.removeClass("active");
+    //     companionFull.removeClass("active");
+    //     companionForm.addClass("active");
+    //   });
+
+    //   companionFull.on("click", ".event-create-add-content", function () {
+    //     createCompanion.removeClass("active");
+    //     companionFull.removeClass("active");
+    //     companionForm.addClass("active");
+    //   });
+
+    //   companionForm.on("click", ".btn-submit", function () {
+    //     companionForm.removeClass("active");
+    //     companionFull.addClass("active");
+    //     createCompanion.removeClass("active");
+    //   });
+
+    //   companionForm.on("click", ".btn-cancel", function () {
+    //     companionForm.removeClass("active");
+    //     companionFull.removeClass("active");
+    //     createCompanion.addClass("active");
+    //   });
+    // }
+
+    // handleTickets() {
+    //   const createTicket = this.elements.eventTickets;
+    //   const ticketFull = this.elements.eventTicketsFull;
+
+    //   ticketFull.on("click", ".event-create-add-content", function () {
+    //     createTicket.addClass("active");
+    //     ticketFull.removeClass("active");
+    //   });
+
+    //   createTicket.on("click", ".btn-submit", function () {
+    //     ticketFull.addClass("active");
+    //     createTicket.removeClass("active");
+    //   });
+
+    //   createTicket.on("click", ".btn-cancel", function () {
+    //     ticketFull.addClass("active");
+    //     createTicket.removeClass("active");
+    //   });
+    // }
 
     handleInputTime() {
       this.elements.eventInputTime.on("input", function () {
@@ -525,6 +832,7 @@ import moment from "moment-jalaali";
       });
     }
 
+    //TODO
     handleCover() {
       this.elements.eventTopic.on("change", "#event-create-cover", (event) => {
         const file = event.target.files[0];

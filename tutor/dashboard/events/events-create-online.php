@@ -457,7 +457,7 @@ endif;
 
                     <span class="dash-line"></span>
 
-                    <div class="card-type1">
+                    <!-- <div class="card-type1">
 
                         <div class="flex justify-between p-3">
                             <p>
@@ -493,10 +493,40 @@ endif;
                             </div>
                         </div>
 
+                    </div> -->
+
+
+                    <div id="base-ticket-card-template" class="card-type1" style="display: none;">
+                        <div class="flex justify-between p-3">
+                            <p ref="event-create-ticket-title"></p>
+                            <span>
+                                <img class="h-fit edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
+                                <img class="h-fit delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
+                            </span>
+                        </div>
+                        <div class="more">
+                            <div class="column">
+                                <span>
+                                    <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/profile-2user.png'?>" alt="">
+                                    <p ref="event-create-ticket-number"></p>
+                                </span>
+                                <span>
+                                    <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/money.png'?>" alt="">
+                                    <p ref="event-create-ticket-price"></p>
+                                </span>
+                            </div>
+                            <div class="column">
+                                <span>
+                                    <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
+                                    <p ref="event-create-sale-start-date"></p>
+                                </span>
+                                <span>
+                                    <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
+                                    <p ref="event-create-sale-finish-date"></p>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-
-
-
 
 
 
@@ -535,7 +565,7 @@ endif;
                         <label for="event-create-category____">
                             نام
                         </label>
-                        <input type="number" name="event-create-companion-name" placeholder="نام">
+                        <input type="text" name="event-create-companion-name" placeholder="نام">
                     </div>
 
 
@@ -588,7 +618,7 @@ endif;
 
                     <span class="dash-line"></span>
 
-                    <div class="card-type2">
+                    <!-- <div class="card-type2">
 
                         <div class="flex justify-between p-3">
                             <span>
@@ -603,9 +633,21 @@ endif;
                                 <img class="with-pink-border" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
                             </span>
                         </div>
+                    </div> -->
+
+
+                    <div id="base-companion-card-template" class="card-type2" style="display: none;">
+                        <div class="flex justify-between p-3">
+                            <span>
+                                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/Rectangle 1742.png'?>" alt="">
+                                <p ref="event-create-companion-name"></p>
+                            </span>
+                            <span>
+                                <img class="with-black-border edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
+                                <img class="with-pink-border delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
+                            </span>
+                        </div>
                     </div>
-
-
 
 
                 </div>
