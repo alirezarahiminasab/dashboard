@@ -1,4 +1,4 @@
-.instructor-events {
+.instructor-courses {
   @apply bg-[#F3F3F4];
 
   &-wrap {
@@ -10,11 +10,11 @@
       &-button {
         @apply flex justify-center items-center border border-[color:var(--Generic-Black,#121212)] rounded-lg border-solid;
 
-        &.instructor-events-filter-btn {
+        &.instructor-courses-filter-btn {
           @apply p-3 gap-2;
         }
 
-        &.instructor-events-sort-btn {
+        &.instructor-courses-sort-btn {
           span:nth-child(2) {
             @apply flex gap-2 items-center p-3 border-r-[color:var(--Neutral-900,#212529)] border-r border-solid;
           }
@@ -29,7 +29,7 @@
     &-boxes {
       @apply w-full flex flex-col gap-4;
 
-      &-event {
+      &-course {
         @apply w-full flex flex-col gap-3 border border-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] rounded-[8px_0px_8px_8px] border-solid;
 
         &-header {
@@ -101,7 +101,7 @@
         &-meta {
           @apply flex justify-between items-center [background:var(--Neutral-100,#F8F9FA)] p-3 rounded-[0px_0px_8px_8px];
 
-          .instructor-event-metadata {
+          .instructor-course-metadata {
             @apply flex justify-between w-full;
             &-status {
               @apply flex items-center gap-1;

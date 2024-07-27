@@ -13,58 +13,59 @@ console.log("js file");
 (function ($) {
   "use strict";
 
-  class EventStatus {
+  class CourseStatus {
     constructor() {
       this.elements = {
-        // eventPrompt: $(".instructor-dropdown-parent"),
-        // eventSort: $(".instructor-events-sort"),
-        // sortBtn: $(".instructor-events-sort-btn"),
+        // coursePrompt: $(".instructor-dropdown-parent"),
+        // courseSort: $(".instructor-courses-sort"),
+        // sortBtn: $(".instructor-courses-sort-btn"),
         // sortCloseBtn: $(".sort-header-close"),
-        // eventFilter: $(".instructor-events-filter"),
-        // filterBtn: $(".instructor-events-filter-btn"),
+        // courseFilter: $(".instructor-courses-filter"),
+        // filterBtn: $(".instructor-courses-filter-btn"),
         // buyNow: $(".buy-now-button"),
-        // filterWrap: $(".instructor-events-filter-wrap"),
-        // eventStatistics: $(".event-statistics"),
-        // eventAction: $(".event-action-btn"),
+        // filterWrap: $(".instructor-courses-filter-wrap"),
+        // courseStatistics: $(".course-statistics"),
+        // courseAction: $(".course-action-btn"),
       };
       console.log("constructor");
 
-      this.getMyEventsAjax();
+      this.getMyCoursesAjax();
       // this.update(elements);
-      // this.sortEvent(elements);
+      // this.sortCourse(elements);
       // this.singleProductAddToCart();
       // this.lessonFunctions();
     }
 
-    getMyEventsAjax() {
-      // select a tag in parent with class instructor-events-wrap-empty amd when clicked do
-      $(".instructor-events-wrap-empty").on("click", () => {
-        console.log("getMyEventsAjax");
-        $.ajax({
-          url: ajax_object.ajax_url,
-          type: "GET",
-          data: {
-            action: "get_my_events",
-          },
-          beforeSend() {},
-          success: function (response) {
-            console.log(response);
-          },
-          error: function (response) {
-            console.error(response);
-          },
-        });
+    getMyCoursesAjax() {
+      $(document).ready(() => {
+        if ($(".instructor-courses").length) {
+          console.log("getMyCoursesAjax");
+          $.ajax({
+            url: ajax_object.ajax_url,
+            type: "GET",
+            data: {
+              action: "get_my_events",
+            },
+            beforeSend() {},
+            success: function (response) {
+              console.log(response);
+            },
+            error: function (response) {
+              console.error(response);
+            },
+          });
+        }
       });
     }
 
     // update($el) {
     //   const plugin = this;
 
-    //   $el.eventPrompt.on(
+    //   $el.coursePrompt.on(
     //     "click",
     //     ".instructor-dropdown-parent-icon",
     //     function (e) {
-    //       e.preventDefault();
+    //       e.prcourseDefault();
     //       const dropdownMenu = $(this).siblings(
     //         ".instructor-dropdown-parent-menu"
     //       );
@@ -77,27 +78,27 @@ console.log("js file");
     //     }
     //   );
 
-    //   $el.eventPrompt.on(
+    //   $el.coursePrompt.on(
     //     "click",
     //     ".instructor-dropdown-item-status",
     //     function (e) {
-    //       e.preventDefault();
-    //       const hiddenEventInput = $(this).siblings("input");
-    //       const eventAction = $(this).data("event-action");
-    //       const eventID = $(this).data("event-id");
+    //       e.prcourseDefault();
+    //       const hiddenCourseInput = $(this).siblings("input");
+    //       const courseAction = $(this).data("course-action");
+    //       const courseID = $(this).data("course-id");
 
     //       const ajaxCall = $.ajax({
     //         url: ajax_object.ajax_url,
     //         type: "POST",
     //         data: {
-    //           action: "change_event_status",
-    //           eventAction: eventAction,
-    //           eventID: eventID,
+    //           action: "change_course_status",
+    //           courseAction: courseAction,
+    //           courseID: courseID,
     //         },
     //         success: (response) => {
     //           // Handle successful upload
     //           toast(response.result, "success");
-    //           if (hiddenEventInput.prop("checked") === true) {
+    //           if (hiddenCourseInput.prop("checked") === true) {
     //             $(this).siblings("input").prop("checked", false);
     //           } else {
     //             $(this).siblings("input").prop("checked", true);
@@ -112,32 +113,32 @@ console.log("js file");
     //   );
 
     //   $el.sortBtn.on("click", function (e) {
-    //     e.preventDefault();
-    //     $(".instructor-events-sort").show();
-    //     gsap.to($(".instructor-events-sort-wrap"), {
+    //     e.prcourseDefault();
+    //     $(".instructor-courses-sort").show();
+    //     gsap.to($(".instructor-courses-sort-wrap"), {
     //       y: 0,
     //       duration: 0.3,
     //     });
     //   });
 
-    //   $el.eventSort
+    //   $el.courseSort
     //     .find(".sort-header-close")
-    //     .add($el.eventSort.find(".instructor-events-sort-bg"))
+    //     .add($el.courseSort.find(".instructor-courses-sort-bg"))
     //     .off("click")
     //     .on("click", function (e) {
-    //       e.preventDefault();
+    //       e.prcourseDefault();
     //       const tl = gsap.timeline();
-    //       tl.to($(".instructor-events-sort-wrap"), {
+    //       tl.to($(".instructor-courses-sort-wrap"), {
     //         y: "100%",
     //         duration: 0.3,
     //       });
-    //       tl.to($(".instructor-events-sort"), {
+    //       tl.to($(".instructor-courses-sort"), {
     //         display: "none",
     //       });
     //     });
 
-    //   $el.eventSort
-    //     .find(".instructor-events-sort-radio")
+    //   $el.courseSort
+    //     .find(".instructor-courses-sort-radio")
     //     .off("click")
     //     .on("click", function (e) {
     //       const authorID = $(this).data("author-id");
@@ -148,13 +149,13 @@ console.log("js file");
     //         url: ajax_object.ajax_url,
     //         type: "POST",
     //         data: {
-    //           action: "event_sort",
+    //           action: "course_sort",
     //           authorID: authorID,
     //           sort: sort,
     //         },
     //         success: (response) => {
     //           // Handle successful upload
-    //           $(".instructor-events-wrap-boxes").html(`${response.result}`);
+    //           $(".instructor-courses-wrap-boxes").html(`${response.result}`);
     //           plugin.init();
     //         },
     //         error: (e) => {
@@ -165,30 +166,30 @@ console.log("js file");
     //     });
 
     //   $el.filterBtn.on("click", function (e) {
-    //     e.preventDefault();
+    //     e.prcourseDefault();
     //     const tl = gsap.timeline();
-    //     tl.to($(".instructor-events-filter"), {
+    //     tl.to($(".instructor-courses-filter"), {
     //       display: "block",
     //     });
-    //     tl.to($(".instructor-events-filter"), {
+    //     tl.to($(".instructor-courses-filter"), {
     //       y: 0,
     //       duration: 0.3,
     //     });
     //   });
 
-    //   $el.eventFilter.on("click", ".sort-header-close", function (e) {
-    //     e.preventDefault();
+    //   $el.courseFilter.on("click", ".sort-header-close", function (e) {
+    //     e.prcourseDefault();
     //     const tl = gsap.timeline();
-    //     tl.to($(".instructor-events-filter"), {
+    //     tl.to($(".instructor-courses-filter"), {
     //       y: "100%",
     //       duration: 0.3,
     //     });
-    //     tl.to($(".instructor-events-filter"), {
+    //     tl.to($(".instructor-courses-filter"), {
     //       display: "none",
     //     });
     //   });
 
-    //   $el.eventFilter.on(
+    //   $el.courseFilter.on(
     //     "click",
     //     ".filter-wrap-setting-content-all",
     //     function (e) {
@@ -202,7 +203,7 @@ console.log("js file");
     //     }
     //   );
 
-    //   $el.eventFilter.on(
+    //   $el.courseFilter.on(
     //     "click",
     //     ".filter-wrap-setting-content input:not(filter-wrap-setting-content-all)",
     //     function (e) {
@@ -217,24 +218,24 @@ console.log("js file");
     //     }
     //   );
 
-    //   $el.eventFilter.on(
+    //   $el.courseFilter.on(
     //     "click",
-    //     ".instructor-events-filter-buttons-show",
+    //     ".instructor-courses-filter-buttons-show",
     //     function (e) {
-    //       e.preventDefault();
+    //       e.prcourseDefault();
     //       const tl = gsap.timeline();
     //       const instructor = $(this).data("instructor");
     //       const status = [];
     //       const category = [];
 
     //       $(
-    //         ".instructor-events-filter .filter-wrap-setting-content-status:checked"
+    //         ".instructor-courses-filter .filter-wrap-setting-content-status:checked"
     //       ).each((index, el) => {
     //         status.push($(el).val());
     //       });
 
     //       $(
-    //         ".instructor-events-filter .filter-wrap-setting-content-category:checked"
+    //         ".instructor-courses-filter .filter-wrap-setting-content-category:checked"
     //       ).each((index, el) => {
     //         category.push($(el).data("id"));
     //       });
@@ -243,20 +244,20 @@ console.log("js file");
     //         url: ajax_object.ajax_url,
     //         type: "POST",
     //         data: {
-    //           action: "event_filter",
+    //           action: "course_filter",
     //           status: status,
     //           category: category,
     //           instructor: instructor,
     //         },
     //         success: (response) => {
-    //           tl.to($(".instructor-events-filter"), {
+    //           tl.to($(".instructor-courses-filter"), {
     //             y: "100%",
     //             duration: 0.3,
     //           });
-    //           tl.to($(".instructor-events-filter"), {
+    //           tl.to($(".instructor-courses-filter"), {
     //             display: "none",
     //           });
-    //           $(".instructor-events-wrap-boxes").html(`${response.result}`);
+    //           $(".instructor-courses-wrap-boxes").html(`${response.result}`);
     //           plugin.init();
     //         },
     //         error: (e) => {
@@ -267,16 +268,16 @@ console.log("js file");
     //     }
     //   );
 
-    //   $el.eventFilter.on(
+    //   $el.courseFilter.on(
     //     "click",
-    //     ".instructor-events-filter-buttons-reset",
+    //     ".instructor-courses-filter-buttons-reset",
     //     function (e) {
-    //       e.preventDefault();
+    //       e.prcourseDefault();
     //       const tl = gsap.timeline();
     //       const instructor = $(this).data("instructor");
     //       const status = ["publish", "pending", "trash"];
 
-    //       $(".instructor-events-filter-wrap input:checkbox").prop(
+    //       $(".instructor-courses-filter-wrap input:checkbox").prop(
     //         "checked",
     //         false
     //       );
@@ -285,20 +286,20 @@ console.log("js file");
     //         url: ajax_object.ajax_url,
     //         type: "POST",
     //         data: {
-    //           action: "event_filter",
+    //           action: "course_filter",
     //           status: status,
     //           category: "",
     //           instructor: instructor,
     //         },
     //         success: (response) => {
-    //           tl.to($(".instructor-events-filter"), {
+    //           tl.to($(".instructor-courses-filter"), {
     //             y: "100%",
     //             duration: 0.3,
     //           });
-    //           tl.to($(".instructor-events-filter"), {
+    //           tl.to($(".instructor-courses-filter"), {
     //             display: "none",
     //           });
-    //           $(".instructor-events-wrap-boxes").html(`${response.result}`);
+    //           $(".instructor-courses-wrap-boxes").html(`${response.result}`);
     //           plugin.init();
     //         },
     //         error: (e) => {
@@ -314,50 +315,50 @@ console.log("js file");
     //     start: "top-=59px bottom",
     //     onEnter: function () {
     //       // Change the position to relative when entering the trigger
-    //       $el.eventAction.addClass("inline-button").removeClass("float-button");
+    //       $el.courseAction.addClass("inline-button").removeClass("float-button");
     //     },
     //     onLeaveBack: function () {
     //       // Revert the position back to fixed when scrolling back up
-    //       $el.eventAction.addClass("float-button").removeClass("inline-button");
+    //       $el.courseAction.addClass("float-button").removeClass("inline-button");
     //     },
     //   });
     // }
 
-    // sortEvent($el) {
-    //   $el.eventStatistics
-    //     .find(".event-statistics-sort-btn")
+    // sortCourse($el) {
+    //   $el.courseStatistics
+    //     .find(".course-statistics-sort-btn")
     //     .on("click", function (e) {
-    //       e.preventDefault();
-    //       $(".event-statistics-sort").show();
-    //       gsap.to($(".event-statistics-sort-wrap"), {
+    //       e.prcourseDefault();
+    //       $(".course-statistics-sort").show();
+    //       gsap.to($(".course-statistics-sort-wrap"), {
     //         y: 0,
     //         duration: 0.3,
     //       });
     //     });
 
-    //   $el.eventStatistics
+    //   $el.courseStatistics
     //     .find(".sort-header-close")
-    //     .add($el.eventStatistics.find(".event-statistics-sort-bg"))
+    //     .add($el.courseStatistics.find(".course-statistics-sort-bg"))
     //     .on("click", function (e) {
-    //       e.preventDefault();
+    //       e.prcourseDefault();
     //       const tl = gsap.timeline();
-    //       tl.to($(".event-statistics-sort-wrap"), {
+    //       tl.to($(".course-statistics-sort-wrap"), {
     //         y: "100%",
     //         duration: 0.3,
     //       });
-    //       tl.to($(".event-statistics-sort"), {
+    //       tl.to($(".course-statistics-sort"), {
     //         display: "none",
     //       });
     //     });
 
-    //   $el.eventStatistics
-    //     .find(".event-statistics-sort-radio")
+    //   $el.courseStatistics
+    //     .find(".course-statistics-sort-radio")
     //     .on("click", function (e) {
     //       const sortType = $(this).data("sort"); // Get the sort type from data-sort attribute of clicked radio button
 
     //       // Select and sort the div elements based on data attribute specified by sortType
-    //       const sortedElements = $el.eventStatistics
-    //         .find(".event-statistics-footer-item")
+    //       const sortedElements = $el.courseStatistics
+    //         .find(".course-statistics-footer-item")
     //         .sort(function (a, b) {
     //           // Convert data values to integers if they are numeric and compare for descending order
     //           return (
@@ -366,7 +367,7 @@ console.log("js file");
     //         });
 
     //       // Select the container that wraps the items to be sorted
-    //       const container = $(".event-statistics-footer-wrap");
+    //       const container = $(".course-statistics-footer-wrap");
     //       container.empty(); // Clear existing content in the container
 
     //       // Append sorted elements back to the container
@@ -375,11 +376,11 @@ console.log("js file");
     //       });
 
     //       const tl = gsap.timeline();
-    //       tl.to($(".event-statistics-sort-wrap"), {
+    //       tl.to($(".course-statistics-sort-wrap"), {
     //         y: "100%",
     //         duration: 0.3,
     //       });
-    //       tl.to($(".event-statistics-sort"), {
+    //       tl.to($(".course-statistics-sort"), {
     //         display: "none",
     //       });
     //     });
@@ -395,7 +396,7 @@ console.log("js file");
     //   $(document).on("click", ".buy-now-button-add-to-cart", function (evt) {
     //     var $thisButton = $(this);
     //     // Do nothing if this is external product.
-    //     evt.preventDefault();
+    //     evt.prcourseDefault();
 
     //     if ($thisButton.hasClass("disabled")) {
     //       // Variation select required.
@@ -440,7 +441,7 @@ console.log("js file");
     //       }
     //     });
 
-    //     // Trigger event.
+    //     // Trigger course.
     //     $("body").trigger("adding_to_cart", [$thisButton, data]);
 
     //     // Ajax action.
@@ -462,7 +463,7 @@ console.log("js file");
 
     //       $thisButton.text("مشاهده سبد خرید");
     //       $thisButton.attr("href", cartUrl);
-    //       // Trigger event so themes can refresh other areas.
+    //       // Trigger course so themes can refresh other areas.
     //     }).always(function () {
     //       $thisButton.addClass("added").removeClass("loading updating-icon");
     //     });
@@ -486,17 +487,17 @@ console.log("js file");
     //   $(".single-lesson-related-navigation")
     //     .find(".btn-right")
     //     .on("click", function (e) {
-    //       e.preventDefault();
+    //       e.prcourseDefault();
     //       swiper.slidePrev();
     //     });
 
     //   $(".single-lesson-related-navigation")
     //     .find(".btn-left")
     //     .on("click", function (e) {
-    //       e.preventDefault();
+    //       e.prcourseDefault();
     //       swiper.slideNext();
     //     });
     // }
   }
-  const EventStatusInit = new EventStatus();
+  const CourseStatusInit = new CourseStatus();
 })(jQuery);

@@ -64,20 +64,27 @@ class EventUtil
 
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     
-            $headers = [
-                'Content-Type: application/json',
-                'Content-Length: ' . strlen($jsonData),
-                'Authorization: Bearer ' . EventUtil::getToken(['role' => 'superAdmin'])
-            ];
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
-            // curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            //     'content-type: application/json',
-            //     'Content-Length: ' . strlen($jsonData)
-            // ]);
-            // $headers[] = 'Authorization: Bearer ' . EventUtil::getToken(['role' => 'superAdmin']);
-            // curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            
+            switch (strtoupper($method)) {
+                case 'POST':
+                case 'PUT':
+                    $headers = [
+                        'Content-Type: application/json',
+                        'Content-Length: ' . strlen($jsonData),
+                        'Authorization: Bearer ' . EventUtil::getToken(['role' => 'teacher'])
+                    ];
+                    break;
+                case 'DELETE':
+                case 'GET':
+                    $headers = [
+                        'Authorization: Bearer ' . EventUtil::getToken(['role' => 'teacher'])
+                    ];
+                    break;
+                default:
+                    throw new Exception("Unsupported HTTP method: $method");
+            }
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+           
             // Set the HTTP method and attach data if needed
             switch (strtoupper($method)) {
                 case 'POST':
