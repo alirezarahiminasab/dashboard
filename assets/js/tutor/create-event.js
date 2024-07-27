@@ -1,6 +1,7 @@
 import toast from "../toast";
 import gsap from "gsap";
 import moment from "moment-jalaali";
+console.log("_js file");
 
 (function ($) {
   "use strict";
@@ -10,6 +11,10 @@ import moment from "moment-jalaali";
 
   class CardManager {
     constructor() {
+      this.editingCardId = null; // To track the card being edited
+      this.editingCompanionId = null;
+      this.editingTicketId = null;
+
       this.cards = [];
       this.companions = [];
       this.tickets = [];
@@ -17,9 +22,9 @@ import moment from "moment-jalaali";
       this.companionCounter = 0;
       this.ticketCounter = 0;
     }
-    dateTime2unix(date, time) {
-      return date && time
-        ? moment(`${date} ${time}`, "jYYYY-jMM-jDD HH:mm").unix()
+    dateTime2unix(dateTime) {
+      return dateTime
+        ? moment(`${dateTime}`, "jYYYY-jMM-jDD HH:mm").unix()
         : null;
     }
 
@@ -53,12 +58,10 @@ import moment from "moment-jalaali";
       return this.cards.map((card) => ({
         ...card,
         sessionStartUnix: this.dateTime2unix(
-          card.sessionDateValue,
-          card.sessionStartTimeValue
+          `${card.sessionDateValue} ${card.sessionStartTimeValue}`
         ),
         sessionFinishUnix: this.dateTime2unix(
-          card.sessionDateValue,
-          card.sessionFinishTimeValue
+          `${card.sessionDateValue} ${card.sessionFinishTimeValue}`
         ),
       }));
     }
@@ -121,7 +124,11 @@ import moment from "moment-jalaali";
     }
 
     getAllTickets() {
-      return this.tickets;
+      return this.tickets.map((card) => ({
+        ...card,
+        saleStartDate: this.dateTime2unix(card.saleStartDate),
+        saleFinishDate: this.dateTime2unix(card.saleFinishDate),
+      }));
     }
   }
 
@@ -130,9 +137,6 @@ import moment from "moment-jalaali";
   class CreateEvent extends CardManager {
     constructor() {
       super();
-      this.editingCardId = null; // To track the card being edited
-      this.editingCompanionId = null;
-      this.editingTicketId = null;
 
       this.coverImage = {};
       this.tags = [];
@@ -219,48 +223,8 @@ import moment from "moment-jalaali";
           )
         );
 
-        formData.append(
-          "event-create-session-start-dateTime",
-          dateTime2unix(
-            `${field("event-create-session-date")} ${field(
-              "event-create-session-start-time"
-            )}`
-          )
-        );
-
-        formData.append(
-          "event-create-session-finish-dateTime",
-          dateTime2unix(
-            `${field("event-create-session-date")} ${field(
-              "event-create-session-finish-time"
-            )}`
-          )
-        );
-
-        formData.append(
-          "event-create-sale-start-dateTime",
-          dateTime2unix("event-create-sale-start-date")
-        );
-
-        formData.append(
-          "event-create-sale-finish-dateTime",
-          dateTime2unix("event-create-sale-finish-date")
-        );
-
         // formData.append("action", "create_event");
         formData.append("event-create-tags", _this.tags.join("-"));
-
-        if (_this.companionLogoImage.data) {
-          formData.append(
-            "event-create-companion-logo-data",
-            _this.companionLogoImage.data
-          );
-
-          formData.append(
-            "event-create-companion-logo-fileName",
-            _this.companionLogoImage.fileName
-          );
-        }
 
         if (_this.coverImage.data) {
           formData.append("event-create-cover-data", _this.coverImage.data);
@@ -272,7 +236,9 @@ import moment from "moment-jalaali";
         }
 
         // Add card data to the form data
-        formData.append("cards", JSON.stringify(_this.getAllCards()));
+        formData.append("sessions", JSON.stringify(_this.getAllCards()));
+        formData.append("companions", JSON.stringify(_this.getAllCompanions()));
+        formData.append("tickets", JSON.stringify(_this.getAllTickets()));
 
         $.ajax({
           url: ajax_object.ajax_url,
@@ -475,6 +441,7 @@ import moment from "moment-jalaali";
 
       createSession.on("click", ".event-create-extract-content", () => {
         this.editingCardId = null; // Reset editing state
+
         this.setActiveSection("eventSessionsForm");
       });
 
@@ -695,7 +662,6 @@ import moment from "moment-jalaali";
       });
     }
     // SECTION
-
     addOrUpdateTicketCard() {
       const ticketForm = this.elements.eventTicketsForm;
 
@@ -736,10 +702,42 @@ import moment from "moment-jalaali";
 
       if (this.editingTicketId) {
         this.updateTicket(this.editingTicketId, ticketData);
-        // Update UI card...
+        const ticketElement = $(
+          `.card-type1[data-id="${this.editingTicketId}"]`
+        );
+        ticketElement
+          .find('[ref="event-create-ticket-title"]')
+          .text(ticketTitle);
+        ticketElement
+          .find('[ref="event-create-ticket-number"]')
+          .text(ticketNumber);
+        ticketElement
+          .find('[ref="event-create-ticket-price"]')
+          .text(ticketPrice);
+        ticketElement
+          .find('[ref="event-create-sale-start-date"]')
+          .text(saleStartDate);
+        ticketElement
+          .find('[ref="event-create-sale-finish-date"]')
+          .text(saleFinishDate);
       } else {
         const ticketId = this.addTicket(ticketData);
-        // Create new UI card...
+
+        const newTicket = $("#base-ticket-card-template").clone();
+        newTicket.attr("data-id", ticketId);
+        newTicket.find('[ref="event-create-ticket-title"]').text(ticketTitle);
+        newTicket.find('[ref="event-create-ticket-number"]').text(ticketNumber);
+        newTicket.find('[ref="event-create-ticket-price"]').text(ticketPrice);
+        newTicket
+          .find('[ref="event-create-sale-start-date"]')
+          .text(saleStartDate);
+        newTicket
+          .find('[ref="event-create-sale-finish-date"]')
+          .text(saleFinishDate);
+        newTicket.removeAttr("id"); // remove the id attribute from the cloned element
+        newTicket.show(); // show the cloned ticket
+
+        this.elements.eventTicketsFull.append(newTicket);
       }
 
       // Reset form and editing state
@@ -763,7 +761,15 @@ import moment from "moment-jalaali";
 
       ticketFull.on("click", ".event-create-add-content", () => {
         this.editingTicketId = null;
-        this.setActiveSection("eventTicketsFull");
+        ticketForm.find("input").val("");
+
+        if (ticketFull.find(".card-type1").length > 1) {
+          ticketForm.find(".btn-cancel").removeClass("disabled");
+        } else {
+          ticketForm.find(".btn-cancel").addClass("disabled");
+        }
+
+        this.setActiveSection("eventTicketsForm");
       });
 
       ticketFull.on("click", ".edit-card", (e) => {
@@ -772,21 +778,22 @@ import moment from "moment-jalaali";
 
         this.editingTicketId = ticketId;
 
-        ticketFull
+        ticketForm
           .find(`[name="event-create-ticket-title"]`)
           .val(ticketData.ticketTitle);
-        ticketFull
+        ticketForm
           .find(`[name="event-create-ticket-number"]`)
           .val(ticketData.ticketNumber);
-        ticketFull
+        ticketForm
           .find(`[name="event-create-ticket-price"]`)
           .val(ticketData.ticketPrice);
-        ticketFull
+        ticketForm
           .find(`[name="event-create-sale-start-date"]`)
           .val(ticketData.saleStartDate);
-        ticketFull
+        ticketForm
           .find(`[name="event-create-sale-finish-date"]`)
           .val(ticketData.saleFinishDate);
+        ticketForm.find(".btn-cancel").removeClass("disabled");
         this.setActiveSection("eventTicketsForm");
       });
 
@@ -794,7 +801,13 @@ import moment from "moment-jalaali";
         const ticketId = $(e.currentTarget).closest(".card-type1").data("id");
         this.deleteTicket(ticketId);
         $(e.currentTarget).closest(".card-type1").remove();
-        this.setActiveSection("eventTicketsFull");
+
+        if (ticketFull.find(".card-type1").length < 2) {
+          this.editingTicketId = null;
+          ticketForm.find("input").val("");
+          ticketForm.find(".btn-cancel").addClass("disabled");
+          this.setActiveSection("eventTicketsForm");
+        }
       });
     }
 

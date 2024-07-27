@@ -1,5 +1,6 @@
 <?php
-require_once __DIR__ . '\\event-module\\sample.php'; // Include the required classes
+// require_once __DIR__ . '\\event-module\\sample.php'; // Include the required classes
+require_once __DIR__ . '\\event-module\\services\\EventService.php' ; 
 
 
 class Events
@@ -9,7 +10,7 @@ class Events
     {
         // Add new actions for each API request
         add_action('wp_ajax_create_event', [$this, 'create_event']);
-        // add_action('wp_ajax_get_all_events', [$this, 'get_all_events']);
+        add_action('wp_ajax_get_my_events', [$this, 'get_my_events']);
         // add_action('wp_ajax_get_event', [$this, 'get_event']);
         // add_action('wp_ajax_update_event', [$this, 'update_event']);
         // add_action('wp_ajax_delete_event', [$this, 'delete_event']);
@@ -78,12 +79,6 @@ class Events
                 $event_create_cover_URL = $this->upload_image($event_create_cover_data,$event_create_cover_fileName);
             }
             
-            $event_create_companion_logo_URL = "";
-            if(isset($_POST['event-create-companion-logo-data'])){
-                $event_create_companion_logo_data = $_POST['event-create-companion-logo-data']; 
-                $event_create_companion_logo_fileName = $_POST['event-create-companion-logo-fileName']; 
-                $event_create_companion_logo_URL = $this->upload_image($event_create_companion_logo_data,$event_create_companion_logo_fileName);
-            }
  
             $event_create_tags = $_POST['event-create-tags']; 
             $event_create_title = $_POST['event-create-title']; 
@@ -108,11 +103,10 @@ class Events
             // $event_create_platform = $_POST['event-create-platform']; 
             
 
-            // Get the session cards data
-            $cards = json_decode(stripslashes($_POST['cards']), true);
-
+            $sessionsCards = json_decode(stripslashes($_POST['sessions']), true);
+            
             $sessions = [];
-            foreach ($cards as $card) {
+            foreach ($sessionsCards as $card) {
                 $sessions[] = [
                     "title" => $card['sessionTitleValue'],
                     "description" => $card['sessionDescription'],
@@ -122,7 +116,30 @@ class Events
                     "classUrl" => $card['sessionClassUrl']
                 ];
             }            
-            
+
+            $companionsCards = json_decode(stripslashes($_POST['companions']), true);
+            $companions = [];
+            foreach ($companionsCards as $card) {
+                $companion = ["name" => $card['companionName']];
+                if($card['companionName'] !== ""){
+                    $event_create_companion_logo_URL = $this->upload_image($card['companionLogo'],$card['companionLogoName']);
+                    $companion["logoURL"] = $event_create_companion_logo_URL;
+                }
+                $companions[] = $companion;
+            }
+
+            $ticketsCards = json_decode(stripslashes($_POST['tickets']), true);
+            $tickets = [];
+            foreach ($ticketsCards as $card) {
+                $tickets[] = [
+                    "count" => $card['ticketNumber'],
+                    "title" => $card['ticketTitle'],
+                    "startDateTime" => $card['saleStartDate'],
+                    "finishDateTime" => $card['saleFinishDate'],
+                    "price" => $card['ticketPrice']
+                ];
+            }
+
             $data = [
                 "title" => $event_create_title,
                 "category" => $event_create_category,
@@ -133,41 +150,13 @@ class Events
                 "finishDateTime" => $event_create_finish_dateTime,
                 "isOnline" => true,
                 // "province": "تهران",
-                // "city": "تهران",
-            
+                // "city": "تهران",            
                 "sessions" => $sessions,
-                "tickets" => [
-                  [
-                    "count" => $event_create_ticket_number,
-                    "title" => $event_create_ticket_title,
-                    "startDateTime" => $event_create_sale_start_dateTime,
-                    "finishDateTime" => $event_create_sale_finish_dateTime,
-                    "price" => $event_create_ticket_price,
-                  ],
-                  [
-                    "count" => $event_create_ticket_number,
-                    "title" => 'ticket2',
-                    "startDateTime" => $event_create_sale_start_dateTime,
-                    "finishDateTime" => $event_create_sale_finish_dateTime,
-                    "price" => $event_create_ticket_price,
-                  ]
-                ],
-                "companions" => [
-                  [
-                    "name" => $event_create_companion_name,
-                    "logoURL" => $event_create_companion_logo_URL
-                  ],
-                  [
-                    "name" => $event_create_companion_name,
-                    "logoURL" => $event_create_companion_logo_URL
-                  ]
-                ]
+                "tickets" => $tickets,
+                "companions" => $companions 
             ];
-
-
-            
-            $test = CallSample::createEvent($data);
-
+            $result = EventService::createEvent($data);
+            // $result = CallSample::createEvent($data);
             
             // $data = array(
             // 'test' => $test,
@@ -198,7 +187,7 @@ class Events
         
             
             // $result = CallSample::createEvent();
-            wp_send_json_success($test);
+            wp_send_json_success($result);
 
 
         
@@ -207,6 +196,17 @@ class Events
         }
     }
 
+
+    // Method to get all events
+    public function get_my_events()
+    {
+        try {
+            $result = EventService::getMyEvents();
+            wp_send_json_success($result);
+        } catch (Exception $e) {
+            wp_send_json_error(['message' => $e->getMessage()]);
+        }
+    }
 
     // Method to get all events
     public function get_all_events()

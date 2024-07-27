@@ -15,11 +15,11 @@ class CallSample
         return "Create Event Response: " . $response;
     }
 
-    // public static function getAllEvents()
-    // {
-    //     $response = EventService::getAllEvents();
-    //     return "Get All Events Response: " . $response;
-    // }
+    public static function getAllEvents()
+    {
+        $response = EventService::getAllEvents();
+        return "Get All Events Response: " . $response;
+    }
 
     // public static function getEvent()
     // {

@@ -38,7 +38,7 @@ class EventUtil
             $payload['iat'] = $issuedAt;
             $payload['exp'] = $expirationTime;
             // TODO set USERID here
-            $payload['USERID'] = 22;
+            $payload['USERID'] = get_current_user_id();
             $jwt = JWT::encode($payload, self::$privateKey, 'RS256');
             return $jwt;
         } catch (Exception $e) {
