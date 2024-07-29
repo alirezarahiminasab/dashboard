@@ -1,0 +1,364 @@
+// .instructor-courses {
+//   @apply bg-[#F3F3F4];
+
+//   &-wrap {
+//     @apply flex flex-col items-center gap-4 [background:var(--Generic-White,#FFF)] p-6 rounded-[32px_32px_0px_0px];
+
+//     &-setting {
+//       @apply flex justify-between items-center w-full;
+
+//       &-button {
+//         @apply flex justify-center items-center border border-[color:var(--Generic-Black,#121212)] rounded-lg border-solid;
+
+//         &.instructor-courses-filter-btn {
+//           @apply p-3 gap-2;
+//         }
+
+//         &.instructor-courses-sort-btn {
+//           span:nth-child(2) {
+//             @apply flex gap-2 items-center p-3 border-r-[color:var(--Neutral-900,#212529)] border-r border-solid;
+//           }
+
+//           span:first-child {
+//             @apply p-3;
+//           }
+//         }
+//       }
+//     }
+
+//     &-boxes {
+//       @apply w-full flex flex-col gap-4;
+
+//       &-course {
+//         @apply w-full flex flex-col gap-3 border border-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] rounded-[8px_0px_8px_8px] border-solid;
+
+//         &-header {
+//           @apply flex items-center gap-2 p-3 relative;
+
+//           h3 {
+//             @apply text-[color:var(--Generic-Black,#121212)] text-right text-sm font-medium line-clamp-2;
+//           }
+
+//           img {
+//             @apply w-12 h-11  rounded-[4px_0px_4px_4px];
+//           }
+
+//           .instructor-dropdown-parent {
+//             &-icon {
+//               @apply absolute left-3 top-3 w-4 h-4 cursor-pointer;
+//             }
+
+//             &-menu {
+//               @apply hidden flex-col absolute left-3 items-center gap-4 border border-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] p-3 rounded-lg border-solid translate-y-3 z-50;
+
+//               img {
+//                 @apply w-4 h-4;
+//               }
+
+//               input {
+//                 @apply m-0;
+
+//                 &::after {
+//                   font-family: "Font Awesome 5 Pro";
+//                 }
+//               }
+
+//               p {
+//                 @apply text-[color:var(--Generic-Black,#121212)] text-center text-xs font-normal;
+//               }
+
+//               .instructor-dropdown-item {
+//                 @apply flex items-center gap-2 w-full;
+
+//                 #instructor-dropdown-item-delete {
+//                   @apply text-[color:var(--Error-500,#F62E2E)];
+//                 }
+//               }
+//             }
+//           }
+//         }
+
+//         &-declined {
+//           @apply flex flex-col justify-center gap-4 border border-[color:var(--Error-500,#F62E2E)] [background:var(--Generic-White,#FFF)] px-3 py-4 rounded-lg border-solid mx-3;
+
+//           p {
+//             @apply text-[color:var(--Error-500,#F62E2E)] text-right text-xs font-normal;
+//           }
+
+//           a {
+//             @apply text-[color:var(--Secondary-500,#015372)] text-center  text-xs font-normal;
+//           }
+
+//           .declined-contact {
+//             @apply flex justify-between;
+
+//             &-item {
+//               @apply flex items-center gap-1;
+//             }
+//           }
+//         }
+
+//         &-meta {
+//           @apply flex justify-between items-center [background:var(--Neutral-100,#F8F9FA)] p-3 rounded-[0px_0px_8px_8px];
+
+//           .instructor-course-metadata {
+//             @apply flex justify-between w-full;
+//             &-status {
+//               @apply flex items-center gap-1;
+
+//               p {
+//                 @apply text-center text-[10px] font-medium;
+
+//                 &.pending {
+//                   @apply text-[color:var(--Warning-500,#EC8909)];
+//                 }
+
+//                 &.published {
+//                   @apply text-[color:var(--Warning-500,#1DAB45)];
+//                 }
+
+//                 &.declined {
+//                   @apply text-[color:var(--Warning-500,#F62E2E)];
+//                 }
+//               }
+//             }
+
+//             &-enrolled,
+//             &-reviews,
+//             &-category {
+//               @apply flex items-center gap-1;
+
+//               p {
+//                 @apply text-[color:var(--Neutral-900,#212529)] text-center text-xs font-normal;
+
+//                 &:not(:last-child)::after {
+//                   content: ",";
+//                 }
+//               }
+//             }
+//           }
+//         }
+//       }
+//     }
+
+//     &-empty {
+//       &.active {
+//         @apply flex;
+//       }
+//       @apply hidden flex-col items-center mt-12;
+
+//       p {
+//         @apply text-[color:var(--Generic-Black,#121212)] text-center text-lg font-medium;
+//       }
+
+//       a {
+//         @apply flex justify-center items-center [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg mt-8;
+//         @apply text-[color:var(--Generic-White,#FFF)] text-center text-sm font-medium;
+//       }
+//     }
+
+//     &-create-btn {
+//       @apply self-start;
+
+//       a {
+//         @apply flex justify-center items-center gap-2 z-10 relative;
+//       }
+//     }
+//   }
+
+//   &-sort {
+//     @apply fixed top-0 bottom-0 left-0 right-0 z-[90] hidden;
+
+//     &-bg {
+//       @apply absolute top-0 bottom-0 left-0 right-0 bg-[#121212] opacity-60;
+//     }
+
+//     &-wrap {
+//       @apply absolute bottom-0 w-full translate-y-full z-50;
+
+//       &-header {
+//         @apply flex items-center justify-between px-6 py-4 rounded-[24px_24px_0px_0px] bg-white border-b-[color:var(--Neutral-400,#CED4DA)] border-b border-solid;
+
+//         p {
+//           @apply text-[color:var(--Generic-Black,#121212)] text-center text-sm font-medium;
+//         }
+
+//         .sort-header {
+//           &-logo {
+//             @apply absolute left-0 right-0 m-auto w-8 h-8;
+//           }
+
+//           &-close {
+//             @apply cursor-pointer;
+//           }
+//         }
+//       }
+
+//       &-radio {
+//         @apply flex flex-col bg-white;
+
+//         span:not(.loader) {
+//           @apply flex items-center gap-2 py-3 px-6;
+
+//           input[type="radio"]:after {
+//             @apply bg-[#C22E58];
+//           }
+
+//           p {
+//             @apply text-[color:var(--Generic-Black,#121212)] text-center text-sm font-normal;
+//           }
+//         }
+//       }
+//     }
+//   }
+
+//   &-filter {
+//     @apply overflow-y-auto fixed top-0 bottom-0 left-0 right-0 z-[90] bg-white translate-y-full hidden;
+
+//     &-header {
+//       @apply grid grid-cols-3 items-center justify-between px-6 py-3 bg-white border-b-[color:var(--Neutral-400,#CED4DA)] border-b border-solid;
+
+//       p {
+//         @apply justify-self-start col-span-1 text-[color:var(--Generic-Black,#121212)] text-center text-sm font-medium;
+//       }
+
+//       .sort-header {
+//         &-logo {
+//           @apply h-auto justify-self-center col-span-1 w-8;
+//         }
+
+//         &-close {
+//           @apply justify-self-end col-span-1 cursor-pointer;
+//         }
+//       }
+//     }
+
+//     &-wrap {
+//       input[type="checkbox"] {
+//         @apply rounded-md;
+//         font-family: "Font Awesome 5 Pro";
+
+//         &:checked:before {
+//           @apply bg-[#F3D5DE] border border-[color:var(--Primary-500,#C22E58)] border-solid rounded-md;
+//         }
+
+//         &:checked:after {
+//           @apply text-[#C22E58] rounded-md;
+//         }
+//       }
+
+//       .filter-wrap-setting {
+//         @apply flex flex-col gap-4 p-6;
+
+//         &-header {
+//           @apply flex items-center justify-between border-b border-b-[#ADB5BD] border-solid pb-2;
+
+//           &-title {
+//             @apply flex gap-2;
+
+//             p {
+//               @apply text-[color:var(--Generic-Black,#121212)] text-center text-sm font-medium;
+//             }
+//           }
+//         }
+
+//         &-content {
+//           span {
+//             @apply flex gap-2 py-3;
+
+//             p {
+//               @apply text-[color:var(--Generic-Black,#121212)] text-center text-xs font-normal;
+//             }
+//           }
+//         }
+
+//         .checkbox-slider {
+//           @apply relative ml-10;
+//           &:checked {
+//             &::before {
+//               transform: translateX(100%);
+//             }
+//             &::after {
+//               background: #0069d9;
+//             }
+//           }
+//           &::after,
+//           &::before {
+//             @apply -top-[3px] -left-[3px] absolute;
+//             content: "";
+//             transition: all 0.3s ease-in-out;
+//           }
+//           &::after {
+//             @apply bg-[#b1b1b1] w-9 h-5 rounded-[10px];
+//             outline: none;
+//           }
+//           &::before {
+//             @apply w-4 h-4 left-0 -top-[0.5px] rounded-full bg-white z-10;
+//             outline: none;
+//           }
+//         }
+//       }
+
+//       $on: #0069d9;
+//       $off: #b1b1b1;
+//       $slider: #fff;
+
+//       .custom-checkbox-slider {
+//         position: relative;
+//         margin-right: 40px;
+//         &:checked {
+//           &::before {
+//             transform: translateX(100%);
+//           }
+//           &::after {
+//             background: $on;
+//           }
+//         }
+//         &::after,
+//         &::before {
+//           content: "";
+//           top: -3px;
+//           left: -3px;
+//           position: absolute;
+//           transition: all 0.3s ease-in-out;
+//         }
+//         &::after {
+//           background: $off;
+//           width: 37px;
+//           height: 20px;
+//           border-radius: 10px;
+//           outline: none;
+//         }
+//         &::before {
+//           width: 15px;
+//           height: 15px;
+//           left: 0px;
+//           top: -0.5px;
+//           border-radius: 50%;
+//           background: $slider;
+//           z-index: 1;
+//           outline: none;
+//         }
+//       }
+//     }
+
+//     &-buttons {
+//       @apply flex justify-center items-center gap-2 w-full bottom-0 [background:var(--Generic-White,#FFF)] px-6 py-2 border-t-[rgba(204,221,227,0.50)] border-t border-solid;
+//       a {
+//         @apply text-center text-sm font-medium;
+
+//         &:hover {
+//           color: inherit;
+//         }
+//       }
+
+//       &-show {
+//         @apply flex-1 [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg text-[color:var(--Generic-White,#FFF)];
+//       }
+
+//       &-reset {
+//         @apply flex-1 border border-[color:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg border-solid text-[color:var(--Primary-500,#C22E58)];
+//       }
+//     }
+//   }
+// }
