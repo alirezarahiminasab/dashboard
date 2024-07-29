@@ -10,6 +10,9 @@
 
 defined('ABSPATH') || exit;
 
+
+require_once get_stylesheet_directory() . '\\inc\\event-module\\services\\EventService.php' ; 
+
 use TUTOR\Input;
 use Tutor\Models\CourseModel;
 
@@ -49,7 +52,7 @@ $per_page           = tutor_utils()->get_option('courses_per_page', 10);
 $paged              = Input::get('current_page', 1, Input::TYPE_INT);
 $offset             = $per_page * ($paged - 1);
 
-// $results = tutor_utils()->get_courses_by_instructor($current_user_id, $status, $offset, $per_page);
+$results = tutor_utils()->get_courses_by_instructor($current_user_id, $status, $offset, $per_page);
 ?>
 
 <div class="instructor-settings-back">
@@ -61,7 +64,7 @@ $offset             = $per_page * ($paged - 1);
 
 <div class="instructor-courses">
     <div class="instructor-courses-wrap">
-        <!-- <div class="instructor-courses-wrap-setting">
+        <div class="instructor-courses-wrap-setting">
             <a class="instructor-courses-wrap-setting-button instructor-courses-filter-btn" href="#">
                 <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/filter-search.png' ?>" alt="">
                 <?php esc_html_e('فیلتر', 'edumall-child'); ?>
@@ -75,47 +78,75 @@ $offset             = $per_page * ($paged - 1);
                     <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/arrow-down.png' ?>" alt="">
                 </span>
             </a>
-        </div> -->
+        </div>
+        <?php if (is_array($results) && count($results)) : ?>
+            <?php
+            global $post;
+            $tutor_nonce_value     = wp_create_nonce(tutor()->nonce_action);
+            $default_thumbnail_src = tutor()->url . 'assets/images/placeholder.svg';
 
-
-
-
+            ?>
             <div class="instructor-courses-wrap-boxes">
+                <?php foreach ($results as $post) : ?>
+                    <?php
+                    setup_postdata($post);
 
-
+                    $course_rating    = tutor_utils()->get_course_rating();
+                    $course_reviews    = tutor_utils()->get_course_reviews($post->ID);
+                    $terms = get_the_terms($post->ID, 'course-category');
+                    $reviews_count = sizeof($course_reviews);
+                    $avg_rating       = $course_rating->rating_avg;
+                    $rating_count     = $course_rating->rating_count;
+                    $id_string_delete = 'tutor_my_courses_delete_' . $post->ID;
+                    $row_id           = 'instructor-course-' . $post->ID;
+                    ?>
                     <div id="<?php echo $row_id ?>" class="edumall-box instructor-courses-wrap-boxes-course instructor-course-<?php the_ID(); ?>">
+                        <div class="instructor-courses-wrap-boxes-course-header">
+                            <a href="<?php the_permalink(); ?>">
+                                <?php if (has_post_thumbnail()) : ?>
+                                    <?php Edumall_Image::the_post_thumbnail([
+                                        'alt'  => get_the_title(),
+                                    ]); ?>
+                                <?php else : ?>
+                                    <?php echo Edumall_Image::build_img_tag([
+                                        'src' => $default_thumbnail_src,
+                                        'alt' => get_the_title(),
+                                    ]) ?>
+                                <?php endif; ?>
+                            </a>
+                            <h3 class="course-title"><a href="<?php the_permalink(); ?>" class="link-in-title"><?php the_title(); ?></a></h3>
 
 
-    <!-- SECTION -->
-                    <div class="instructor-courses-wrap-boxes-course-header">
-                            <a href="the_permalink" srs="EVENT.imageURL" alt="EVENT.title"></a>
-                            <h3 class="course-title"><a href="the_permalink" class="link-in-title">EVENT.title</a></h3>
+
+                            
                             <div class="instructor-dropdown-parent">
                                 <img class="instructor-dropdown-parent-icon" src="<?php echo get_stylesheet_directory_uri() . '/assets/images/more.svg' ?>" alt="">
-                                <div id="table-dashboard-course-list-EVENT._id" class="instructor-dropdown-parent-menu">
+                                <div id="table-dashboard-course-list-<?php echo esc_attr($post->ID); ?>" class="instructor-dropdown-parent-menu">
+
+                                    <!-- Move to Draf Action -->
+                                    <div class="instructor-dropdown-item">
+                                        <input type="checkbox" name="" <?php echo in_array($post->post_status, array(CourseModel::STATUS_PUBLISH)) ? '' : 'checked' ?>>
+
+                                        <a class="instructor-dropdown-item-status" href="#" data-course-action='hide-course' data-course-id='<?php echo $post->ID ?>'>
+                                            <?php esc_html_e('پنهان کردن', 'edumall-child'); ?>
+                                        </a>
+                                    </div>
+
+                                    <!-- # Move to Draft Action -->
 
                                     <!-- Edit Action -->
                                     <div class="instructor-dropdown-item">
                                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/edit.svg' ?>" alt="">
-                                        <a href="<?php echo esc_url(tutor_utils()->get_tutor_dashboard_page_permalink('course/edit-courses/?course_ID=' . EVENT._id)); ?>">
+                                        <a href="<?php echo esc_url(tutor_utils()->get_tutor_dashboard_page_permalink('course/edit-courses/?course_ID=' . $post->ID)); ?>">
                                             <?php esc_html_e('ویرایش', 'edumall-child'); ?>
                                         </a>
                                     </div>
                                     <!-- # Edit Action -->
 
-                                    <!-- discount Action -->
-                                    <div class="instructor-dropdown-item">
-                                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/edit.svg' ?>" alt="">
-                                        <a href="<?php echo esc_url(tutor_utils()->get_tutor_dashboard_page_permalink('event/discount-page/?course_ID=' . EVENT._id)); ?>">
-                                            <?php esc_html_e('کد تخفیف', 'edumall-child'); ?>
-                                        </a>
-                                    </div>
-                                    <!-- # discount Action -->
-
                                     <!-- Delete Action -->
                                     <div class="instructor-dropdown-item">
                                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/trash.svg' ?>" alt="">
-                                        <a id='instructor-dropdown-item-delete' class="instructor-dropdown-item-status" href="#" data-course-action='delete-course' data-course-id="EVENT._id">
+                                        <a id='instructor-dropdown-item-delete' class="instructor-dropdown-item-status" href="#" data-course-action='delete-course' data-course-id='<?php echo $post->ID ?>'>
                                             <?php esc_html_e('Delete', 'edumall-child'); ?>
                                         </a>
                                     </div>
@@ -124,24 +155,46 @@ $offset             = $per_page * ($paged - 1);
                                 </div>
                             </div>
                         </div>
-                        
-                            <!-- SECTION -->
-
-
+                        <?php if ($post->post_status === 'trash') : ?>
+                            <div class="instructor-courses-wrap-boxes-course-declined">
+                                <div class="declined-message">
+                                    <p>
+                                        این دوره به دلیل نقض قوانین هانیل تایید نشده است.
+                                    </p>
+                                </div>
+                                <div class="declined-contact">
+                                    <div class="declined-contact-item">
+                                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/policy.svg' ?>" alt="">
+                                        <a href="#">
+                                            مشاهده قوانین
+                                        </a>
+                                    </div>
+                                    <div class="declined-contact-item">
+                                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/call.svg' ?>" alt="">
+                                        <a href="">
+                                            تماس با پشتیبانی
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif ?>
                         <div class="instructor-courses-wrap-boxes-course-meta">
                             <div class="instructor-course-metadata">
+                                <?php
+                                $course_students = tutor_utils()->count_enrolled_users_by_course();
+                                ?>
 
                                 <div class="instructor-course-metadata-status">
                                     <?php
-                                    if (EVENT.status === 'pending') : ?>
+                                    if ($post->post_status === 'pending') : ?>
                                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/pending.svg' ?>" alt="">
                                         <p class="pending">در انتظار تایید</p>
                                     <?php endif;
-                                    if (EVENT.status === 'approve') : ?>
+                                    if ($post->post_status === 'publish') : ?>
                                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/verified.svg' ?>" alt="">
                                         <p class="published">تایید شده</p>
                                     <?php endif;
-                                    if (EVENT.status === 'reject') : ?>
+                                    if ($post->post_status === 'trash') : ?>
                                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/denied.svg' ?>" alt="">
                                         <p class="declined">تایید نشده</p>
                                     <?php endif;
@@ -150,21 +203,59 @@ $offset             = $per_page * ($paged - 1);
 
                                 <div class="instructor-course-metadata-category">
                                     <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/category.svg' ?>" alt="">
-                                    <p class="meta-value">(EVENT.category)</p>
+                                    <?php if (!empty($terms)) : ?>
+                                        <?php foreach ($terms as $term) : ?>
+                                            <p class="meta-value"><?php echo esc_html($term->name); ?></p>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="instructor-course-metadata-enrolled">
+                                    <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/profile-students.svg' ?>" alt="">
+                                    <p class="meta-value"><?php echo esc_html($course_students); ?></p>
                                 </div>
 
                                 <div class="instructor-course-metadata-reviews">
                                     <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/reviews.svg' ?>" alt="">
-                                    <p class="meta-value">unix2date(EVENT.startDate)</p>
+                                    <p class="meta-value"><?php echo esc_html($reviews_count); ?></p>
                                 </div>
-                            </div>                
+                            </div>
+
+                            <!-- Delete prompt modal -->
+                            <div id="<?php echo $id_string_delete; ?>" class="tutor-modal modal-delete-my-course">
+                                <div class="tutor-modal-overlay"></div>
+                                <div class="tutor-modal-window">
+                                    <div class="tutor-modal-content tutor-modal-content-white">
+                                        <button class="tutor-iconic-btn tutor-modal-close-o" data-tutor-modal-close>
+                                            <span class="tutor-icon-times" area-hidden="true"></span>
+                                        </button>
+
+                                        <div class="tutor-modal-body tutor-text-center">
+                                            <div class="tutor-mt-48">
+                                                <img class="tutor-d-inline-block" src="<?php echo tutor()->url; ?>assets/images/icon-trash.svg" />
+                                            </div>
+
+                                            <div class="tutor-fs-3 tutor-fw-medium tutor-color-black tutor-mb-12"><?php esc_html_e('Delete This Course?', 'edumall-child'); ?></div>
+                                            <div class="tutor-fs-6 tutor-color-muted"><?php esc_html_e('Are you sure you want to delete this course permanently from the site? Please confirm your choice.', 'edumall-child'); ?></div>
+
+                                            <div class="tutor-d-flex tutor-justify-center tutor-my-48">
+                                                <button data-tutor-modal-close class="tutor-btn tutor-btn-outline-primary">
+                                                    <?php esc_html_e('Cancel', 'edumall-child'); ?>
+                                                </button>
+                                                <button class="tutor-btn tutor-btn-primary tutor-list-ajax-action tutor-ml-20" data-request_data='{"course_id":<?php echo $post->ID; ?>,"action":"tutor_delete_dashboard_course"}' data-delete_element_id="<?php echo $row_id; ?>">
+                                                    <?php esc_html_e('Yes, Delete This', 'edumall-child'); ?>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-
-                            <!-- SECTION -->
-
                     </div>
+                <?php endforeach; ?>
+                <?php wp_reset_postdata(); ?>
             </div>
+        <?php else : ?>
             <div class="instructor-courses-wrap-empty">
                 <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/NoItemsCourse.png' ?>" alt="">
                 <p>
@@ -174,8 +265,22 @@ $offset             = $per_page * ($paged - 1);
                     <?php esc_html_e('ایجاد دوره', 'edumall-child'); ?>
                 </a>
             </div>
+        <?php endif; ?>
 
+        <?php
+        if (count($count_map) > $per_page) {
+            $pagination_data = array(
+                'total_items' => count($count_map),
+                'per_page'    => $per_page,
+                'paged'       => $paged,
+            );
 
+            tutor_load_template_from_custom_path(
+                tutor()->path . 'templates/dashboard/elements/pagination.php',
+                $pagination_data
+            );
+        }
+        ?>
         <div class="instructor-courses-wrap-create-btn">
             <a href="<?php echo site_url('/dashboard/course/course-create/') ?>" target="_blank">
                 <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/add-course.png' ?>" alt="">
@@ -183,7 +288,7 @@ $offset             = $per_page * ($paged - 1);
         </div>
 
     </div>
-    <!-- <div class="instructor-courses-sort">
+    <div class="instructor-courses-sort">
         <div class="instructor-courses-sort-bg"></div>
         <div class="instructor-courses-sort-wrap">
             <div class="instructor-courses-sort-wrap-header">
@@ -299,5 +404,5 @@ $offset             = $per_page * ($paged - 1);
                 <?php esc_html_e('بازنشانی', 'edumall-child'); ?>
             </a>
         </div>
-    </div> -->
+    </div>
 </div>

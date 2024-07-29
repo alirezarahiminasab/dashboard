@@ -142,7 +142,10 @@
     }
 
     &-empty {
-      @apply flex flex-col items-center mt-12;
+      &.active {
+        @apply flex;
+      }
+      @apply hidden flex-col items-center mt-12;
 
       p {
         @apply text-[color:var(--Generic-Black,#121212)] text-center text-lg font-medium;
@@ -267,6 +270,74 @@
               @apply text-[color:var(--Generic-Black,#121212)] text-center text-xs font-normal;
             }
           }
+        }
+
+        .checkbox-slider {
+          @apply relative ml-10;
+          &:checked {
+            &::before {
+              transform: translateX(100%);
+            }
+            &::after {
+              background: #0069d9;
+            }
+          }
+          &::after,
+          &::before {
+            @apply -top-[3px] -left-[3px] absolute;
+            content: "";
+            transition: all 0.3s ease-in-out;
+          }
+          &::after {
+            @apply bg-[#b1b1b1] w-9 h-5 rounded-[10px];
+            outline: none;
+          }
+          &::before {
+            @apply w-4 h-4 left-0 -top-[0.5px] rounded-full bg-white z-10;
+            outline: none;
+          }
+        }
+      }
+
+      $on: #0069d9;
+      $off: #b1b1b1;
+      $slider: #fff;
+
+      .custom-checkbox-slider {
+        position: relative;
+        margin-right: 40px;
+        &:checked {
+          &::before {
+            transform: translateX(100%);
+          }
+          &::after {
+            background: $on;
+          }
+        }
+        &::after,
+        &::before {
+          content: "";
+          top: -3px;
+          left: -3px;
+          position: absolute;
+          transition: all 0.3s ease-in-out;
+        }
+        &::after {
+          background: $off;
+          width: 37px;
+          height: 20px;
+          border-radius: 10px;
+          outline: none;
+        }
+        &::before {
+          width: 15px;
+          height: 15px;
+          left: 0px;
+          top: -0.5px;
+          border-radius: 50%;
+          background: $slider;
+          z-index: 1;
+          outline: none;
         }
       }
     }

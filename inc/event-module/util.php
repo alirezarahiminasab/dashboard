@@ -57,7 +57,7 @@ class EventUtil
             $jsonData = json_encode($data);
             
             //log $data
-            error_log(print_r($jsonData, true));
+            // error_log(print_r($jsonData, true));
 
             // return  EventUtil::getToken(['role' => 'superAdmin']);
             // Set common cURL options

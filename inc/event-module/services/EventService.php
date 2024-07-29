@@ -15,7 +15,7 @@ class EventService
     public static function getMyEvents()
     {
         $result = EventUtil::callApi('events/me', [], 'GET');
-        error_log(print_r($result, true));
+        // error_log(print_r($result, true));
         return $result;
          
     }

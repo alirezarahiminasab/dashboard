@@ -112,6 +112,10 @@ $results = tutor_utils()->get_courses_by_instructor($current_user_id, $status, $
                                 <?php endif; ?>
                             </a>
                             <h3 class="course-title"><a href="<?php the_permalink(); ?>" class="link-in-title"><?php the_title(); ?></a></h3>
+
+
+
+                            
                             <div class="instructor-dropdown-parent">
                                 <img class="instructor-dropdown-parent-icon" src="<?php echo get_stylesheet_directory_uri() . '/assets/images/more.svg' ?>" alt="">
                                 <div id="table-dashboard-course-list-<?php echo esc_attr($post->ID); ?>" class="instructor-dropdown-parent-menu">

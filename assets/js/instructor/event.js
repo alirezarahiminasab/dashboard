@@ -4,6 +4,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import Swiper from "swiper";
 import { Autoplay } from "swiper/modules";
+import moment from "moment-jalaali";
 
 // import "swiper/css";
 console.log("js file");
@@ -15,8 +16,10 @@ console.log("js file");
 
   class CourseStatus {
     constructor() {
+      this.categoies = new Set();
+
       this.elements = {
-        // coursePrompt: $(".instructor-dropdown-parent"),
+        coursePrompt: $(".instructor-dropdown-parent"),
         // courseSort: $(".instructor-courses-sort"),
         // sortBtn: $(".instructor-courses-sort-btn"),
         // sortCloseBtn: $(".sort-header-close"),
@@ -36,6 +39,12 @@ console.log("js file");
       // this.lessonFunctions();
     }
 
+    unix2date(unixNumber) {
+      return unixNumber
+        ? moment.unix(unixNumber).format("jYYYY/jMM/jDD")
+        : null;
+    }
+
     getMyCoursesAjax() {
       $(document).ready(() => {
         if ($(".instructor-courses").length) {
@@ -47,8 +56,21 @@ console.log("js file");
               action: "get_my_events",
             },
             beforeSend() {},
-            success: function (response) {
-              console.log(response);
+            success: (response) => {
+              if (response.success) {
+                // console.log(response);
+                const data = JSON.parse(response.data).data.events;
+                if (data.length) {
+                  this.displayEvents(data);
+                  this.addCategoriesToFilter();
+                  $("instructor-courses-wrap-empty").removeClass("active");
+                } else {
+                  $("instructor-courses-wrap-empty").addClass("active");
+                }
+                this.update();
+              } else {
+                console.error(response.data.message);
+              }
             },
             error: function (response) {
               console.error(response);
@@ -58,31 +80,123 @@ console.log("js file");
       });
     }
 
-    // update($el) {
-    //   const plugin = this;
+    addCategoriesToFilter() {
+      const categoryFilterContainer = $(
+        ".filter-wrap-setting-category .filter-wrap-setting-content"
+      );
+      this.categoies.forEach((category) => {
+        categoryFilterContainer.append(
+          `<span><input type="checkbox" data-category=${category} name="" id="" class="filter-wrap-setting-content-category"><p>${category}</p></span>`
+        );
+      });
+    }
 
-    //   $el.coursePrompt.on(
-    //     "click",
-    //     ".instructor-dropdown-parent-icon",
-    //     function (e) {
-    //       e.prcourseDefault();
-    //       const dropdownMenu = $(this).siblings(
-    //         ".instructor-dropdown-parent-menu"
-    //       );
+    displayEvents(events) {
+      const template = $("#event-card-template").html();
+      const eventsContainer = $(".instructor-courses-wrap-boxes");
 
-    //       if (dropdownMenu.css("display") === "none") {
-    //         dropdownMenu.css("display", "flex");
-    //       } else {
-    //         dropdownMenu.css("display", "none");
-    //       }
-    //     }
-    //   );
+      // eventsContainer.empty(); // Clear any existing content
 
+      events.forEach((event) => {
+        let card = $(template).clone();
+        this.categoies.add(event.category);
+
+        card.find(".event-link").attr("href", "the_permalink");
+        card
+          .find(".event-image")
+          .attr("src", event.imageURL)
+          .attr("alt", event.title);
+        card
+          .find(".event-title")
+          .text(event.title)
+          .attr("href", "the_permalink");
+
+        // Edit link
+        const editUrlTemplate = card
+          .find(".hidden-elements .edit-url-template")
+          .val();
+        card.find(".event-edit").attr("href", `${editUrlTemplate}${event._id}`);
+
+        // Discount link
+        const discountUrlTemplate = card
+          .find(".hidden-elements .discount-url-template")
+          .val();
+        card
+          .find(".event-discount")
+          .attr("href", `${discountUrlTemplate}${event._id}`);
+
+        // Delete link
+        card.find(".event-delete").attr("data-course-id", event._id);
+
+        // Status
+        let statusIcon = "";
+        let statusText = "";
+        switch (event.status) {
+          case "pending":
+            statusIcon = $(".hidden-elements .pending-icon").val();
+            statusText = "در انتظار تایید";
+            break;
+          case "approve":
+            statusIcon = $(".hidden-elements .approve-icon").val();
+            statusText = "تایید شده";
+            break;
+          case "reject":
+            statusIcon = $(".hidden-elements .reject-icon").val();
+            statusText = "تایید نشده";
+            break;
+        }
+        card.find(".event-status-icon").attr("src", statusIcon);
+        card.find(".event-status-text").text(statusText);
+
+        // Category
+        card.find(".event-category").text(event.category);
+
+        // Start Date
+        console.log(event.startDate);
+        const startDate = this.unix2date(event.startDate);
+        console.log(startDate);
+        card.find(".event-start-date").text(startDate);
+
+        // Append card to the container
+        eventsContainer.append(card);
+      });
+    }
+
+    update() {
+      $(".instructor-dropdown-parent").on(
+        "click",
+        ".instructor-dropdown-parent-icon",
+        function (e) {
+          e.preventDefault();
+          const dropdownMenu = $(this).siblings(
+            ".instructor-dropdown-parent-menu"
+          );
+
+          if (dropdownMenu.css("display") === "none") {
+            dropdownMenu.css("display", "flex");
+          } else {
+            dropdownMenu.css("display", "none");
+          }
+        }
+      );
+
+      $(".instructor-courses-filter-btn").on("click", function (e) {
+        e.preventDefault();
+        const tl = gsap.timeline();
+        tl.to($(".instructor-courses-filter"), {
+          display: "block",
+        });
+        tl.to($(".instructor-courses-filter"), {
+          y: 0,
+          duration: 0.3,
+        });
+      });
+    }
     //   $el.coursePrompt.on(
     //     "click",
     //     ".instructor-dropdown-item-status",
     //     function (e) {
-    //       e.prcourseDefault();
+    //       e.preventDefault();
     //       const hiddenCourseInput = $(this).siblings("input");
     //       const courseAction = $(this).data("course-action");
     //       const courseID = $(this).data("course-id");
@@ -113,7 +227,7 @@ console.log("js file");
     //   );
 
     //   $el.sortBtn.on("click", function (e) {
-    //     e.prcourseDefault();
+    //     e.preventDefault();
     //     $(".instructor-courses-sort").show();
     //     gsap.to($(".instructor-courses-sort-wrap"), {
     //       y: 0,
@@ -126,7 +240,7 @@ console.log("js file");
     //     .add($el.courseSort.find(".instructor-courses-sort-bg"))
     //     .off("click")
     //     .on("click", function (e) {
-    //       e.prcourseDefault();
+    //       e.preventDefault();
     //       const tl = gsap.timeline();
     //       tl.to($(".instructor-courses-sort-wrap"), {
     //         y: "100%",
@@ -165,20 +279,8 @@ console.log("js file");
     //       });
     //     });
 
-    //   $el.filterBtn.on("click", function (e) {
-    //     e.prcourseDefault();
-    //     const tl = gsap.timeline();
-    //     tl.to($(".instructor-courses-filter"), {
-    //       display: "block",
-    //     });
-    //     tl.to($(".instructor-courses-filter"), {
-    //       y: 0,
-    //       duration: 0.3,
-    //     });
-    //   });
-
     //   $el.courseFilter.on("click", ".sort-header-close", function (e) {
-    //     e.prcourseDefault();
+    //     e.preventDefault();
     //     const tl = gsap.timeline();
     //     tl.to($(".instructor-courses-filter"), {
     //       y: "100%",
@@ -222,7 +324,7 @@ console.log("js file");
     //     "click",
     //     ".instructor-courses-filter-buttons-show",
     //     function (e) {
-    //       e.prcourseDefault();
+    //       e.preventDefault();
     //       const tl = gsap.timeline();
     //       const instructor = $(this).data("instructor");
     //       const status = [];
@@ -272,7 +374,7 @@ console.log("js file");
     //     "click",
     //     ".instructor-courses-filter-buttons-reset",
     //     function (e) {
-    //       e.prcourseDefault();
+    //       e.preventDefault();
     //       const tl = gsap.timeline();
     //       const instructor = $(this).data("instructor");
     //       const status = ["publish", "pending", "trash"];
@@ -328,7 +430,7 @@ console.log("js file");
     //   $el.courseStatistics
     //     .find(".course-statistics-sort-btn")
     //     .on("click", function (e) {
-    //       e.prcourseDefault();
+    //       e.preventDefault();
     //       $(".course-statistics-sort").show();
     //       gsap.to($(".course-statistics-sort-wrap"), {
     //         y: 0,
@@ -340,7 +442,7 @@ console.log("js file");
     //     .find(".sort-header-close")
     //     .add($el.courseStatistics.find(".course-statistics-sort-bg"))
     //     .on("click", function (e) {
-    //       e.prcourseDefault();
+    //       e.preventDefault();
     //       const tl = gsap.timeline();
     //       tl.to($(".course-statistics-sort-wrap"), {
     //         y: "100%",
@@ -396,7 +498,7 @@ console.log("js file");
     //   $(document).on("click", ".buy-now-button-add-to-cart", function (evt) {
     //     var $thisButton = $(this);
     //     // Do nothing if this is external product.
-    //     evt.prcourseDefault();
+    //     evt.preventDefault();
 
     //     if ($thisButton.hasClass("disabled")) {
     //       // Variation select required.
@@ -487,14 +589,14 @@ console.log("js file");
     //   $(".single-lesson-related-navigation")
     //     .find(".btn-right")
     //     .on("click", function (e) {
-    //       e.prcourseDefault();
+    //       e.preventDefault();
     //       swiper.slidePrev();
     //     });
 
     //   $(".single-lesson-related-navigation")
     //     .find(".btn-left")
     //     .on("click", function (e) {
-    //       e.prcourseDefault();
+    //       e.preventDefault();
     //       swiper.slideNext();
     //     });
     // }

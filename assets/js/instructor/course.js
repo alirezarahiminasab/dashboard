@@ -42,8 +42,9 @@ gsap.registerPlugin(ScrollTrigger);
         ".instructor-dropdown-parent-icon",
         function (e) {
           e.preventDefault();
+          console.log("drop");
           const dropdownMenu = $(this).siblings(
-            ".instructor-dropdown-parent-menu",
+            ".instructor-dropdown-parent-menu"
           );
 
           if (dropdownMenu.css("display") === "none") {
@@ -51,7 +52,7 @@ gsap.registerPlugin(ScrollTrigger);
           } else {
             dropdownMenu.css("display", "none");
           }
-        },
+        }
       );
 
       $el.coursePrompt.on(
@@ -85,7 +86,7 @@ gsap.registerPlugin(ScrollTrigger);
               console.log(e);
             },
           });
-        },
+        }
       );
 
       $el.sortBtn.on("click", function (e) {
@@ -176,7 +177,7 @@ gsap.registerPlugin(ScrollTrigger);
           } else {
             inputBoxes.prop("checked", false);
           }
-        },
+        }
       );
 
       $el.courseFilter.on(
@@ -191,7 +192,7 @@ gsap.registerPlugin(ScrollTrigger);
           if ($(this).prop("checked") === false) {
             inputBoxes.prop("checked", false);
           }
-        },
+        }
       );
 
       $el.courseFilter.on(
@@ -205,13 +206,13 @@ gsap.registerPlugin(ScrollTrigger);
           const category = [];
 
           $(
-            ".instructor-courses-filter .filter-wrap-setting-content-status:checked",
+            ".instructor-courses-filter .filter-wrap-setting-content-status:checked"
           ).each((index, el) => {
             status.push($(el).val());
           });
 
           $(
-            ".instructor-courses-filter .filter-wrap-setting-content-category:checked",
+            ".instructor-courses-filter .filter-wrap-setting-content-category:checked"
           ).each((index, el) => {
             category.push($(el).data("id"));
           });
@@ -241,7 +242,7 @@ gsap.registerPlugin(ScrollTrigger);
               console.log(e);
             },
           });
-        },
+        }
       );
 
       $el.courseFilter.on(
@@ -255,7 +256,7 @@ gsap.registerPlugin(ScrollTrigger);
 
           $(".instructor-courses-filter-wrap input:checkbox").prop(
             "checked",
-            false,
+            false
           );
 
           $.ajax({
@@ -283,7 +284,7 @@ gsap.registerPlugin(ScrollTrigger);
               console.log(e);
             },
           });
-        },
+        }
       );
 
       ScrollTrigger.create({
