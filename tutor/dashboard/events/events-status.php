@@ -14,7 +14,7 @@ defined('ABSPATH') || exit;
 require_once get_stylesheet_directory() . '\\inc\\event-module\\services\\EventService.php' ; 
 require_once get_stylesheet_directory() . '\\inc\\date-conversion.php' ; 
 
-// $default_thumbnail_src = tutor()->url . 'assets/images/placeholder.svg';
+$default_thumbnail_src = tutor()->url . 'assets/images/placeholder.svg';
 
 // use TUTOR\Input;
 // use Tutor\Models\CourseModel;
@@ -71,10 +71,10 @@ if (json_last_error() === JSON_ERROR_NONE) {
         $categories = array_column($results, 'category');
         
         // Remove duplicate values
-        $course_category = array_values(array_unique($categories));
+        $event_category = array_values(array_unique($categories));
         
         // Output the unique categories
-        // error_log(print_r($course_category,true));
+        // error_log(print_r($event_category,true));
     } else {
         error_log(print_r("Response status is not 'success'.",true));
     }
@@ -89,62 +89,44 @@ if (json_last_error() === JSON_ERROR_NONE) {
     <a href="<?php echo esc_url($profile_url); ?>">
         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/arrow-right.png' ?>" alt="">
     </a>
-    <h3><?php esc_html_e('دوره‌های ایجاد شده', 'edumall-child'); ?></h3>
+    <h3><?php esc_html_e('رویداد های ایجاد شده', 'edumall-child'); ?></h3>
 </div>
 
-<div class="instructor-courses">
-    <div class="instructor-courses-wrap">
+<div class="instructor-event">
+    <div class="instructor-event-wrap">
         <?php if (is_array($results) && count($results)) : ?>
 
-            <div class="instructor-courses-wrap-setting">
-                <a class="instructor-courses-wrap-setting-button instructor-courses-filter-btn" href="#">
+            <div class="instructor-event-wrap-setting">
+                <a class="instructor-event-wrap-setting-button instructor-event-filter-btn" href="#">
                     <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/filter-search.png' ?>" alt="">
                     <?php esc_html_e('فیلتر', 'edumall-child'); ?>
                 </a>
             </div>
 
 
-            <div class="instructor-courses-wrap-boxes">
+            <div class="instructor-event-wrap-boxes">
                 <?php foreach ($results as $event) : ?>
                     <?php
-                    // error_log(print_r($event, true));
-                    // error_log(print_r($event['title'], true));
-                    $course_rating    = '$course_rating';
-                    $course_reviews    = 'course_reviews';
-                    $terms = $event['category'];
-                    $avg_rating       = $event['avgRate'];
-                    $rating_count     = 'rating_count';
-                    $id_string_delete = 'tutor_my_courses_delete_' . $event['_id'];
-                    $row_id           = 'instructor-course-' . $event['_id'];
+                    $id_string_delete = 'tutor_my_events_delete_' . $event['_id'];
+                    $row_id           = 'instructor-event-' . $event['_id'];
                     ?>
-                    <div id="<?php echo $row_id ?>" class="edumall-box instructor-courses-wrap-boxes-course instructor-course-<?php the_ID(); ?>">
-                        <div class="instructor-courses-wrap-boxes-course-header">
-                            <a href="<?php the_permalink(); ?>">
-                                <?php if (has_post_thumbnail()) : ?>
-                                    <?php Edumall_Image::the_post_thumbnail([
-                                        'alt'  => get_the_title(),
-                                    ]); ?>
-                                <?php else : ?>
-                                    <?php echo Edumall_Image::build_img_tag([
-                                        'src' => $default_thumbnail_src,
-                                        'alt' => get_the_title(),
-                                    ]) ?>
-                                <?php endif; ?>
-                            </a>
-                            <h3 class="course-title"><a href="<?php the_permalink(); ?>" class="link-in-title"><?php echo $event['title'] ?></a></h3>
+                    <div id="<?php echo $row_id ?>" class="edumall-box instructor-event-wrap-boxes-event instructor-event-<?php echo $event['_id'] ?>">
+                        <div class="instructor-event-wrap-boxes-event-header">
+                            <img alt="<?php echo $event['title']?>" src="<?php echo $event['imageURL']?>"/>
+                            <h3 class="event-title"><?php echo $event['title'] ?></h3>
 
 
 
                             
-                            <div class="instructor-dropdown-parent">
-                                <img class="instructor-dropdown-parent-icon" src="<?php echo get_stylesheet_directory_uri() . '/assets/images/more.svg' ?>" alt="">
-                                <div id="table-dashboard-course-list-<?php echo esc_attr($event['_id']); ?>" class="instructor-dropdown-parent-menu">
+                            <div class="instructor-event-dropdown-parent">
+                                <img class="instructor-event-dropdown-parent-icon" src="<?php echo get_stylesheet_directory_uri() . '/assets/images/more.svg' ?>" alt="">
+                                <div id="table-dashboard-event-list-<?php echo esc_attr($event['_id']); ?>" class="instructor-event-dropdown-parent-menu">
 
 
                                     <!-- # Move to Draft Action -->
 
                                     <!-- Edit Action -->
-                                    <div class="instructor-dropdown-item">
+                                    <div class="instructor-event-dropdown-item">
                                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/edit.svg' ?>" alt="">
                                         <a href="<?php echo esc_url(tutor_utils()->get_tutor_dashboard_page_permalink('course/edit-courses/?course_ID=' . $event['_id'])); ?>">
                                             <?php esc_html_e('ویرایش', 'edumall-child'); ?>
@@ -153,9 +135,9 @@ if (json_last_error() === JSON_ERROR_NONE) {
                                     <!-- # Edit Action -->
 
                                     <!-- Delete Action -->
-                                    <div class="instructor-dropdown-item">
+                                    <div class="instructor-event-dropdown-item">
                                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/trash.svg' ?>" alt="">
-                                        <a id='instructor-dropdown-item-delete' class="instructor-dropdown-item-status" href="#" data-course-action='delete-course' data-course-id='<?php echo $event['_id'] ?>'>
+                                        <a id='instructor-event-dropdown-item-delete' class="instructor-event-dropdown-item-status" href="#" data-event-action='delete-event' data-event-id='<?php echo $event['_id'] ?>'>
                                             <?php esc_html_e('Delete', 'edumall-child'); ?>
                                         </a>
                                     </div>
@@ -165,10 +147,10 @@ if (json_last_error() === JSON_ERROR_NONE) {
                             </div>
                         </div>
                         <?php if ($event['status'] === 'reject') : ?>
-                            <div class="instructor-courses-wrap-boxes-course-declined">
+                            <div class="instructor-event-wrap-boxes-event-declined">
                                 <div class="declined-message">
                                     <p>
-                                        این دوره به دلیل نقض قوانین هانیل تایید نشده است.
+                                        این رویداد به دلیل نقض قوانین هانیل تایید نشده است.
                                     </p>
                                 </div>
                                 <div class="declined-contact">
@@ -187,10 +169,10 @@ if (json_last_error() === JSON_ERROR_NONE) {
                                 </div>
                             </div>
                         <?php endif ?>
-                        <div class="instructor-courses-wrap-boxes-course-meta">
-                            <div class="instructor-course-metadata">
+                        <div class="instructor-event-wrap-boxes-event-meta">
+                            <div class="instructor-event-metadata">
 
-                                <div class="instructor-course-metadata-status">
+                                <div class="instructor-event-metadata-status">
                                     <?php
                                     if ($event['status'] === 'pending') : ?>
                                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/pending.svg' ?>" alt="">
@@ -207,12 +189,12 @@ if (json_last_error() === JSON_ERROR_NONE) {
                                     ?>
                                 </div>
 
-                                <div class="instructor-course-metadata-category">
+                                <div class="instructor-event-metadata-category">
                                     <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/category.svg' ?>" alt="">
                                     <p class="meta-value"><?php echo esc_html($event['category']); ?></p>
                                 </div>
 
-                                <div class="instructor-course-metadata-startDate">
+                                <div class="instructor-event-metadata-startDate">
                                     <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/calendar.svg' ?>" alt="">
                                     <p class="meta-value"><?php echo esc_html(jdate('Y/m/d', $event['startDate']), 'none', 'Asia/Tehran', 'en') ?></p>
                                 </div>
@@ -221,7 +203,7 @@ if (json_last_error() === JSON_ERROR_NONE) {
                             </div>
 
                             <!-- Delete prompt modal -->
-                            <div id="<?php echo $id_string_delete; ?>" class="tutor-modal modal-delete-my-course">
+                            <div id="<?php echo $id_string_delete; ?>" class="tutor-modal modal-delete-my-event">
                                 <div class="tutor-modal-overlay"></div>
                                 <div class="tutor-modal-window">
                                     <div class="tutor-modal-content tutor-modal-content-white">
@@ -234,14 +216,14 @@ if (json_last_error() === JSON_ERROR_NONE) {
                                                 <img class="tutor-d-inline-block" src="<?php echo tutor()->url; ?>assets/images/icon-trash.svg" />
                                             </div>
 
-                                            <div class="tutor-fs-3 tutor-fw-medium tutor-color-black tutor-mb-12"><?php esc_html_e('Delete This Course?', 'edumall-child'); ?></div>
-                                            <div class="tutor-fs-6 tutor-color-muted"><?php esc_html_e('Are you sure you want to delete this course permanently from the site? Please confirm your choice.', 'edumall-child'); ?></div>
+                                            <div class="tutor-fs-3 tutor-fw-medium tutor-color-black tutor-mb-12"><?php esc_html_e('Delete This Event?', 'edumall-child'); ?></div>
+                                            <div class="tutor-fs-6 tutor-color-muted"><?php esc_html_e('Are you sure you want to delete this event permanently from the site? Please confirm your choice.', 'edumall-child'); ?></div>
 
                                             <div class="tutor-d-flex tutor-justify-center tutor-my-48">
                                                 <button data-tutor-modal-close class="tutor-btn tutor-btn-outline-primary">
                                                     <?php esc_html_e('Cancel', 'edumall-child'); ?>
                                                 </button>
-                                                <button class="tutor-btn tutor-btn-primary tutor-list-ajax-action tutor-ml-20" data-request_data='{"course_id":<?php echo $event['_id']; ?>,"action":"tutor_delete_dashboard_course"}' data-delete_element_id="<?php echo $row_id; ?>">
+                                                <button class="tutor-btn tutor-btn-primary tutor-list-ajax-action tutor-ml-20" data-request_data='{"event_id":<?php echo $event['_id']; ?>,"action":"tutor_delete_dashboard_event"}' data-delete_element_id="<?php echo $row_id; ?>">
                                                     <?php esc_html_e('Yes, Delete This', 'edumall-child'); ?>
                                                 </button>
                                             </div>
@@ -255,20 +237,20 @@ if (json_last_error() === JSON_ERROR_NONE) {
                 <?php wp_reset_postdata(); ?>
             </div>
             
-            <div class="instructor-courses-wrap-create-btn">
+            <div class="instructor-event-wrap-create-btn">
                 <a href="<?php echo site_url('/dashboard/course/course-create/') ?>" target="_blank">
                     <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/add-course.png' ?>" alt="">
                 </a>
             </div>
 
         <?php else : ?>
-            <div class="instructor-courses-wrap-empty">
+            <div class="instructor-event-wrap-empty">
                 <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/NoItemsCourse.png' ?>" alt="">
                 <p>
-                    <?php esc_html_e('هنوز دوره‌ای ایجاد نکرده‌اید.', 'edumall-child'); ?>
+                    <?php esc_html_e('هنوز رویدادی ایجاد نکرده‌اید.', 'edumall-child'); ?>
                 </p>
                 <a href="<?php echo site_url('/dashboard/events/events-create-online/') ?>">
-                    <?php esc_html_e('ایجاد دوره', 'edumall-child'); ?>
+                    <?php esc_html_e('ایجاد رویداد', 'edumall-child'); ?>
                 </a>
             </div>
         <?php endif; ?>
@@ -277,8 +259,8 @@ if (json_last_error() === JSON_ERROR_NONE) {
     </div>
 
 
-    <div class="instructor-courses-filter">
-        <div class="instructor-courses-filter-header">
+    <div class="instructor-event-filter">
+        <div class="instructor-event-filter-header">
             <p>فیلترها</p>
             <span class="sort-header-logo">
                 <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/logo-hanil-2.png' ?>" alt="">
@@ -286,7 +268,7 @@ if (json_last_error() === JSON_ERROR_NONE) {
             </span>
             <img class="sort-header-close" src="<?php echo get_stylesheet_directory_uri() . '/assets/images/close-circle.svg' ?>" alt="">
         </div>
-        <div class="instructor-courses-filter-wrap">
+        <div class="instructor-event-filter-wrap">
             <div class="filter-wrap-setting">
                 <div class="filter-wrap-setting-header">
                     <span class="filter-wrap-setting-header-title">
@@ -341,8 +323,8 @@ if (json_last_error() === JSON_ERROR_NONE) {
                             <?php esc_html_e('همه', 'edumall-child'); ?>
                         </p>
                     </span>
-                    <?php if (!empty($course_category)) : ?>
-                        <?php foreach ($course_category as $category) : ?>
+                    <?php if (!empty($event_category)) : ?>
+                        <?php foreach ($event_category as $category) : ?>
                             <span>
                                 <input type="checkbox" data-id="<?php echo $category ?>" name="" id="" class="filter-wrap-setting-content-category">
                                 <p>
@@ -354,11 +336,11 @@ if (json_last_error() === JSON_ERROR_NONE) {
                 </div>
             </div>
         </div>
-        <div class="instructor-courses-filter-buttons">
-            <a class="instructor-courses-filter-buttons-show" >
+        <div class="instructor-event-filter-buttons">
+            <a class="instructor-event-filter-buttons-show" >
                 <?php esc_html_e('مشاهده نتایج', 'edumall-child'); ?>
             </a>
-            <a class="instructor-courses-filter-buttons-reset" >
+            <a class="instructor-event-filter-buttons-reset" >
                 <?php esc_html_e('بازنشانی', 'edumall-child'); ?>
             </a>
         </div>

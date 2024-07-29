@@ -1,4 +1,4 @@
-.instructor-courses {
+.instructor-event {
   @apply bg-[#F3F3F4];
 
   &-wrap {
@@ -10,11 +10,11 @@
       &-button {
         @apply flex justify-center items-center border border-[color:var(--Generic-Black,#121212)] rounded-lg border-solid;
 
-        &.instructor-courses-filter-btn {
+        &.instructor-event-filter-btn {
           @apply p-3 gap-2;
         }
 
-        &.instructor-courses-sort-btn {
+        &.instructor-event-sort-btn {
           span:nth-child(2) {
             @apply flex gap-2 items-center p-3 border-r-[color:var(--Neutral-900,#212529)] border-r border-solid;
           }
@@ -29,7 +29,7 @@
     &-boxes {
       @apply w-full flex flex-col gap-4;
 
-      &-course {
+      &-event {
         @apply w-full flex flex-col gap-3 border border-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] rounded-[8px_0px_8px_8px] border-solid;
 
         &-header {
@@ -43,7 +43,7 @@
             @apply w-12 h-11  rounded-[4px_0px_4px_4px];
           }
 
-          .instructor-dropdown-parent {
+          .instructor-event-dropdown-parent {
             &-icon {
               @apply absolute left-3 top-3 w-4 h-4 cursor-pointer;
             }
@@ -67,10 +67,10 @@
                 @apply text-[color:var(--Generic-Black,#121212)] text-center text-xs font-normal;
               }
 
-              .instructor-dropdown-item {
+              .instructor-event-dropdown-item {
                 @apply flex items-center gap-2 w-full;
 
-                #instructor-dropdown-item-delete {
+                #instructor-event-dropdown-item-delete {
                   @apply text-[color:var(--Error-500,#F62E2E)];
                 }
               }
@@ -101,7 +101,7 @@
         &-meta {
           @apply flex justify-between items-center [background:var(--Neutral-100,#F8F9FA)] p-3 rounded-[0px_0px_8px_8px];
 
-          .instructor-course-metadata {
+          .instructor-event-metadata {
             @apply flex justify-between w-full;
             &-status {
               @apply flex items-center gap-1;

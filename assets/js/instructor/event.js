@@ -12,24 +12,24 @@ gsap.registerPlugin(ScrollTrigger);
 (function ($) {
   "use strict";
 
-  const EdumallCourse = function () {
+  const EdumallEvent = function () {
     this.init = function () {
       const elements = {
-        coursePrompt: $(".instructor-dropdown-parent"),
-        courseSort: $(".instructor-courses-sort"),
-        sortBtn: $(".instructor-courses-sort-btn"),
+        eventPrompt: $(".instructor-event-dropdown-parent"),
+        eventSort: $(".instructor-event-sort"),
+        sortBtn: $(".instructor-event-sort-btn"),
         sortCloseBtn: $(".sort-header-close"),
-        courseFilter: $(".instructor-courses-filter"),
-        filterBtn: $(".instructor-courses-filter-btn"),
+        eventFilter: $(".instructor-event-filter"),
+        filterBtn: $(".instructor-event-filter-btn"),
         buyNow: $(".buy-now-button"),
-        filterWrap: $(".instructor-courses-filter-wrap"),
-        courseStatistics: $(".course-statistics"),
-        courseAction: $(".course-action-btn"),
+        filterWrap: $(".instructor-event-filter-wrap"),
+        eventStatistics: $(".event-statistics"),
+        eventAction: $(".event-action-btn"),
       };
       const plugin = this;
 
       plugin.update(elements);
-      plugin.sortCourse(elements);
+      plugin.sortEvent(elements);
       plugin.singleProductAddToCart();
       plugin.lessonFunctions();
     };
@@ -37,14 +37,14 @@ gsap.registerPlugin(ScrollTrigger);
     this.update = function ($el) {
       const plugin = this;
 
-      $el.coursePrompt.on(
+      $el.eventPrompt.on(
         "click",
-        ".instructor-dropdown-parent-icon",
+        ".instructor-event-dropdown-parent-icon",
         function (e) {
           e.preventDefault();
           console.log("drop");
           const dropdownMenu = $(this).siblings(
-            ".instructor-dropdown-parent-menu"
+            ".instructor-event-dropdown-parent-menu"
           );
 
           if (dropdownMenu.css("display") === "none") {
@@ -55,27 +55,27 @@ gsap.registerPlugin(ScrollTrigger);
         }
       );
 
-      $el.coursePrompt.on(
+      $el.eventPrompt.on(
         "click",
-        ".instructor-dropdown-item-status",
+        ".instructor-event-dropdown-item-status",
         function (e) {
           e.preventDefault();
-          const hiddenCourseInput = $(this).siblings("input");
-          const courseAction = $(this).data("course-action");
-          const courseID = $(this).data("course-id");
+          const hiddenEventInput = $(this).siblings("input");
+          const eventAction = $(this).data("event-action");
+          const eventID = $(this).data("event-id");
 
           const ajaxCall = $.ajax({
             url: ajax_object.ajax_url,
             type: "POST",
             data: {
-              action: "change_course_status",
-              courseAction: courseAction,
-              courseID: courseID,
+              action: "change_event_status",
+              eventAction: eventAction,
+              eventID: eventID,
             },
             success: (response) => {
               // Handle successful upload
               toast(response.result, "success");
-              if (hiddenCourseInput.prop("checked") === true) {
+              if (hiddenEventInput.prop("checked") === true) {
                 $(this).siblings("input").prop("checked", false);
               } else {
                 $(this).siblings("input").prop("checked", true);
@@ -91,31 +91,31 @@ gsap.registerPlugin(ScrollTrigger);
 
       $el.sortBtn.on("click", function (e) {
         e.preventDefault();
-        $(".instructor-courses-sort").show();
-        gsap.to($(".instructor-courses-sort-wrap"), {
+        $(".instructor-event-sort").show();
+        gsap.to($(".instructor-event-sort-wrap"), {
           y: 0,
           duration: 0.3,
         });
       });
 
-      $el.courseSort
+      $el.eventSort
         .find(".sort-header-close")
-        .add($el.courseSort.find(".instructor-courses-sort-bg"))
+        .add($el.eventSort.find(".instructor-event-sort-bg"))
         .off("click")
         .on("click", function (e) {
           e.preventDefault();
           const tl = gsap.timeline();
-          tl.to($(".instructor-courses-sort-wrap"), {
+          tl.to($(".instructor-event-sort-wrap"), {
             y: "100%",
             duration: 0.3,
           });
-          tl.to($(".instructor-courses-sort"), {
+          tl.to($(".instructor-event-sort"), {
             display: "none",
           });
         });
 
-      $el.courseSort
-        .find(".instructor-courses-sort-radio")
+      $el.eventSort
+        .find(".instructor-event-sort-radio")
         .off("click")
         .on("click", function (e) {
           const authorID = $(this).data("author-id");
@@ -126,13 +126,13 @@ gsap.registerPlugin(ScrollTrigger);
             url: ajax_object.ajax_url,
             type: "POST",
             data: {
-              action: "course_sort",
+              action: "event_sort",
               authorID: authorID,
               sort: sort,
             },
             success: (response) => {
               // Handle successful upload
-              $(".instructor-courses-wrap-boxes").html(`${response.result}`);
+              $(".instructor-event-wrap-boxes").html(`${response.result}`);
               plugin.init();
             },
             error: (e) => {
@@ -145,28 +145,28 @@ gsap.registerPlugin(ScrollTrigger);
       $el.filterBtn.on("click", function (e) {
         e.preventDefault();
         const tl = gsap.timeline();
-        tl.to($(".instructor-courses-filter"), {
+        tl.to($(".instructor-event-filter"), {
           display: "block",
         });
-        tl.to($(".instructor-courses-filter"), {
+        tl.to($(".instructor-event-filter"), {
           y: 0,
           duration: 0.3,
         });
       });
 
-      $el.courseFilter.on("click", ".sort-header-close", function (e) {
+      $el.eventFilter.on("click", ".sort-header-close", function (e) {
         e.preventDefault();
         const tl = gsap.timeline();
-        tl.to($(".instructor-courses-filter"), {
+        tl.to($(".instructor-event-filter"), {
           y: "100%",
           duration: 0.3,
         });
-        tl.to($(".instructor-courses-filter"), {
+        tl.to($(".instructor-event-filter"), {
           display: "none",
         });
       });
 
-      $el.courseFilter.on(
+      $el.eventFilter.on(
         "click",
         ".filter-wrap-setting-content-all",
         function (e) {
@@ -180,7 +180,7 @@ gsap.registerPlugin(ScrollTrigger);
         }
       );
 
-      $el.courseFilter.on(
+      $el.eventFilter.on(
         "click",
         ".filter-wrap-setting-content input:not(filter-wrap-setting-content-all)",
         function (e) {
@@ -195,9 +195,9 @@ gsap.registerPlugin(ScrollTrigger);
         }
       );
 
-      $el.courseFilter.on(
+      $el.eventFilter.on(
         "click",
-        ".instructor-courses-filter-buttons-show",
+        ".instructor-event-filter-buttons-show",
         function (e) {
           e.preventDefault();
           const tl = gsap.timeline();
@@ -206,13 +206,13 @@ gsap.registerPlugin(ScrollTrigger);
           const category = [];
 
           $(
-            ".instructor-courses-filter .filter-wrap-setting-content-status:checked"
+            ".instructor-event-filter .filter-wrap-setting-content-status:checked"
           ).each((index, el) => {
             status.push($(el).val());
           });
 
           $(
-            ".instructor-courses-filter .filter-wrap-setting-content-category:checked"
+            ".instructor-event-filter .filter-wrap-setting-content-category:checked"
           ).each((index, el) => {
             category.push($(el).data("id"));
           });
@@ -221,20 +221,20 @@ gsap.registerPlugin(ScrollTrigger);
             url: ajax_object.ajax_url,
             type: "POST",
             data: {
-              action: "course_filter",
+              action: "event_filter",
               status: status,
               category: category,
               instructor: instructor,
             },
             success: (response) => {
-              tl.to($(".instructor-courses-filter"), {
+              tl.to($(".instructor-event-filter"), {
                 y: "100%",
                 duration: 0.3,
               });
-              tl.to($(".instructor-courses-filter"), {
+              tl.to($(".instructor-event-filter"), {
                 display: "none",
               });
-              $(".instructor-courses-wrap-boxes").html(`${response.result}`);
+              $(".instructor-event-wrap-boxes").html(`${response.result}`);
               plugin.init();
             },
             error: (e) => {
@@ -245,16 +245,16 @@ gsap.registerPlugin(ScrollTrigger);
         }
       );
 
-      $el.courseFilter.on(
+      $el.eventFilter.on(
         "click",
-        ".instructor-courses-filter-buttons-reset",
+        ".instructor-event-filter-buttons-reset",
         function (e) {
           e.preventDefault();
           const tl = gsap.timeline();
           const instructor = $(this).data("instructor");
           const status = ["publish", "pending", "trash"];
 
-          $(".instructor-courses-filter-wrap input:checkbox").prop(
+          $(".instructor-event-filter-wrap input:checkbox").prop(
             "checked",
             false
           );
@@ -263,20 +263,20 @@ gsap.registerPlugin(ScrollTrigger);
             url: ajax_object.ajax_url,
             type: "POST",
             data: {
-              action: "course_filter",
+              action: "event_filter",
               status: status,
               category: "",
               instructor: instructor,
             },
             success: (response) => {
-              tl.to($(".instructor-courses-filter"), {
+              tl.to($(".instructor-event-filter"), {
                 y: "100%",
                 duration: 0.3,
               });
-              tl.to($(".instructor-courses-filter"), {
+              tl.to($(".instructor-event-filter"), {
                 display: "none",
               });
-              $(".instructor-courses-wrap-boxes").html(`${response.result}`);
+              $(".instructor-event-wrap-boxes").html(`${response.result}`);
               plugin.init();
             },
             error: (e) => {
@@ -292,54 +292,50 @@ gsap.registerPlugin(ScrollTrigger);
         start: "top-=59px bottom",
         onEnter: function () {
           // Change the position to relative when entering the trigger
-          $el.courseAction
-            .addClass("inline-button")
-            .removeClass("float-button");
+          $el.eventAction.addClass("inline-button").removeClass("float-button");
         },
         onLeaveBack: function () {
           // Revert the position back to fixed when scrolling back up
-          $el.courseAction
-            .addClass("float-button")
-            .removeClass("inline-button");
+          $el.eventAction.addClass("float-button").removeClass("inline-button");
         },
       });
     };
 
-    this.sortCourse = function ($el) {
-      $el.courseStatistics
-        .find(".course-statistics-sort-btn")
+    this.sortEvent = function ($el) {
+      $el.eventStatistics
+        .find(".event-statistics-sort-btn")
         .on("click", function (e) {
           e.preventDefault();
-          $(".course-statistics-sort").show();
-          gsap.to($(".course-statistics-sort-wrap"), {
+          $(".event-statistics-sort").show();
+          gsap.to($(".event-statistics-sort-wrap"), {
             y: 0,
             duration: 0.3,
           });
         });
 
-      $el.courseStatistics
+      $el.eventStatistics
         .find(".sort-header-close")
-        .add($el.courseStatistics.find(".course-statistics-sort-bg"))
+        .add($el.eventStatistics.find(".event-statistics-sort-bg"))
         .on("click", function (e) {
           e.preventDefault();
           const tl = gsap.timeline();
-          tl.to($(".course-statistics-sort-wrap"), {
+          tl.to($(".event-statistics-sort-wrap"), {
             y: "100%",
             duration: 0.3,
           });
-          tl.to($(".course-statistics-sort"), {
+          tl.to($(".event-statistics-sort"), {
             display: "none",
           });
         });
 
-      $el.courseStatistics
-        .find(".course-statistics-sort-radio")
+      $el.eventStatistics
+        .find(".event-statistics-sort-radio")
         .on("click", function (e) {
           const sortType = $(this).data("sort"); // Get the sort type from data-sort attribute of clicked radio button
 
           // Select and sort the div elements based on data attribute specified by sortType
-          const sortedElements = $el.courseStatistics
-            .find(".course-statistics-footer-item")
+          const sortedElements = $el.eventStatistics
+            .find(".event-statistics-footer-item")
             .sort(function (a, b) {
               // Convert data values to integers if they are numeric and compare for descending order
               return (
@@ -348,7 +344,7 @@ gsap.registerPlugin(ScrollTrigger);
             });
 
           // Select the container that wraps the items to be sorted
-          const container = $(".course-statistics-footer-wrap");
+          const container = $(".event-statistics-footer-wrap");
           container.empty(); // Clear existing content in the container
 
           // Append sorted elements back to the container
@@ -357,11 +353,11 @@ gsap.registerPlugin(ScrollTrigger);
           });
 
           const tl = gsap.timeline();
-          tl.to($(".course-statistics-sort-wrap"), {
+          tl.to($(".event-statistics-sort-wrap"), {
             y: "100%",
             duration: 0.3,
           });
-          tl.to($(".course-statistics-sort"), {
+          tl.to($(".event-statistics-sort"), {
             display: "none",
           });
         });
@@ -481,6 +477,6 @@ gsap.registerPlugin(ScrollTrigger);
     };
   };
 
-  const EdumallCourseInit = new EdumallCourse();
-  EdumallCourseInit.init();
+  const EdumallEventInit = new EdumallEvent();
+  EdumallEventInit.init();
 })(jQuery);
