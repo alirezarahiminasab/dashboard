@@ -10,7 +10,7 @@ class Events
     {
         // Add new actions for each API request
         add_action('wp_ajax_create_event', [$this, 'create_event']);
-        add_action('wp_ajax_get_my_events', [$this, 'get_my_events']);
+        // add_action('wp_ajax_get_my_events', [$this, 'get_my_events']);
         // add_action('wp_ajax_get_event', [$this, 'get_event']);
         // add_action('wp_ajax_update_event', [$this, 'update_event']);
         // add_action('wp_ajax_delete_event', [$this, 'delete_event']);

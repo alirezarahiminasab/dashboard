@@ -241,7 +241,6 @@ endif;
                         جلسات رویداد
                     </h2>
 
-
                     <div class="event-create-section-inner-input">
                         <label for="event-create-session-title">
                             عنوان جلسه <sup>*</sup>

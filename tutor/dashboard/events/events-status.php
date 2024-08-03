@@ -11,7 +11,7 @@
 defined('ABSPATH') || exit;
 
 
-require_once get_stylesheet_directory() . '\\inc\\event-module\\services\\EventService.php' ; 
+require_once get_stylesheet_directory() . '\\inc\\event-module\\util.php' ; 
 require_once get_stylesheet_directory() . '\\inc\\date-conversion.php' ; 
 
 $default_thumbnail_src = tutor()->url . 'assets/images/placeholder.svg';
@@ -238,7 +238,7 @@ if (json_last_error() === JSON_ERROR_NONE) {
             </div>
             
             <div class="instructor-event-wrap-create-btn">
-                <a href="<?php echo site_url('/dashboard/course/course-create/') ?>" target="_blank">
+                <a href="<?php echo site_url('/dashboard/events/events-create-online/') ?>" target="_blank">
                     <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/add-course.png' ?>" alt="">
                 </a>
             </div>
@@ -249,7 +249,7 @@ if (json_last_error() === JSON_ERROR_NONE) {
                 <p>
                     <?php esc_html_e('هنوز رویدادی ایجاد نکرده‌اید.', 'edumall-child'); ?>
                 </p>
-                <a href="<?php echo site_url('/dashboard/events/events-create-online/') ?>">
+                <a href="<?php echo site_url('/dashboard/events/events-create-online/') ?>" target="_blank">
                     <?php esc_html_e('ایجاد رویداد', 'edumall-child'); ?>
                 </a>
             </div>

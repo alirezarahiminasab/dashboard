@@ -12,18 +12,94 @@
 defined('ABSPATH') || exit;
 
 
-use Tutor\Models\CourseModel;
+require_once get_stylesheet_directory() . '\\inc\\event-module\\util.php' ; 
+$fetch_results = EventUtil::callApi('shops/students', [], 'GET');
+
+$results = [];
+
+$decoded = json_decode($fetch_results, true);
+if (json_last_error() === JSON_ERROR_NONE) {
+    // error_log(print_r($decoded, true));
+    
+    if ($decoded['status'] === 'success') {
+        $results = $decoded['data']['shops'];
+        error_log(print_r($results, true));
+
+        // Extract category values into an array
+        $categories = array_column($results, 'category');
+        
+        // Remove duplicate values
+        $event_category = array_values(array_unique($categories));
+        
+        // Output the unique categories
+        // error_log(print_r($event_category,true));
+    } else {
+        error_log(print_r("Response status is not 'success'.",true));
+    }
+
+} else {
+    error_log(print_r("Error decoding JSON: " . json_last_error_msg(),true));
+}
+
+// Extract unique USERIDs
+$userIds = array_map(function($item) {
+    return $item['userDetails']['USERID'];
+}, $results);
+$uniqueUserIds = array_unique($userIds);
+
+// Fetch user metadata from WordPress
+function fetch_user_meta($userId) {
+    // Ensure that you are within the WordPress environment
+    if (function_exists('get_user_meta')) {
+        return [
+            'first_name' => get_user_meta($userId, 'first_name', true),
+            'last_name' => get_user_meta($userId, 'last_name', true),
+            '_instructor_marriage' => get_user_meta($userId, '_instructor_marriage', true),
+            '_instructor_birth_date' => get_user_meta($userId, '_instructor_birth_date', true),
+            '_instructor_profile_pic' => get_user_meta($userId, '_instructor_profile_pic', true)
+        ];
+    } else {
+        // Handle error - maybe log it or return a default value
+        return [];
+    }
+}
+
+$my_students = [];
+foreach ($uniqueUserIds as $userId) {
+    $my_students[$userId] = fetch_user_meta($userId);
+}
+
+// Extract unique eventDetails based on _id
+$instructor_events = [];
+$eventDetailIds = [];
+foreach ($results as $item) {
+    $eventDetail = $item['eventDetails'];
+    if (!in_array($eventDetail['_id'], $eventDetailIds)) {
+        $eventDetailIds[] = $eventDetail['_id'];
+        $instructor_events[] = $eventDetail;
+    }
+}
+
+// Output results
+// error_log(print_r("Unique USERIDs:\n",true));
+// error_log(print_r($uniqueUserIds,true));
+// error_log(print_r("\nUnique Titles:\n",true));
+// error_log(print_r($instructor_events,true));
+// error_log(print_r("\nUser Metadata:\n",true));
+// error_log(print_r($my_students,true));
+
+
 
 $profile_url  = apply_filters('edumall_user_profile_url', '');
 
 $current_user_id = get_current_user_id();
 
-$instructor_courses = CourseModel::get_courses_by_instructor($current_user_id);
+
 
 $instructor_courses_ids = [];
 
-foreach ($instructor_courses as $courses) :
-    $instructor_courses_ids[] = $courses->ID;
+foreach ($instructor_events as $event) :
+    $instructor_courses_ids[] = $event['_id'];
 endforeach;
 $instructor_courses_ids = json_encode($instructor_courses_ids);
 // Read the JSON file 
@@ -36,7 +112,7 @@ $limit        = 20;
 $current_page = max(1, tutils()->array_get('current_page', $_GET));
 $offset       = ($current_page - 1) * $limit;
 
-$my_students    = Edumall_Tutor::instance()->get_students_by_instructor($current_user_id, $offset, $limit);
+// $my_students    = Edumall_Tutor::instance()->get_students_by_instructor($current_user_id, $offset, $limit);
 $total_students = Edumall_Tutor::instance()->get_total_students_by_instructor(get_current_user_id());
 
 $total_pages = ceil($total_students / $limit);
@@ -83,9 +159,9 @@ $default_thumbnail_src = tutor()->url . 'assets/images/placeholder.svg';
                         <option value='<?php print_r($instructor_courses_ids) ?>' data-current="all" class="instructor-students-list-course" data-author-id="<?php echo $current_user_id ?>" data-type='all'>
                             <?php esc_html_e('همه', 'edumall-child'); ?>
                         </option>
-                        <?php foreach ($instructor_courses as $courses) : ?>
-                            <option class="instructor-students-list-course" value="<?php echo $courses->ID ?>" data-current="<?php echo $courses->post_title ?>" data-author-id="<?php echo $current_user_id ?>" data-type='selected'>
-                                <?php echo $courses->post_title; ?>
+                        <?php foreach ($instructor_events as $event) : ?>
+                            <option class="instructor-students-list-course" value="<?php echo $event['_id'] ?>" data-current="<?php echo $event['title'] ?>" data-author-id="<?php echo $current_user_id ?>" data-type='selected'>
+                                <?php echo $event['title']; ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
@@ -99,41 +175,32 @@ $default_thumbnail_src = tutor()->url . 'assets/images/placeholder.svg';
                 </p>
                 <div class="all-student-wrap">
 
-                    <?php foreach ($my_students as $student) : ?>
+                    <?php foreach ($uniqueUserIds as $USERID) : ?>
                         <?php
-                        $profile_url             = tutor_utils()->profile_url($student->ID);
-                        $enrolled_courses_action = tutor_utils()->get_tutor_dashboard_page_permalink('my-students/enrolled-courses/?student_id=' . $student->ID);
-                        $student_registered_date = strtotime($student->user_registered);
-                        $registered_date = parsidate("Y/m/j",  $student_registered_date);
-                        $student_location = get_user_meta($student->ID, "_student_location", true);
-                        $student_refer = get_user_meta($student->ID, "_student_refer", true);
-                        $student_marriage = get_user_meta($student->ID, "_student_marriage", true);
-                        $student_age = get_user_meta($student->ID, "_student_age", true);
-                        $profile_photo_id    = get_user_meta($student->ID, '_instructor_profile_pic', true);
+                        $profile_url             = tutor_utils()->profile_url($USERID);
+                        $enrolled_courses_action = tutor_utils()->get_tutor_dashboard_page_permalink('my-students/enrolled-courses/?student_id=' . $USERID);
+                        // $student_registered_date = strtotime($student['user_registered']);
+                        // $registered_date = parsidate("Y/m/j",  $student_registered_date);
+
+                        // get_user_meta($userId, 'first_name', true),
+                        // get_user_meta($userId, 'last_name', true),
+
+                        $student_location = get_user_meta($USERID, "_instructor_city", true);
+                        $student_refer = get_user_meta($USERID, "_student_refer", true);
+                        $student_marriage = get_user_meta($USERID, "_instructor_marriage", true);
+                        $student_age = get_user_meta($USERID, "_instructor_birth_date", true);
+                        $profile_photo_id = get_user_meta($USERID, '_instructor_profile_pic', true);
+                        $profile_fullName = get_user_meta($USERID, 'first_name', true) . " " .get_user_meta($USERID, 'last_name', true);
                         ?>
-                        <div class="student-box" data-date="<?php echo $student_registered_date ?>">
+                        <div class="student-box" data-date="$student_registered_date">
                             <div class="student-box-info">
                                 <div class="student-box-info-avatar">
                                     <img src="<?php echo !empty($profile_photo_id) ? $profile_photo_id : $default_thumbnail_src ?>" alt="">
                                 </div>
-                                <h6 class="student-box-info-name"><?php echo esc_html($student->display_name); ?></h6>
+                                <h6 class="student-box-info-name"><?php echo $profile_fullName ?></h6>
                             </div>
                             <div class="student-box-meta">
                                 <div class="student-box-meta-top">
-                                    <div class="student-box-meta-item">
-                                        <div class="student-box-meta-progress-circles">
-                                            <span class="circle full">
-                                                <svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                                    <circle class="progress" cx="50%" cy="50%" r="4"></circle>
-                                                </svg>
-                                            </span>
-                                            <span class="circle percent">
-                                                <svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg">
-                                                    <circle class="progress" cx="50%" cy="50%" r="4"></circle>
-                                                </svg>
-                                            </span>
-                                        </div>
-                                    </div>
 
                                     <div class="student-box-meta-item">
                                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/calendar-2.svg' ?>" alt="">
@@ -143,14 +210,16 @@ $default_thumbnail_src = tutor()->url . 'assets/images/placeholder.svg';
                                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/location.svg' ?>" alt="">
                                         <p> <?php echo $student_location; ?> </p>
                                     </div>
-                                    <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/arrow-down.svg' ?>" alt="">
-                                </div>
-
-                                <div class="student-box-meta-bottom">
                                     <div class="student-box-meta-item">
                                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/discount-circle.svg' ?>" alt="">
                                         <?php echo $student_refer ?>
                                     </div>
+
+                                    
+                                    <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/arrow-down.svg' ?>" alt="">
+                                </div>
+
+                                <div class="student-box-meta-bottom">
                                     <div class="student-box-meta-item">
                                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/heart-tick.svg' ?>" alt="">
                                         <?php echo $student_marriage ?>
