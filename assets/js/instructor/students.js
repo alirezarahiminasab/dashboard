@@ -11,14 +11,16 @@ const dropDownMenu = function (e) {
   const EdumallStudents = function () {
     this.init = function (param) {
       const elements = {
-        startDate: $(".filter-wrap-setting-content-start-date"),
-        endDate: $(".filter-wrap-setting-content-end-date"),
-        students: $(".instructor-students"),
-        studentsSort: $(".instructor-students-sort"),
-        courseList: $(".instructor-students-list"),
-        sortBtn: $(".instructor-students-sort-btn"),
-        studentsFilter: $(".instructor-students-filter"),
-        filterBtn: $(".instructor-students-filter-btn"),
+        startDate: $(
+          "#course-students .filter-wrap-setting-content-start-date"
+        ),
+        endDate: $("#course-students .filter-wrap-setting-content-end-date"),
+        students: $("#course-students .instructor-students"),
+        studentsSort: $("#course-students .instructor-students-sort"),
+        courseList: $("#course-students .instructor-students-list"),
+        sortBtn: $("#course-students .instructor-students-sort-btn"),
+        studentsFilter: $("#course-students .instructor-students-filter"),
+        filterBtn: $("#course-students .instructor-students-filter-btn"),
       };
       const plugin = this;
 
@@ -34,8 +36,8 @@ const dropDownMenu = function (e) {
 
       // $el.sortBtn.on("click", function (e) {
       //   e.preventDefault();
-      //   $(".instructor-students-sort").show();
-      //   gsap.to($(".instructor-students-sort-wrap"), {
+      //   $("#course-students .instructor-students-sort").show();
+      //   gsap.to($("#course-students .instructor-students-sort-wrap"), {
       //     y: 0,
       //     duration: 0.3,
       //   });
@@ -47,11 +49,11 @@ const dropDownMenu = function (e) {
       //   function (e) {
       //     e.preventDefault();
       //     const tl = gsap.timeline();
-      //     tl.to($(".instructor-students-sort-wrap"), {
+      //     tl.to($("#course-students .instructor-students-sort-wrap"), {
       //       y: "100%",
       //       duration: 0.3,
       //     });
-      //     tl.to($(".instructor-students-sort"), {
+      //     tl.to($("#course-students .instructor-students-sort"), {
       //       display: "none",
       //     });
       //   },
@@ -75,12 +77,12 @@ const dropDownMenu = function (e) {
       //       },
       //       success: (response) => {
       //         // Handle successful upload
-      //         $(".all-student-wrap").html(`${response.result}`);
-      //         tl.to($(".instructor-students-sort-wrap"), {
+      //         $("#course-students .all-student-wrap").html(`${response.result}`);
+      //         tl.to($("#course-students .instructor-students-sort-wrap"), {
       //           y: "100%",
       //           duration: 0.3,
       //         });
-      //         tl.to($(".instructor-students-sort"), {
+      //         tl.to($("#course-students .instructor-students-sort"), {
       //           display: "none",
       //         });
       //         plugin.init();
@@ -96,10 +98,10 @@ const dropDownMenu = function (e) {
       $el.filterBtn.on("click", function (e) {
         e.preventDefault();
         const tl = gsap.timeline();
-        tl.to($(".instructor-students-filter"), {
+        tl.to($("#course-students .instructor-students-filter"), {
           display: "block",
         });
-        tl.to($(".instructor-students-filter"), {
+        tl.to($("#course-students .instructor-students-filter"), {
           y: 0,
           duration: 0.3,
         });
@@ -108,15 +110,17 @@ const dropDownMenu = function (e) {
       $el.studentsFilter.on("click", ".sort-header-close", function (e) {
         e.preventDefault();
         const tl = gsap.timeline();
-        tl.to($(".instructor-students-filter"), {
+        tl.to($("#course-students .instructor-students-filter"), {
           y: "100%",
           duration: 0.3,
         });
-        tl.to($(".instructor-students-filter"), {
+        tl.to($("#course-students .instructor-students-filter"), {
           display: "none",
         });
-        $(".other-city").hide();
-        $(".filter-wrap-setting-content-show-all").parent().show();
+        $("#course-students .other-city").hide();
+        $("#course-students .filter-wrap-setting-content-show-all")
+          .parent()
+          .show();
       });
 
       $el.studentsFilter.on(
@@ -130,7 +134,7 @@ const dropDownMenu = function (e) {
           } else {
             inputBoxes.prop("checked", false);
           }
-        },
+        }
       );
 
       $el.studentsFilter.on(
@@ -145,7 +149,7 @@ const dropDownMenu = function (e) {
           if ($(this).prop("checked") === false) {
             inputBoxes.prop("checked", false);
           }
-        },
+        }
       );
 
       $el.studentsFilter
@@ -154,14 +158,14 @@ const dropDownMenu = function (e) {
           e.preventDefault();
 
           const instructor = $(this).data("id");
-          const startDate = $(".filter-wrap-setting-content-start-date").attr(
-            "data-gdate",
-          );
-          const endDate = $(".filter-wrap-setting-content-end-date").attr(
-            "data-gdate",
-          );
+          const startDate = $(
+            "#course-students .filter-wrap-setting-content-start-date"
+          ).attr("data-gdate");
+          const endDate = $(
+            "#course-students .filter-wrap-setting-content-end-date"
+          ).attr("data-gdate");
           const cities = $el.studentsFilter.find(
-            ".filter-wrap-setting-content-city input:checked",
+            ".filter-wrap-setting-content-city input:checked"
           );
 
           const citiesArr = [];
@@ -182,13 +186,15 @@ const dropDownMenu = function (e) {
             },
             success: (response) => {
               // Handle successful upload
-              $(".all-student-wrap").html(`${response.result}`);
+              $("#course-students .all-student-wrap").html(
+                `${response.result}`
+              );
               const tl = gsap.timeline();
-              tl.to($(".instructor-students-filter"), {
+              tl.to($("#course-students .instructor-students-filter"), {
                 y: "100%",
                 duration: 0.3,
               });
-              tl.to($(".instructor-students-filter"), {
+              tl.to($("#course-students .instructor-students-filter"), {
                 display: "none",
               });
               plugin.init();
@@ -228,7 +234,7 @@ const dropDownMenu = function (e) {
               container.append(el);
             });
           }
-        },
+        }
       );
 
       $el.studentsFilter.on(
@@ -237,8 +243,8 @@ const dropDownMenu = function (e) {
         function (e) {
           e.preventDefault();
           $(this).hide();
-          $(".other-city").css("display", "flex");
-        },
+          $("#course-students .other-city").css("display", "flex");
+        }
       );
 
       $el.courseList.on("change", "select", function (e) {
@@ -257,7 +263,7 @@ const dropDownMenu = function (e) {
           },
           success: (response) => {
             // Handle successful upload
-            $(".all-student-wrap").html(`${response.result}`);
+            $("#course-students .all-student-wrap").html(`${response.result}`);
           },
           error: (e) => {
             // Handle error
@@ -273,17 +279,17 @@ const dropDownMenu = function (e) {
         .on("click", function (e) {
           e.preventDefault();
           const selectCourse = $(
-            ".instructor-students-list-wrap select :selected",
+            ".instructor-students-list-wrap select :selected"
           ).data("current");
 
           if (selectCourse === "all") {
-            $("#sort_by_progress").hide();
+            $("#course-students #sort_by_progress").hide();
           } else {
-            $("#sort_by_progress").show();
+            $("#course-students #sort_by_progress").show();
           }
 
-          $(".instructor-students-sort").show();
-          gsap.to($(".instructor-students-sort-wrap"), {
+          $("#course-students .instructor-students-sort").show();
+          gsap.to($("#course-students .instructor-students-sort-wrap"), {
             y: 0,
             duration: 0.3,
           });
@@ -294,11 +300,11 @@ const dropDownMenu = function (e) {
         .on("click", function (e) {
           e.preventDefault();
           const tl = gsap.timeline();
-          tl.to($(".instructor-students-sort-wrap"), {
+          tl.to($("#course-students .instructor-students-sort-wrap"), {
             y: "100%",
             duration: 0.3,
           });
-          tl.to($(".instructor-students-sort"), {
+          tl.to($("#course-students .instructor-students-sort"), {
             display: "none",
           });
         });
@@ -319,7 +325,7 @@ const dropDownMenu = function (e) {
             });
 
           // Select the container that wraps the items to be sorted
-          const container = $(".all-student-wrap");
+          const container = $("#course-students .all-student-wrap");
           container.empty(); // Clear existing content in the container
 
           // Append sorted elements back to the container
@@ -328,11 +334,11 @@ const dropDownMenu = function (e) {
           });
 
           const tl = gsap.timeline();
-          tl.to($(".instructor-students-sort-wrap"), {
+          tl.to($("#course-students .instructor-students-sort-wrap"), {
             y: "100%",
             duration: 0.3,
           });
-          tl.to($(".instructor-students-sort"), {
+          tl.to($("#course-students .instructor-students-sort"), {
             display: "none",
           });
         });

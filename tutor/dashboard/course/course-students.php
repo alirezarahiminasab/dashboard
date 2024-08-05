@@ -51,6 +51,7 @@ $default_thumbnail_src = tutor()->url . 'assets/images/placeholder.svg';
     <h3><?php esc_html_e('لیست فراگیران', 'edumall-child'); ?></h3>
 </div>
 
+<div id="course-students">
 
 <?php if (!empty($my_students)) : ?>
     <div class="instructor-students">
@@ -360,3 +361,4 @@ $default_thumbnail_src = tutor()->url . 'assets/images/placeholder.svg';
         <?php esc_html_e('You do not have any students yet.', 'edumall-child'); ?>
     </div>
 <?php endif; ?>
+</div>

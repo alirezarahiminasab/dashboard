@@ -1,7 +1,7 @@
 <?php
 // require_once __DIR__ . '\\event-module\\sample.php'; // Include the required classes
-require_once __DIR__ . '\\event-module\\services\\EventService.php' ; 
-
+require_once __DIR__ . '\\event-module\\util.php' ; 
+require_once get_stylesheet_directory() . '\\inc\\date-conversion.php' ; 
 
 class Events
 {
@@ -10,6 +10,7 @@ class Events
     {
         // Add new actions for each API request
         add_action('wp_ajax_create_event', [$this, 'create_event']);
+        add_action('wp_ajax_get_shops', [$this, 'get_shops']);
         // add_action('wp_ajax_get_my_events', [$this, 'get_my_events']);
         // add_action('wp_ajax_get_event', [$this, 'get_event']);
         // add_action('wp_ajax_update_event', [$this, 'update_event']);
@@ -22,7 +23,6 @@ class Events
         // add_action('wp_ajax_get_all_discounts_by_event', [$this, 'get_all_discounts_by_event']);
         // add_action('wp_ajax_get_all_tickets_by_event', [$this, 'get_all_tickets_by_event']);
         // add_action('wp_ajax_create_shop', [$this, 'create_shop']);
-        // add_action('wp_ajax_get_shops', [$this, 'get_shops']);
         // add_action('wp_ajax_get_stats', [$this, 'get_stats']);
         // add_action('wp_ajax_create_comment', [$this, 'create_comment']);
         // add_action('wp_ajax_get_all_comments', [$this, 'get_all_comments']);
@@ -131,7 +131,8 @@ class Events
                 "tickets" => $tickets,
                 "companions" => $companions 
             ];
-            $result = EventService::createEvent($data);
+            // $result = EventService::createEvent($data);
+            $result = EventUtil::callApi('events', $data, 'POST');
                   
             // $result = CallSample::createEvent();
             wp_send_json_success($result);
@@ -144,16 +145,119 @@ class Events
     }
 
 
-    // Method to get my events
-    public function get_my_events()
+
+    // Method to get shops by event ID
+    public function get_shops()
     {
+        $eventID = $_POST['eventID'];
         try {
-            $result = EventService::getMyEvents();
-            wp_send_json_success($result);
+            $result = EventUtil::callApi('shops/students?eventID='.$eventID, [], 'GET');
+            $content = $this->selected_event($result);
+            wp_send_json_success($content);
+            // wp_send_json_success($result);
         } catch (Exception $e) {
             wp_send_json_error(['message' => $e->getMessage()]);
         }
     }
+    
+    public function fetch_user_meta($userId) {
+        return [
+            'full_name' => get_user_meta($userId, 'first_name', true) . " " .  get_user_meta($userId, 'last_name', true),
+            'marriage' => get_user_meta($userId, '_instructor_marriage', true),
+            'birth_date' => get_user_meta($userId, '_instructor_birth_date', true),
+            'profile_pic' => get_user_meta($userId, '_instructor_profile_pic', true),
+            'city' => get_user_meta($userId, '_instructor_city', true)
+        ];
+    }
+    
+    public function selected_event($students)
+    {
+        $default_thumbnail_src =
+"data:/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NjAiIGhlaWdodD0iNDgwIiBmaWxsPSJub25lIj48cGF0aCBmaWxsPSIjRUZGMUY3IiBkPSJNMCAwaDc2MHY0ODBIMHoiLz48cGF0aCBmaWxsPSIjRTNFNkVCIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0zNDguOSAzMjAuNTdhMzAgMzAgMCAwIDAtNDIuNy0yLjFMMTMxIDQ3OS44MmgzNjBMMzQ4LjkgMzIwLjU3WiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PHBhdGggZmlsbD0iI0MwQzNDQiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNTQwLjk5IDIzOS44YTMwIDMwIDAgMCAwLTQ0LjA1LS4zNUwyNzEgNDc5LjgyaDQ4OC41MUw1NDAuOTkgMjM5LjhaIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIG9wYWNpdHk9Ii4zIi8+PHBhdGggZmlsbD0iI0NEQ0ZENSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTg2LjUgMTg4YTQ1LjUgNDUuNSAwIDEgMCAwLTkxIDQ1LjUgNDUuNSAwIDAgMCAwIDkxWiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PC9zdmc+";
+
+
+        $decoded = json_decode($students, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {    
+            error_log(print_r("Error decoding JSON: " . json_last_error_msg(),true));
+            return false;
+        }
+    
+        if ($decoded['status'] !== 'success') {
+            error_log(print_r("Response status is not 'success'.",true));
+            return false;
+        }
+    
+        $studentList = $decoded['data']['shops'];
+        // Fetch user metadata from WordPress
+        foreach ($studentList as &$student) {
+            $student['meta'] = $this->fetch_user_meta($student['USERID']);
+        }
+        unset($student); 
+
+        // error_log(print_r($studentList,true));
+
+        
+        ob_start();
+
+        foreach ($studentList as $student) : ?>
+            
+            <div class="student-box" data-date="$student_registered_date">
+                <div class="student-box-info">
+                    <div class="student-box-info-avatar">
+                        <img src="<?php echo !empty($student['meta']['profile_pic']) ? $student['meta']['profile_pic'] : $default_thumbnail_src ?>" alt="">
+                    </div>
+                    <h6 class="student-box-info-name"><?php echo $student['meta']['full_name'] ?></h6>
+                </div>
+                <div class="student-box-meta">
+                    <div class="student-box-meta-top">
+
+                        <div class="student-box-meta-item">
+                            <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/calendar-2.svg' ?>" alt="">
+                            <p> <?php echo jdate('Y/m/d', $student['createDateTime']) ?> </p>
+                        </div>
+                        <div class="student-box-meta-item">
+                            <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/location.svg' ?>" alt="">
+                            <p> <?php echo $student['meta']['city'] ?> </p>
+                        </div>
+                        <div class="student-box-meta-item">
+                            <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/discount-circle.svg' ?>" alt="">
+                            <?php echo array_key_exists('discountID', $student)?'کد تخفیف':'' ?>
+                        </div>
+
+                        
+                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/arrow-down.svg' ?>" alt="">
+                    </div>
+
+                    <div class="student-box-meta-bottom">
+                        <div class="student-box-meta-item">
+                            <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/heart-tick.svg' ?>" alt="">
+                            <?php echo $student['meta']['marriage'] ?>
+                        </div>
+                        <div class="student-box-meta-item">
+                            <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/calendar-circle.svg' ?>" alt="">
+                            <?php echo $student['meta']['birth_date'] ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach;
+
+        $output = ob_get_clean();
+        return $output;
+    }
+
+    // // Method to get my events
+    // public function get_my_events()
+    // {
+    //     try {
+    //         // $result = EventService::getMyEvents();
+    //         $result = EventUtil::callApi('events/me', [], 'GET');
+    //         wp_send_json_success($result);
+    //     } catch (Exception $e) {
+    //         wp_send_json_error(['message' => $e->getMessage()]);
+    //     }
+    // }
+
 
     // // Method to get all events
     // public function get_all_events()
@@ -287,16 +391,6 @@ class Events
     //     }
     // }
 
-    // // Method to get shops by event ID
-    // public function get_shops()
-    // {
-    //     try {
-    //         $result = CallSample::getShops();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
 
     // // Method to get stats
     // public function get_stats()

@@ -45,6 +45,20 @@ function getMyEvents() {
     return $results;
 }
 
+function hidden_for($PAGE,$hidden_values = []) {
+    if (in_array($PAGE, $hidden_values)) {
+        return 'can_hide hide';
+    }
+    return 'can_hide';
+}
+
+function just_for($PAGE,$justfor_values = []) {
+    if (in_array($PAGE, $justfor_values)) {
+        return 'can_hide';
+    }
+    return 'can_hide hide';
+}
+
 function getStudents($eventID) {
     $fetchResult = EventUtil::callApi('shops/students?eventID=' . $eventID, [], 'GET');
     
@@ -73,7 +87,7 @@ if ($myEvents === false) {
     $PAGE = 'no-event';
 } else {
     
-    $studentList = getStudents($myEvents[1]['_id']);
+    $studentList = getStudents($myEvents[0]['_id']);
     if ($studentList === false) {
         $PAGE = 'error';
     } elseif (empty($studentList)) {    
@@ -89,6 +103,8 @@ if ($myEvents === false) {
         // error_log(print_r($studentList,true));
     }
 }
+error_log(print_r("PAGE: ".$PAGE,true));
+
 
 
 $profile_url  = apply_filters('edumall_user_profile_url', '');
@@ -103,19 +119,18 @@ $default_thumbnail_src = tutor()->url . 'assets/images/placeholder.svg';
 </div>
 
 <div id="event-students">
-<?php if ($PAGE === 'data' || $PAGE === 'no-student') : ?>
     <div class="instructor-students">
 
         <div class="instructor-students-wrap">
 
-            <div class="instructor-students-wrap-setting <?php echo ($PAGE !== 'data') ? 'hidden' : ''; ?>"  >
+            <div class="instructor-students-wrap-setting <?php echo just_for($PAGE,['data']) ?>"  >
                 <a class="instructor-students-wrap-setting-button instructor-students-filter-btn" href="#">
                     <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/filter-search.png' ?>" alt="">
                     <?php esc_html_e('فیلتر ها', 'edumall-child'); ?>
                 </a>
             </div>
 
-            <div class="instructor-students-list">
+            <div class="instructor-students-list <?php echo just_for($PAGE,['data','no-student']) ?>">
                 <p>
                     <?php esc_html_e('انتخاب رویداد', 'edumall-child'); ?>
                 </p>
@@ -131,88 +146,110 @@ $default_thumbnail_src = tutor()->url . 'assets/images/placeholder.svg';
                 </div>
             </div>
 
-            <?php if ($PAGE === 'data') : ?>
 
-                <div class="instructor-students-wrap-table">
-                    <p class="instructor-students-wrap-table-count">
-                        <?php esc_html_e('لیست فراگیران', 'edumall-child'); ?>
-                        <?php echo "(" . count($studentList) .")" ?>
-                    </p>
-                    <div class="all-student-wrap">
+            <div class="instructor-students-wrap-table <?php echo just_for($PAGE,['data']) ?>">
+                <p class="instructor-students-wrap-table-count">
+                    <?php esc_html_e('لیست فراگیران', 'edumall-child'); ?>
+                    <span>(<?php echo count($studentList)?>)</span>
+                </p>
+                <div class="all-student-wrap">
 
-                        <?php foreach ($studentList as $student) : ?>
-                            <?php
-                            // $profile_url             = tutor_utils()->profile_url($USERID);
-                            // $enrolled_courses_action = tutor_utils()->get_tutor_dashboard_page_permalink('my-students/enrolled-courses/?student_id=' . $USERID);
-                            // $student_registered_date = strtotime($student['user_registered']);
-                            // $registered_date = parsidate("Y/m/j",  $student_registered_date);
-
-                            // get_user_meta($userId, 'first_name', true),
-                            // get_user_meta($userId, 'last_name', true),
-
-                            // full_name, marriage, birth_date, profile_pic, city
-                            // $student_location = get_user_meta($USERID, "_instructor_city", true);
-                            // $student_refer = get_user_meta($USERID, "_student_refer", true);
-                            // $student_marriage = get_user_meta($USERID, "_instructor_marriage", true);
-                            // $student_age = get_user_meta($USERID, "_instructor_birth_date", true);
-                            // $profile_photo_id = get_user_meta($USERID, '_instructor_profile_pic', true);
-                            // $profile_fullName = get_user_meta($USERID, 'first_name', true) . " " .get_user_meta($USERID, 'last_name', true);
-                            ?>
-                            <div class="student-box" data-date="$student_registered_date">
-                                <div class="student-box-info">
-                                    <div class="student-box-info-avatar">
-                                        <img src="<?php echo !empty($student['meta']['profile_pic']) ? $student['meta']['profile_pic'] : $default_thumbnail_src ?>" alt="">
-                                    </div>
-                                    <h6 class="student-box-info-name"><?php echo $student['meta']['full_name'] ?></h6>
+                    <?php foreach ($studentList as $student) : ?>
+        
+                        <div class="student-box" data-date="$student_registered_date">
+                            <div class="student-box-info">
+                                <div class="student-box-info-avatar">
+                                    <img src="<?php echo !empty($student['meta']['profile_pic']) ? $student['meta']['profile_pic'] : $default_thumbnail_src ?>" alt="">
                                 </div>
-                                <div class="student-box-meta">
-                                    <div class="student-box-meta-top">
+                                <h6 class="student-box-info-name"><?php echo $student['meta']['full_name'] ?></h6>
+                            </div>
+                            <div class="student-box-meta">
+                                <div class="student-box-meta-top">
 
-                                        <div class="student-box-meta-item">
-                                            <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/calendar-2.svg' ?>" alt="">
-                                            <p> <?php echo jdate('Y/m/d', $student['createDateTime']) ?> </p>
-                                        </div>
-                                        <div class="student-box-meta-item">
-                                            <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/location.svg' ?>" alt="">
-                                            <p> <?php echo $student['meta']['city'] ?> </p>
-                                        </div>
-                                        <div class="student-box-meta-item">
-                                            <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/discount-circle.svg' ?>" alt="">
-                                            <?php echo array_key_exists('discountID', $student)?'کد تخفیف':'' ?>
-                                        </div>
-
-                                        
-                                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/arrow-down.svg' ?>" alt="">
+                                    <div class="student-box-meta-item">
+                                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/calendar-2.svg' ?>" alt="">
+                                        <p> <?php echo jdate('Y/m/d', $student['createDateTime']) ?> </p>
+                                    </div>
+                                    <div class="student-box-meta-item">
+                                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/location.svg' ?>" alt="">
+                                        <p> <?php echo $student['meta']['city'] ?> </p>
+                                    </div>
+                                    <div class="student-box-meta-item">
+                                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/discount-circle.svg' ?>" alt="">
+                                        <?php echo array_key_exists('discountID', $student)?'کد تخفیف':'' ?>
                                     </div>
 
-                                    <div class="student-box-meta-bottom">
-                                        <div class="student-box-meta-item">
-                                            <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/heart-tick.svg' ?>" alt="">
-                                            <?php echo $student['meta']['marriage'] ?>
-                                        </div>
-                                        <div class="student-box-meta-item">
-                                            <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/calendar-circle.svg' ?>" alt="">
-                                            <?php echo $student['meta']['birth_date'] ?>
-                                        </div>
+                                    
+                                    <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/arrow-down.svg' ?>" alt="">
+                                </div>
+
+                                <div class="student-box-meta-bottom">
+                                    <div class="student-box-meta-item">
+                                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/heart-tick.svg' ?>" alt="">
+                                        <?php echo $student['meta']['marriage'] ?>
+                                    </div>
+                                    <div class="student-box-meta-item">
+                                        <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/calendar-circle.svg' ?>" alt="">
+                                        <?php echo $student['meta']['birth_date'] ?>
                                     </div>
                                 </div>
                             </div>
-                        <?php endforeach; ?>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+
+                        <!-- TODO -->
+
+            <div class="instructor-students-wrap-empty">
+ 
+                <div class="instructor-students-wrap-empty-error <?php echo just_for($PAGE,['error']) ?>">
+
+                    <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/Container.png' ?>" alt="">
+                    <p><?php esc_html_e('به گیرنده هاتون دست نزنید.', 'edumall-child'); ?></p>
+                    <p><?php esc_html_e(' مشکل از فرستنده است!', 'edumall-child'); ?></p>
+                    <div class="row">                    
+                        <a href="<?php echo site_url('/dashboard/events/events-students/') ?>">
+                            <?php esc_html_e('تلاش مجدد', 'edumall-child'); ?>
+                        </a>
+                    </div>
+                </div>
+                
+                
+                <div class="instructor-students-wrap-empty-student <?php echo just_for($PAGE,['no-student']) ?>">
+                    <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/EmptyState.png' ?>" alt="">
+                    <p>
+                        <?php esc_html_e('این رویداد هنوز فراگیری نداشته است.', 'edumall-child'); ?>
+                    </p>
+                </div>
+    
+                    
+                    
+                <div class="instructor-students-wrap-empty-event <?php echo just_for($PAGE,['no-event']) ?>">
+
+                    <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/NoItemsCourse.png' ?>" alt="">
+                    <p>
+                        <?php esc_html_e('هنوز رویدادی ایجاد نکرده‌اید.', 'edumall-child'); ?>
+                    </p>
+                    <div class="row">
+                        
+                        <a href="<?php echo site_url('/dashboard/events/events-create-online/') ?>">
+                            <?php esc_html_e('ایجاد رویداد حضوری', 'edumall-child'); ?>
+                        </a>
+                        <a href="<?php echo site_url('/dashboard/events/events-create-online/') ?>">
+                            <?php esc_html_e('ایجاد رویداد آنلاین', 'edumall-child'); ?>
+                        </a>
                     </div>
                 </div>
 
-            <?php else : ?>
+            </div>
 
-                <div class="dashboard-no-content-found">
-                    <?php esc_html_e('You do not have any students on this event.', 'edumall-child'); ?>
-                </div>
 
-            <?php endif; ?>
         </div>
     </div>
 
 
-
+<!-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
     <div class="instructor-students-filter">
         <div class="instructor-students-filter-header">
             <p>فیلترها</p>
@@ -243,7 +280,6 @@ $default_thumbnail_src = tutor()->url . 'assets/images/placeholder.svg';
                     </span>
                 </div>
             </div>
-            <!-- TODO -->
             <!-- Implement student progress -->
             <!-- <div class="filter-wrap-setting">
                 <div class="filter-wrap-setting-header">
@@ -363,26 +399,9 @@ $default_thumbnail_src = tutor()->url . 'assets/images/placeholder.svg';
             </a>
         </div>
     </div>
-
-    <?php if ($total_pages > 1) : ?>
-    <div class="edumall-grid-pagination">
-        <?php
-        Edumall_Templates::render_paginate_links([
-            'format'  => '?current_page=%#%',
-            'current' => $current_page,
-            'total'   => $total_pages,
-        ]);
-        ?>
-    </div>
-    <?php endif; ?>
-<?php elseif($PAGE === 'no-event' ): ?>
-    <div class="dashboard-no-content-found">
-        <?php esc_html_e('no event!.', 'edumall-child'); ?>
-    </div>
-
-<?php elseif($PAGE === 'error' ): ?>
-    <div class="dashboard-no-content-found">
-        <?php esc_html_e('error occured.', 'edumall-child'); ?>
-    </div>
-<?php endif; ?>
 </div>
+
+
+
+
+

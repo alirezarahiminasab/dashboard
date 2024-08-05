@@ -126,3 +126,9 @@ include(dirname(__FILE__) . "/inc/dequeue-scripts.php");
 include(dirname(__FILE__) . "/inc/user-custom-query.php");
 include(dirname(__FILE__) . "/inc/instructor-dashboard.php");
 include(dirname(__FILE__) . "/inc/landing-page-function.php");
+
+// add_action('init', 'load_event_class');
+
+// function load_event_class() {
+//     include(get_stylesheet_directory() . '/inc/event-class.php');
+// }
