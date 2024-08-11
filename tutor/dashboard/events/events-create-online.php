@@ -9,44 +9,72 @@
  */
 
 defined('ABSPATH') || exit;
+require_once get_stylesheet_directory() . '\\inc\\event-module\\util.php' ; 
 
 use TUTOR\Input;
 
 get_header();
-do_action('tutor_load_template_before', 'dashboard.create-course', null);
 
-$course_id = Input::get('course_ID', 0, Input::TYPE_INT);
-$post      = '';
-$user_id = get_current_user_id();
 $profile_url = apply_filters('edumall_user_profile_url', '');
-$course_categories = get_terms(array(
-    'taxonomy' => 'course-category',
-    'hide_empty' => false,
-));
-$course_tags = get_terms(array(
-    'taxonomy' => 'course-tag',
-    'hide_empty' => false,
-));
+// do_action('tutor_load_template_before', 'dashboard.create-course', null);
+// $course_id = Input::get('course_ID', 0, Input::TYPE_INT);
+// $post      = '';
+// $user_id = get_current_user_id();
+// $course_categories = get_terms(array(
+//     'taxonomy' => 'course-category',
+//     'hide_empty' => false,
+// ));
+// $course_tags = get_terms(array(
+//     'taxonomy' => 'course-tag',
+//     'hide_empty' => false,
+// ));
 
-$instructor_status = boolval(get_user_meta($user_id, '_tutor_instructor_status', true));
-$is_instructor = boolval(tutor_utils()->is_instructor($user_id, true));
+// $instructor_status = boolval(get_user_meta($user_id, '_tutor_instructor_status', true));
+// $is_instructor = boolval(tutor_utils()->is_instructor($user_id, true));
 
-if (!($is_instructor ||  $instructor_status)) :
-    $args = array(
-        'headline'    => __('Permission Denied', 'edumall-child'),
-        'message'     => __('You don\'t have the right to edit this course', 'edumall-child'),
-        'description' => __('Please make sure you are logged in to correct account', 'edumall-child'),
-        'button'      => array(
-            'url'  => get_permalink($course_id),
-            'text' => __('View Course', 'edumall-child'),
-        ),
-    );
+// if (!($is_instructor ||  $instructor_status)) :
+//     $args = array(
+//         'headline'    => __('Permission Denied', 'edumall-child'),
+//         'message'     => __('You don\'t have the right to edit this course', 'edumall-child'),
+//         'description' => __('Please make sure you are logged in to correct account', 'edumall-child'),
+//         'button'      => array(
+//             'url'  => get_permalink($course_id),
+//             'text' => __('View Course', 'edumall-child'),
+//         ),
+//     );
 
-    tutor_load_template('permission-denied', $args);
+//     tutor_load_template('permission-denied', $args);
 
-    return;
-endif;
+//     return;
+// endif;
 ?>
+
+<?php
+
+// Fetch the event ID from the URL
+$event_id = Input::get('event_id', '', Input::TYPE_STRING);
+
+$event_data = [];
+
+if ($event_id) {
+    // Fetch the event data from the database or API using the event ID
+    $event_data = EventUtil::callApi('events/' . $event_id, [], 'GET');
+    $event_data = json_decode($event_data, true);
+
+    if ($event_data['status'] !== 'success') {
+        $event_data = [];
+    } else {
+        $event_data = $event_data['data'];
+    }
+}
+
+error_log(print_r($event_data,true));
+
+// Check if the page is loaded for editing an existing event
+$is_edit = !empty($event_data);
+
+?>
+
 
 <div class="event-create">
         <div class="flex justify-center bg-white">SIDEBAR</div>

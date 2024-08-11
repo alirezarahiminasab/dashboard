@@ -128,7 +128,7 @@ if (json_last_error() === JSON_ERROR_NONE) {
                                     <!-- Edit Action -->
                                     <div class="instructor-event-dropdown-item">
                                         <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/edit.svg' ?>" alt="">
-                                        <a href="<?php echo esc_url(site_url('/dashboard/events/events-create-online/?event_id=' . $event['_id'])); ?>">
+                                        <a href="<?php echo esc_url(site_url('/dashboard/events/events-create-online?event_id=' . $event['_id'])); ?>">
                                             <?php esc_html_e('ویرایش', 'edumall-child'); ?>
                                         </a>
                                     </div>
