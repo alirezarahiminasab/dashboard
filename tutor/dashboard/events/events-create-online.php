@@ -1,80 +1,93 @@
 <?php
-
-/**
- * @package       TutorLMS/Templates
- * @version       1.4.3
- *
- * @theme-since   1.0.0
- * @theme-version 3.2.2
- */
-
 defined('ABSPATH') || exit;
 require_once get_stylesheet_directory() . '\\inc\\event-module\\util.php' ; 
-
-use TUTOR\Input;
-
-get_header();
-
 $profile_url = apply_filters('edumall_user_profile_url', '');
-// do_action('tutor_load_template_before', 'dashboard.create-course', null);
-// $course_id = Input::get('course_ID', 0, Input::TYPE_INT);
-// $post      = '';
-// $user_id = get_current_user_id();
-// $course_categories = get_terms(array(
-//     'taxonomy' => 'course-category',
-//     'hide_empty' => false,
-// ));
-// $course_tags = get_terms(array(
-//     'taxonomy' => 'course-tag',
-//     'hide_empty' => false,
-// ));
-
-// $instructor_status = boolval(get_user_meta($user_id, '_tutor_instructor_status', true));
-// $is_instructor = boolval(tutor_utils()->is_instructor($user_id, true));
-
-// if (!($is_instructor ||  $instructor_status)) :
-//     $args = array(
-//         'headline'    => __('Permission Denied', 'edumall-child'),
-//         'message'     => __('You don\'t have the right to edit this course', 'edumall-child'),
-//         'description' => __('Please make sure you are logged in to correct account', 'edumall-child'),
-//         'button'      => array(
-//             'url'  => get_permalink($course_id),
-//             'text' => __('View Course', 'edumall-child'),
-//         ),
-//     );
-
-//     tutor_load_template('permission-denied', $args);
-
-//     return;
-// endif;
+use TUTOR\Input;
+get_header();
 ?>
 
+
 <?php
+class EventManager {
+    private $event_id;
+    private $event_data = [];
+    private $tickets = [];
 
-// Fetch the event ID from the URL
-$event_id = Input::get('event_id', '', Input::TYPE_STRING);
+    public function __construct($event_id) {
+        $this->event_id = $event_id;
+    }
 
-$event_data = [];
+    public function fetchEventData() {
+        try {
+            if (empty($this->event_id)) {
+                throw new Exception('No event ID provided in the URL.');
+            }
 
-if ($event_id) {
-    // Fetch the event data from the database or API using the event ID
-    $event_data = EventUtil::callApi('events/' . $event_id, [], 'GET');
-    $event_data = json_decode($event_data, true);
+            // Fetch the event data from the API using the event ID
+            $event_response = EventUtil::callApi('events/' . $this->event_id, [], 'GET');
+            $decoded_response = json_decode($event_response, true);
 
-    if ($event_data['status'] !== 'success') {
-        $event_data = [];
-    } else {
-        $event_data = $event_data['data'];
+            if (!$decoded_response || $decoded_response['status'] !== 'success') {
+                throw new Exception('Failed to retrieve event data for event ID: ' . $this->event_id);
+            }
+
+            $this->event_data = $decoded_response['data'];
+            return $this->event_data;
+
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            return [];
+        }
+    }
+
+    public function fetchTickets() {
+        try {
+            if (empty($this->event_data)) {
+                throw new Exception('Cannot fetch tickets without event data.');
+            }
+
+            // Fetch the tickets data for the event
+            $tickets_response = EventUtil::callApi('tickets/' . $this->event_id, [], 'GET');
+            $decoded_response = json_decode($tickets_response, true);
+
+            if (!$decoded_response || $decoded_response['status'] !== 'success') {
+                throw new Exception('Failed to retrieve tickets data for event ID: ' . $this->event_id);
+            }
+
+            $this->tickets = $decoded_response['data'];
+            return $this->tickets;
+
+        } catch (Exception $e) {
+            error_log($e->getMessage());
+            return [];
+        }
+    }
+
+    public function isEdit() {
+        return !empty($this->event_data);
     }
 }
 
-error_log(print_r($event_data,true));
+// Usage
+$event_id = Input::get('event_id', '', Input::TYPE_STRING);
+$event_data = [];
+$tickets = [];
+$is_edit = false;
 
-// Check if the page is loaded for editing an existing event
-$is_edit = !empty($event_data);
+if ($event_id) {
+    $eventManager = new EventManager($event_id);
+    $event_data = $eventManager->fetchEventData();
+    $tickets = $eventManager->fetchTickets();
+    $is_edit = $eventManager->isEdit();
 
+    error_log(print_r($event_data, true));
+    error_log(print_r($tickets, true));
+}
 ?>
 
+<!-- //////////////////////////////////////////////////// UI ///////////////////////////////////////////////////// -->
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 <div class="event-create">
         <div class="flex justify-center bg-white">SIDEBAR</div>

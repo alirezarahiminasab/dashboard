@@ -142,14 +142,10 @@ console.log("_js file");
       this.tags = [];
       this.elements = {
         eventInputCounter: $(".event-create-input"),
-        eventCreateGoals: $(".event-create-goals"),
         eventTopic: $("#event-create-topic"),
-        eventPrerequisites: $(".event-create-prerequisites"),
-        eventChapters: $(".event-create-lessons"),
-        eventQuestions: $(".event-create-questions"),
         eventTags: $(".event-create-tags"),
         eventSubmit: $(".event-create-submit"),
-        eventInputTime: $(".input-time"),
+        // eventInputTime: $(".input-time"),
         eventSessions: $(".event-create-sessions"),
         eventSessionsForm: $(".event-create-sessions-form"),
         eventSessionsFull: $(".event-create-sessions-full"),
@@ -811,68 +807,18 @@ console.log("_js file");
       });
     }
 
-    // handleCompanions() {
-    //   const createCompanion = this.elements.eventCompanions;
-    //   const companionForm = this.elements.eventCompanionsForm;
-    //   const companionFull = this.elements.eventCompanionsFull;
+    // handleInputTime() {
+    //   this.elements.eventInputTime.on("input", function () {
+    //     let value = $(this).val().replace(/\D/g, ""); // Remove non-numeric characters
+    //     if (value.length > 4) value = value.slice(0, 4); // Limit to 4 digits
 
-    //   createCompanion.on("click", ".event-create-extract-content", function () {
-    //     createCompanion.removeClass("active");
-    //     companionFull.removeClass("active");
-    //     companionForm.addClass("active");
-    //   });
+    //     if (value.length > 2) {
+    //       value = value.slice(0, 2) + ":" + value.slice(2);
+    //     }
 
-    //   companionFull.on("click", ".event-create-add-content", function () {
-    //     createCompanion.removeClass("active");
-    //     companionFull.removeClass("active");
-    //     companionForm.addClass("active");
-    //   });
-
-    //   companionForm.on("click", ".btn-submit", function () {
-    //     companionForm.removeClass("active");
-    //     companionFull.addClass("active");
-    //     createCompanion.removeClass("active");
-    //   });
-
-    //   companionForm.on("click", ".btn-cancel", function () {
-    //     companionForm.removeClass("active");
-    //     companionFull.removeClass("active");
-    //     createCompanion.addClass("active");
+    //     $(this).val(value);
     //   });
     // }
-
-    // handleTickets() {
-    //   const createTicket = this.elements.eventTickets;
-    //   const ticketFull = this.elements.eventTicketsFull;
-
-    //   ticketFull.on("click", ".event-create-add-content", function () {
-    //     createTicket.addClass("active");
-    //     ticketFull.removeClass("active");
-    //   });
-
-    //   createTicket.on("click", ".btn-submit", function () {
-    //     ticketFull.addClass("active");
-    //     createTicket.removeClass("active");
-    //   });
-
-    //   createTicket.on("click", ".btn-cancel", function () {
-    //     ticketFull.addClass("active");
-    //     createTicket.removeClass("active");
-    //   });
-    // }
-
-    handleInputTime() {
-      this.elements.eventInputTime.on("input", function () {
-        let value = $(this).val().replace(/\D/g, ""); // Remove non-numeric characters
-        if (value.length > 4) value = value.slice(0, 4); // Limit to 4 digits
-
-        if (value.length > 2) {
-          value = value.slice(0, 2) + ":" + value.slice(2);
-        }
-
-        $(this).val(value);
-      });
-    }
 
     handleInputCounter() {
       this.elements.eventInputCounter.on("input", function (e) {
@@ -975,18 +921,6 @@ console.log("_js file");
       );
     }
 
-    handleCreateGoals() {
-      this.elements.eventCreateGoals.find("a").on("click", function (e) {
-        e.preventDefault();
-        const $counter = $(".event-create-goals-wrap input:last").attr(
-          "data-counter"
-        );
-        const $goalInput = $("#event-create-goals").clone();
-        $goalInput.attr("data-counter", parseInt($counter) + 1);
-        $(".event-create-goals-wrap").append($goalInput);
-      });
-    }
-
     handleInputPrice() {
       $("#event-create-price-input").on("input", function (e) {
         var value = $(this).val();
@@ -995,156 +929,6 @@ console.log("_js file");
           value = parseInt(value, 10).toLocaleString(); // Convert to integer and format with thousands separator
         }
         $(this).val(value);
-      });
-    }
-
-    handleeventPrerequisite() {
-      this.elements.eventPrerequisites.on("input", function () {
-        const eventPreName = $(this).val();
-        const inputeventPre = this;
-
-        if (eventPreName.length > 3) {
-          const existeventPre = $(".event-create-pre-list span p");
-          const existeventArr = [];
-
-          existeventPre.each(function (index, item) {
-            existeventArr.push($(item).data("id"));
-          });
-
-          const formData = new FormData();
-          formData.append("action", "get_events_prerequisites");
-          formData.append("eventName", eventPreName);
-          formData.append("existevent", existeventArr);
-
-          $.ajax({
-            url: ajax_object.ajax_url,
-            type: "POST",
-            data: formData,
-            processData: false, // Required for FormData
-            contentType: false, // Required for FormData
-            beforeSend() {
-              $(".event-create-pre-dropdown").html("");
-              $(".event-create-pre-wrap-input").append(
-                "<span class='loader'></span>"
-              );
-            },
-            success: function (response) {
-              $(".event-create-pre-wrap-input .loader").remove();
-              if (response.success) {
-                $(".event-create-pre-dropdown").addClass("active");
-                const events = response.data.events;
-
-                events.map(function (item) {
-                  $(".event-create-pre-dropdown").append(
-                    `<a class='event-create-pre-item' href='#' data-id='${
-                      item.ID
-                    }'>${decodeURIComponent(item.post_name)}</a>`
-                  );
-                });
-              }
-
-              // Event delegation for dynamically added elements
-              $(".event-create-pre-dropdown")
-                .off("click")
-                .on("click", ".event-create-pre-item", function (e) {
-                  e.preventDefault();
-                  const eventName = $(this).text();
-                  const eventID = $(this).data("id");
-
-                  $(".event-create-pre-dropdown").removeClass("active");
-                  $(".event-create-pre-list").addClass("active");
-                  $(".event-create-pre-list").append(`<span>
-            <p data-id='${eventID}'>${eventName}</p>
-            <svg class='event-create-pre-delete' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path id="Vector" d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-                <path id="Vector_2" d="M9.16992 14.8299L14.8299 9.16992" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-                <path id="Vector_3" d="M14.8299 14.8299L9.16992 9.16992" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-        </span>`);
-                });
-
-              // Event delegation for dynamically added delete buttons
-              $(".event-create-pre-list")
-                .off("click")
-                .on("click", ".event-create-pre-delete", function (e) {
-                  e.preventDefault();
-                  $(this).parent().remove();
-                });
-            },
-            error: function (response) {
-              console.error(response);
-            },
-          });
-        }
-      });
-    }
-
-    handleChapter() {
-      this.elements.eventChapters.on(
-        "click",
-        ".event-create-add-lesson a",
-        function (e) {
-          e.preventDefault();
-
-          const lessonWrap = $(this)
-            .parent()
-            .siblings(".event-create-chapter-lesson:last")
-            .clone();
-          const lessonCounter = lessonWrap.attr("data-lesson");
-
-          lessonWrap.find("#chapter-title").parent().remove();
-          lessonWrap
-            .find("#lesson-title")
-            .parent()
-            .siblings("label")
-            .text(`عنوان قسمت ${parseInt(lessonCounter) + 1}`);
-          lessonWrap
-            .find("#lesson-description")
-            .siblings("label")
-            .text(`توضیحات متنی قسمت ${parseInt(lessonCounter) + 1}`);
-          lessonWrap.addClass("appended-lesson");
-          lessonWrap.attr("data-lesson", parseInt(lessonCounter) + 1);
-
-          $(this).parent().before(lessonWrap);
-        }
-      );
-
-      this.elements.eventChapters.on(
-        "click",
-        ".event-create-add-chapter a",
-        function (e) {
-          e.preventDefault();
-
-          const chapterCounter = chapterWrap.attr("data-chapter");
-
-          chapterWrap
-            .find(".event-create-chapter-counter p")
-            .text(`فصل ${parseInt(chapterCounter) + 1}`);
-
-          chapterWrap.attr("data-chapter", parseInt(chapterCounter) + 1);
-
-          $(".event-create-add-chapter").before(chapterWrap.clone());
-        }
-      );
-    }
-
-    handleQuestions() {
-      this.elements.eventQuestions.on(
-        "click",
-        ".event-create-questions-add a",
-        function (e) {
-          e.preventDefault();
-
-          $(".event-create-questions-add").before(questionBox.clone());
-        }
-      );
-
-      this.elements.eventQuestions.on("input", "input,textarea", function (e) {
-        if ($(this).val().trim() !== "") {
-          $(this).addClass("not-empty");
-        } else {
-          $(this).removeClass("not-empty");
-        }
       });
     }
 
@@ -1163,36 +947,6 @@ console.log("_js file");
       });
     }
   }
-
-  // class for getting all input tags by name attribute of form and validation each
-  class FormValidator {
-    constructor(formSelector) {
-      this.form = $(formSelector);
-      this.inputs = this.form.find("input[name]");
-      this.init();
-    }
-
-    init() {
-      this.form.on("submit", (e) => this.validateForm(e));
-    }
-
-    validateForm(event) {
-      let isValid = true;
-      this.inputs.each((index, input) => {
-        if (!this.validateInput($(input))) {
-          isValid = false;
-        }
-      });
-      if (!isValid) {
-        event.preventDefault();
-        alert("Please correct the errors in the form.");
-      }
-    }
-  }
-
-  $(document).ready(() => {
-    new FormValidator("#myForm");
-  });
 
   const CreateEventInit = new CreateEvent();
 })(jQuery);
