@@ -22,6 +22,7 @@ console.log("_js file");
       this.companionCounter = 0;
       this.ticketCounter = 0;
     }
+
     dateTime2unix(dateTime) {
       return dateTime
         ? moment(`${dateTime}`, "jYYYY-jMM-jDD HH:mm").unix()
@@ -135,9 +136,26 @@ console.log("_js file");
     //////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////
 
+    editModeInit() {
+      this.isEdit = $("#create_online_event_edit_mode").text() === "true";
+      this.eventData = JSON.parse($("#create_online_event_data").text());
+      this.ticketsData = JSON.parse($("#create_online_event_tickets").text());
+
+      // Remove the <p> tags after reading the data
+      $(
+        "#create_online_event_edit_mode, #create_online_event_data, #create_online_event_tickets"
+      ).remove();
+
+      if (this.isEdit) {
+        prefillSessions();
+        prefillCompanions();
+        prefillTickets();
+      }
+    }
+
     prefillSessions() {
       const _this = this;
-      eventData["sessions"].forEach(function (session) {
+      this.eventData["sessions"].forEach(function (session) {
         const cardId = _this.addCard({
           sessionTitleValue: session["title"],
           sessionPlatformValue: session["platform"],
@@ -158,7 +176,7 @@ console.log("_js file");
 
     prefillCompanions() {
       const _this = this;
-      eventData["companions"].forEach(function (companion) {
+      this.eventData["companions"].forEach(function (companion) {
         const companionId = _this.addCompanion({
           companionName: companion["name"],
           companionLogo: companion["logoURL"],
@@ -169,7 +187,7 @@ console.log("_js file");
 
     prefillTickets() {
       const _this = this;
-      ticketsData.forEach(function (ticket) {
+      this.ticketsData.forEach(function (ticket) {
         const ticketId = _this.addTicket({
           ticketTitle: ticket["title"],
           ticketNumber: ticket["count"],

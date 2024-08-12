@@ -249,6 +249,10 @@ if ($event_id) {
                 </div>
             </div>
 
+            <p id="create_online_event_edit_mode" style="display:none;"><?php echo $is_edit ? 'true' : 'false'; ?></p>
+            <p id="create_online_event_data" style="display:none;"><?php echo htmlspecialchars(json_encode($event_data), ENT_QUOTES, 'UTF-8'); ?></p>
+            <p id="create_online_event_tickets" style="display:none;"><?php echo htmlspecialchars(json_encode($tickets), ENT_QUOTES, 'UTF-8'); ?></p>
+
             <!-- SECTION -->
 
             <div id="event-create-sessions" class="event-create-section ">
