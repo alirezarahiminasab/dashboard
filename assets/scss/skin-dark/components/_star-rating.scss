@@ -1,0 +1,10 @@
+.edumall-dark-scheme {
+	.tm-star-rating {
+		&.style-01 {
+			.tm-star-half:after,
+			.tm-star-empty {
+				color: #80868d;
+			}
+		}
+	}
+}

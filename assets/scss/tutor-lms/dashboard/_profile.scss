@@ -1,0 +1,417 @@
+/* .profile-cover {
+  @apply absolute;
+
+  .overlay {
+    @apply z-10 absolute top-0 bottom-0 w-full;
+    background: linear-gradient(0deg, #fff 8%, transparent 100%);
+  }
+} */
+.profile-page {
+  @apply flex flex-col justify-center items-center mt-0 gap-4 relative px-4 py-0 z-50;
+
+  .bio-header {
+    @apply flex items-center gap-2;
+
+    &-text {
+      @apply flex;
+
+      P {
+        @apply text-[color:var(--gray-900,#402C47)] text-[22px] not-italic font-bold leading-[35px] uppercase;
+      }
+    }
+  }
+
+  .dashboard-profile-info {
+    @apply flex flex-col items-start gap-[var(--border-radius-rounded-xl,12px)] self-stretch border-none px-4 pt-4 pb-0 m-0;
+    background: none;
+
+    .dashboard-profile-info-item {
+      @apply m-0;
+    }
+
+    .profile-display-avatar {
+      @apply w-20 h-20 rounded-2xl overflow-hidden;
+    }
+
+    .profile-display-name {
+      p {
+        @apply self-stretch text-[color:var(--gray-900,#111928)] text-center text-xl not-italic font-medium leading-[150%];
+      }
+    }
+
+    .profile-job-title {
+      p {
+        @apply self-stretch text-[color:var(--gray-900,#402C47)] text-center text-sm not-italic font-normal leading-[150%];
+      }
+    }
+
+    .tutor-rating-box {
+      @apply flex justify-center items-center gap-[10px] py-1 px-2 rounded-[20px];
+      background: #f5eedc;
+
+      &-numbers {
+        @apply flex gap-1;
+
+        p {
+          @apply text-[color:var(--gray-900,#402C47)] text-right text-[11px] not-italic font-normal leading-[normal];
+        }
+      }
+    }
+  }
+
+  .tutor-courses-events {
+    @apply flex flex-col gap-4 relative -mt-[25%] bg-white;
+
+    .see-more {
+      @apply flex flex-col items-center w-full absolute top-0 -translate-y-full text-center pt-8;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 1) 70%
+      );
+
+      a {
+        @apply text-lg font-bold;
+      }
+    }
+
+    .tutor-courses-info {
+      @apply flex justify-around w-full my-4;
+
+      .courses {
+        @apply flex flex-col items-center gap-1 px-4 py-2 rounded-md;
+        background: var(--yellow-100, #fdf6b2);
+
+        p {
+          @apply text-[color:var(--yellow-800,#723B13)] text-center text-sm not-italic font-bold leading-[150%];
+        }
+      }
+
+      .students {
+        @apply flex flex-col items-center gap-1 px-4 py-2 rounded-md;
+        background: var(--green-100, #def7ec);
+
+        p {
+          @apply text-[color:var(--green-800,#03543F)] text-center text-sm not-italic font-bold leading-[150%];
+        }
+      }
+
+      .events {
+        @apply flex justify-center items-center gap-1 px-2.5 py-0.5 rounded-md;
+        background: var(--indigo-100, #e5edff);
+
+        p {
+          @apply text-[color:var(--indigo-800,#42389D)] text-center text-xs not-italic font-bold leading-[150%];
+        }
+      }
+    }
+
+    .tutor-reel-video {
+      @apply relative rounded-[var(--border-radius-rounded-lg,8px)] overflow-hidden;
+
+      .play {
+        @apply absolute w-fit h-fit top-0 bottom-0 left-0 right-0 m-auto bg-[#00000040] rounded-full cursor-pointer;
+
+        &.hide {
+          @apply hidden;
+        }
+      }
+    }
+
+    .tutor-bio {
+      @apply px-4;
+
+      p {
+        @apply flex-[1_0_0] text-[color:var(--gray-700,#5C618B)] text-center text-sm not-italic font-normal leading-[22px];
+      }
+    }
+
+    .tutor-courses-recorded {
+      @apply flex flex-col gap-4 w-full;
+
+      .recorded {
+        .swiper-wrapper {
+          .course {
+            @apply flex w-5/6 flex-col justify-end gap-4 self-stretch shadow-[0px_1px_2px_-1px_rgba(0,0,0,0.10),0px_1px_3px_0px_rgba(0,0,0,0.10)] p-4 rounded-3xl;
+            background:
+              linear-gradient(
+                0deg,
+                rgba(253, 186, 140, 0.25) 0%,
+                rgba(253, 186, 140, 0.25) 100%
+              ),
+              lightgray 50% / cover no-repeat;
+
+            .tutor {
+              @apply flex items-center mt-8 gap-[var(--border-radius-rounded-lg,8px)];
+
+              .avatar {
+                @apply rounded-full;
+              }
+
+              .info {
+                @apply flex flex-col justify-center gap-[var(--border-radius-rounded-lg,8px)];
+
+                .name {
+                  @apply text-[color:var(--white,#FFF)] text-sm not-italic font-semibold leading-[150%];
+                  text-shadow:
+                    0px 10px 10px rgba(0, 0, 0, 0.04),
+                    0px 20px 25px rgba(0, 0, 0, 0.1);
+                }
+
+                .vocation {
+                  @apply flex justify-center items-center px-[10px] py-[2px] rounded-md;
+                  background: var(--indigo-100, #e5edff);
+
+                  p {
+                    @apply text-[color:var(--indigo-800,#42389D)] text-center text-xs not-italic font-medium leading-[150%];
+                  }
+                }
+              }
+            }
+
+            &-info {
+              @apply flex flex-col gap-4 self-stretch rounded-[var(--border-radius-rounded-lg,8px)] p-4;
+              background: #fff;
+
+              .title-wrapper {
+                @apply flex flex-col justify-center gap-[var(--border-radius-rounded-lg,8px)] self-stretch;
+
+                .title {
+                  @apply self-stretch text-[color:var(--gray-600,#717D9B)] text-right text-[22px] not-italic font-bold leading-[35px] uppercase;
+                }
+
+                .excerpt {
+                  @apply self-stretch text-[color:var(--gray-500,#8698AB)] text-right text-xs not-italic font-normal leading-[19px];
+                }
+              }
+
+              .rating-level {
+                @apply flex items-end gap-[var(--border-radius-rounded-lg,8px)];
+
+                .rating {
+                  @apply flex items-center gap-1 px-2.5 py-0.5 rounded-md;
+                  background: var(--yellow-100, #fdf6b2);
+
+                  p {
+                    @apply text-[color:var(--yellow-800,#723B13)] text-center text-xs not-italic font-medium leading-[150%];
+                  }
+                }
+
+                .level {
+                  @apply flex justify-center items-center gap-1 px-2.5 py-0.5 rounded-md;
+                  background: var(--green-100, #def7ec);
+
+                  p {
+                    @apply text-[color:var(--green-800,#03543F)] text-center text-xs not-italic font-medium leading-[150%];
+                  }
+                }
+              }
+
+              .price-wrapper {
+                @apply flex justify-end items-center gap-4 self-stretch;
+
+                .price {
+                  @apply flex gap-1 text-[color:var(--gray-600,#717D9B)] text-right text-sm not-italic font-bold leading-[22px];
+
+                  .sale {
+                    @apply line-through;
+                  }
+                }
+
+                .start {
+                  @apply flex justify-center items-center px-3 py-2 rounded-lg;
+                  background: #7f0f2e;
+
+                  a {
+                    @apply text-[color:var(--white,#FFF)] text-right text-xs not-italic font-medium leading-[150%];
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .tutor-courses-live {
+      @apply flex flex-col gap-8 w-full;
+
+      .live {
+        @apply flex flex-col gap-4 rounded-lg;
+
+        .swiper-wrapper {
+          .course {
+            @apply flex w-5/6 flex-col justify-end gap-4 self-stretch shadow-[0px_1px_2px_-1px_rgba(0,0,0,0.10),0px_1px_3px_0px_rgba(0,0,0,0.10)] p-4 rounded-3xl;
+            background: #f9fafb;
+
+            .image {
+              @apply overflow-hidden -mt-8 rounded-[var(--border-radius-rounded-lg,8px)];
+            }
+
+            .tutor {
+              @apply flex items-center gap-[var(--border-radius-rounded-lg,8px)];
+
+              .avatar {
+                @apply rounded-full;
+              }
+
+              .info {
+                @apply flex flex-col justify-center gap-[var(--border-radius-rounded-lg,8px)];
+
+                .name {
+                  p {
+                    @apply text-[color:var(--gray-700,#5C618B)] text-sm not-italic font-semibold leading-[150%];
+                    text-shadow:
+                      0px 10px 10px rgba(0, 0, 0, 0.04),
+                      0px 20px 25px rgba(0, 0, 0, 0.1);
+                  }
+                }
+
+                .vocation {
+                  @apply flex justify-center items-center px-[10px] py-[2px] rounded-md;
+                  background: var(--indigo-100, #e5edff);
+
+                  p {
+                    @apply text-[color:var(--indigo-800,#42389D)] text-center text-xs not-italic font-medium leading-[150%];
+                  }
+                }
+              }
+            }
+
+            &-info {
+              @apply flex flex-col gap-4 self-stretch rounded-[var(--border-radius-rounded-lg,8px)] p-4;
+
+              .title-wrapper {
+                @apply flex flex-col justify-center gap-[var(--border-radius-rounded-lg,8px)] self-stretch;
+
+                .title {
+                  @apply self-stretch text-[color:var(--gray-600,#717D9B)] text-right text-[22px] not-italic font-bold leading-[35px] uppercase;
+                }
+
+                .excerpt {
+                  @apply self-stretch text-[color:var(--gray-500,#8698AB)] text-right text-xs not-italic font-normal leading-[19px];
+                }
+              }
+
+              .rating-level {
+                @apply flex items-end gap-[var(--border-radius-rounded-lg,8px)];
+
+                .rating {
+                  @apply flex items-center gap-1 px-2.5 py-0.5 rounded-md;
+                  background: var(--yellow-100, #fdf6b2);
+
+                  p {
+                    @apply text-[color:var(--yellow-800,#723B13)] text-center text-xs not-italic font-medium leading-[150%];
+                  }
+                }
+
+                .level {
+                  @apply flex justify-center items-center gap-1 px-2.5 py-0.5 rounded-md;
+                  background: var(--primary-100, #e1effe);
+
+                  p {
+                    @apply text-[color:var(--primary-800,#1E429F)] text-center text-xs not-italic font-medium leading-[150%];
+                  }
+                }
+              }
+
+              .price-wrapper {
+                @apply flex justify-end items-center gap-4 self-stretch;
+
+                .price {
+                  @apply flex gap-1 text-[color:var(--gray-600,#717D9B)] text-right text-sm not-italic font-bold leading-[22px];
+
+                  .sale {
+                    @apply line-through;
+                  }
+                }
+
+                .start {
+                  @apply flex justify-center items-center px-3 py-2 rounded-lg;
+                  background: #7f0f2e;
+
+                  a {
+                    @apply text-[color:var(--white,#FFF)] text-right text-xs not-italic font-medium leading-[150%];
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .tutor-students-reviews {
+      @apply flex flex-col justify-center gap-4 self-stretch;
+
+      .reviews {
+        .swiper-wrapper {
+          .review-box {
+            @apply flex w-5/6 flex-col gap-[var(--border-radius-rounded-lg,8px)] border border-[color:var(--gray-200,#E5E7EB)] shadow-[0px_2px_4px_-2px_rgba(0,0,0,0.05),0px_4px_6px_-1px_rgba(0,0,0,0.10)] p-4 rounded-lg border-solid;
+            background: var(--white, #fff);
+
+            .profile {
+              @apply flex items-center gap-[10px];
+
+              .info {
+                @apply flex flex-col gap-1;
+
+                .name {
+                  @apply text-[color:var(--gray-900,#111928)] text-xs not-italic font-semibold leading-[150%];
+                }
+
+                .date {
+                  @apply text-[color:var(--gray-500,#6B7280)] text-xs not-italic font-normal leading-[150%];
+                }
+              }
+            }
+
+            .comment {
+              @apply flex flex-col gap-2;
+
+              .title {
+                p {
+                  @apply self-stretch text-[color:var(--gray-900,#111928)] text-right text-2xl not-italic font-semibold leading-[150%] tracking-[-0.24px];
+                }
+              }
+
+              .content {
+                p {
+                  @apply self-stretch text-[color:var(--gray-500,#6B7280)] text-right text-base not-italic font-normal leading-[150%];
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .tutor-q-a {
+      @apply w-full;
+
+      .ask {
+        @apply flex flex-col justify-center items-center gap-6 shadow-[0px_1px_2px_-1px_rgba(0,0,0,0.10),0px_1px_3px_0px_rgba(0,0,0,0.10)] p-4 rounded-lg;
+        background: var(--white, #fff);
+
+        .text {
+          p {
+            @apply self-stretch text-[color:var(--gray-500,#8698AB)] text-center text-base not-italic font-medium leading-[150%];
+          }
+        }
+
+        .register {
+          @apply flex justify-center items-center self-stretch px-3 py-2 rounded-lg;
+          background: #7f0f2e;
+
+          a {
+            @apply text-[color:var(--white,#FFF)] text-right text-sm not-italic font-medium leading-[150%];
+          }
+        }
+      }
+
+      .separator {
+        @apply my-8 h-[1px] bg-[#C7DAD9] rounded-full;
+      }
+    }
+  }
+}

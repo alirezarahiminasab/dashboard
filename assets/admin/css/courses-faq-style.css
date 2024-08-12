@@ -1,0 +1,23 @@
+/* Custom styles for FAQ fields */
+.faq-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.faq-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.faq-field label {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.faq-field button {
+  width: fit-content;
+}

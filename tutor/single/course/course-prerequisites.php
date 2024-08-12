@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * EduMall use course-prerequisites-alt.php instead of.
+ * Because now there is no way to move it below top lead info section.
+ */
+
+defined('ABSPATH') || exit;
+
+global $post;
+
+use Detection\MobileDetect;
+
+$detect = new MobileDetect();
+
+$course_prerequisites_ids = maybe_unserialize(get_post_meta(get_the_ID(), '_tutor_course_prerequisites_ids', true));
+
+
+$courses = Edumall_Tutor::instance()->get_courses_by_ids($course_prerequisites_ids);
+?>
+<div class="single-course-prerequisite single-course-item">
+    <?php if (!$detect->isMobile()) : ?>
+        <div class="single-course-desktop">
+        <?php endif; ?>
+        <h4 class="tutor-segment-title"><?php esc_html_e('Course Prerequisites', 'edumall-child'); ?></h4>
+        <div class="course-prerequisite-lists-wrap">
+            <ul class="prerequisite-course-lists">
+                <?php if (!is_array($course_prerequisites_ids) || empty($course_prerequisites_ids)) : ?>
+                    <li class="prerequisites-warning">
+                        <p>
+                            <?php esc_html_e('This course does not have any prerequisites', 'edumall-child'); ?>
+                        </p>
+                    </li>
+                <?php endif; ?>
+                <?php foreach ($courses as $post) : setup_postdata($post); ?>
+                    <li>
+                        <a href="<?php the_permalink(); ?>" class="prerequisites-course-item">
+                            <?php if (has_post_thumbnail()) : ?>
+                                <span class="prerequisites-course-feature-image">
+                                    <?php Edumall_Image::the_post_thumbnail(['size' => '70x50']); ?>
+                                </span>
+                            <?php endif; ?>
+                            <span class="prerequisites-course-title">
+                                <?php the_title(); ?>
+                            </span>
+                            <?php if (tutor_utils()->is_completed_course(get_the_ID())) : ?>
+                                <div class="is-complete-prerequisites-course"><i class="tutor-icon-mark"></i></div>
+                            <?php endif; ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+                <?php wp_reset_postdata(); ?>
+            </ul>
+        </div>
+        <?php if (!$detect->isMobile()) : ?>
+        </div>
+    <?php endif; ?>
+</div>

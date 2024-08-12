@@ -1,0 +1,154 @@
+.withdrawal {
+  @apply [background:var(--Generic-Background,#F3F3F4)];
+
+  &-title {
+    @apply flex items-center gap-2 py-3 px-6;
+
+    h3 {
+      @apply text-[color:var(--Generic-Black,#121212)] text-center text-sm font-normal leading-[110%];
+    }
+  }
+
+  &-content {
+    @apply flex flex-col gap-4 [background:var(--Generic-White,#FFF)] p-6 rounded-[32px_32px_0px_0px];
+
+    &-notice {
+      @apply flex flex-col justify-center gap-2 [background:var(--Secondary-100,#CCDDE3)] p-4 rounded-lg;
+
+      &-title {
+        @apply flex items-center gap-1;
+
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-center text-sm font-normal leading-[110%];
+        }
+      }
+
+      &-context {
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-right text-xs font-normal leading-[160%];
+        }
+      }
+    }
+
+    &-income {
+      @apply flex flex-col justify-center items-center shrink-0 border border-[color:var(--Neutral-500,#ADB5BD)] [background:var(--Generic-White,#FFF)] pt-px rounded-lg border-solid overflow-hidden;
+
+      &-item {
+        @apply flex items-center justify-center py-4 relative w-full;
+
+        &:nth-child(2n + 1) {
+          @apply [background:var(--Generic-Background,#F3F3F4)];
+        }
+
+        h4 {
+          @apply text-[color:var(--Neutral-700,#495057)] text-center text-xs font-normal leading-[110%];
+        }
+
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-center text-xs font-medium leading-[110%];
+        }
+
+        &.item-price {
+          @apply flex gap-1;
+
+          &-withdraw {
+            @apply flex gap-1;
+
+            p {
+              @apply text-[color:var(--Secondary-500,#015372)] text-center  text-base font-medium leading-[110%];
+            }
+          }
+
+          &-balance {
+            @apply flex gap-1;
+
+            p {
+              @apply text-[color:var(--Error-500,#F62E2E)] text-center text-xs font-medium leading-[110%];
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-account {
+    @apply [background:var(--Generic-White,#FFF)] px-6 py-4 rounded-[32px_32px_0px_0px];
+
+    &-form {
+      @apply flex flex-col gap-6;
+
+      &-content {
+        @apply flex flex-col gap-4;
+      }
+
+      &-submit {
+        @apply self-end;
+
+        button {
+          @apply [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg border-0;
+          @apply text-[color:var(--Generic-White,#FFF)] text-center text-sm font-medium leading-[110%];
+        }
+      }
+
+      .form-group {
+        @apply flex flex-col gap-2 m-0;
+
+        label {
+          @apply text-[color:var(--Primary-500,#121212)] [font-family:IRANSansXFaNum] text-sm font-medium leading-[110%];
+          font-family: $main-font;
+
+          sup {
+            @apply text-[color:var(--Primary-500,#C22E58)];
+          }
+        }
+
+        input {
+          @apply border border-[color:var(--Neutral-500,#ADB5BD)] [background:var(--Generic-White,#FFF)] p-3 rounded-lg border-solid;
+          font-family: $main-font;
+
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+        }
+
+        &-input {
+          @apply relative;
+
+          img {
+            @apply absolute left-3 top-0 bottom-0 h-fit m-auto;
+          }
+
+          select {
+            @apply border border-[color:var(--Neutral-500,#ADB5BD)] p-3 rounded-lg border-solid cursor-pointer z-10;
+            @apply text-[color:var(--Neutral-500,#ADB5BD)] text-sm font-normal leading-[110%];
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            appearance: none;
+            background: none;
+            font-family: $main-font;
+
+            &::selection {
+              @apply text-[color:var(--Generic-Black,#121212)] text-sm font-medium leading-[110%];
+            }
+
+            option {
+              @apply text-[color:var(--Generic-Black,#121212)] text-xs font-normal leading-[100%];
+              font-family: $main-font;
+            }
+          }
+
+          p {
+            @apply absolute left-3 top-0 bottom-0 h-fit m-auto leading-none;
+            @apply text-[color:var(--Neutral-500,#121212)] text-right text-sm font-normal leading-[110%];
+          }
+
+          input {
+            direction: ltr;
+          }
+        }
+      }
+    }
+  }
+}

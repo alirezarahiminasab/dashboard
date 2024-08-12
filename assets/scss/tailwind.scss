@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "settings/global";
+@import "settings/bootstrap";
+@import "generic/normalize";
+@import "editor-style-rtl";
+@import "editor-style";
+@import "events-manager";
+@import "tutor-lms-course-builder";
+@import "video-conferencing-zoom";
+@import "woocommerce";
+@import "style-dark";
+@import "style";
+@import "tutor-lms";

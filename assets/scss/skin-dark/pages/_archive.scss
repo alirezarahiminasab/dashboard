@@ -1,0 +1,40 @@
+.edumall-dark-scheme {
+	.archive-layout-switcher {
+		.switcher-item {
+			&:before {
+				background: #020d1b;
+				color: $text-color;
+			}
+
+			&:after {
+				color: #b3b6bb;
+			}
+		}
+	}
+
+	.archive-top-filter-content .widget-content.ps-container > .ps-scrollbar-y-rail > .ps-scrollbar-y {
+		background: $secondary-color;
+	}
+
+	.btn-reset-filters {
+		.tm-button.button-white.style-flat {
+			color: $secondary-color;
+
+			&:before {
+				background: #020d1b;
+			}
+
+			&:hover {
+				color: #fff;
+			}
+		}
+	}
+
+	.page-sidebar {
+		&.style-02 {
+			.archive-sidebar-filter {
+
+			}
+		}
+	}
+}

@@ -1,0 +1,28 @@
+.edumall-wp-widget-event-filtering {
+	.form-group {
+		position: relative;
+		margin: 0 0 15px;
+	}
+
+	.form-icon {
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: 52px;
+		width: 52px;
+		line-height: 52px;
+		font-size: 15px;
+		color: #9b9b9b;
+		text-align: center;
+		pointer-events: none;
+	}
+
+	.form-submit {
+		margin: 20px 0 0;
+	}
+
+	.search-submit {
+		padding: 0 20px;
+		width: 100%;
+	}
+}

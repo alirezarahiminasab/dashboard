@@ -1,0 +1,83 @@
+.archive-zoom-meetings.page-has-no-sidebar {
+	.page-content {
+		> .container {
+			max-width: 1200px;
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+	}
+}
+
+.edumall-zoom-meetings {
+	.edumall-box {
+		height: 100%;
+		display: block;
+		background: #f8f8f8;
+		border-radius: 5px;
+
+		&:hover {
+			background: #fff;
+			box-shadow: 0 14px 59px rgba(0, 0, 0, .12);
+		}
+	}
+
+	.edumall-image {
+		border-radius: 5px 5px 0 0;
+	}
+
+	.zvc-caption {
+		padding: 16px 30px 23px;
+	}
+
+	.zvc-loop-title {
+		font-size: 20px;
+		line-height: 1.5;
+		margin: 0;
+	}
+
+	.zvc-loop-zoom-id {
+		display: flex;
+		align-items: center;
+		margin: 9px 0 0;
+
+		.label {
+			font-size: 13px;
+			font-weight: $heading-font-weight;
+			text-transform: uppercase;
+			letter-spacing: 1px;
+			color: #9b9b9b;
+			line-height: 30px;
+			margin: 0 4px 0 0;
+		}
+
+		.value {
+			font-size: 16px;
+			line-height: 30px;
+			font-weight: 700;
+			letter-spacing: 1px;
+		}
+	}
+
+	.zvc-loop-meta {
+		margin: 16px 0 0;
+		font-size: 14px;
+		color: $text-bit-lighten-color;
+
+		.meta-icon {
+			margin-right: 4px;
+			color: $text-color;
+		}
+	}
+
+	.zvc-meta {
+		display: inline-block;
+		padding: 3px 0;
+		margin-right: 20px;
+	}
+
+	.zvc-loop-start-time {
+		.start-time {
+			font-weight: $heading-font-weight;
+		}
+	}
+}

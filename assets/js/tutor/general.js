@@ -1,0 +1,273 @@
+import toast from "../toast";
+
+(function ($) {
+  "use strict";
+
+  var $body = $("body");
+
+  $body.on("click", ".bookmark", saveBookmark);
+
+  $(document).ready(function () {
+    $(document.body).on(
+      "submit",
+      "#tutor-ask-question-form, #tutor-reply-question-form",
+      function (evt) {
+        evt.preventDefault();
+        var $form = $(this);
+        var $button = $form.find('button[type="submit"]');
+
+        $.ajax({
+          url: $edumall.ajaxurl,
+          type: "POST",
+          data: $form.serialize(),
+          dataType: "json",
+          beforeSend: function () {
+            $button.addClass("updating-icon");
+            $form
+              .find(".form-response-messages")
+              .text("")
+              .removeClass("success error")
+              .hide();
+          },
+          success: function (response) {
+            if (response.success) {
+              $form
+                .find(".form-response-messages")
+                .addClass("success")
+                .text(response.data.message)
+                .show();
+              location.reload();
+            } else {
+              $form
+                .find(".form-response-messages")
+                .addClass("error")
+                .text(response.data.message)
+                .show();
+            }
+          },
+          complete: function () {
+            $button.removeClass("updating-icon");
+          },
+        });
+
+        return false;
+      },
+    );
+
+    $body.on("click", "#jik-pik,#magazine", function (e) {
+      e.preventDefault();
+      toast("در حال توسعه", "warning");
+    });
+
+    $body.on("click", "#completeLessonCheckbox", function (e) {
+      $(".tutor-topbar-mark-btn").click();
+    });
+
+    $(document.body).on("click", ".btn-add-an-answer", function (evt) {
+      var questionID = $(this).data("question-id");
+      var $replyModal = $($(this).data("edumall-target"));
+
+      if ($replyModal.length > 0) {
+        $replyModal.find('input[name="question_id"]').val(questionID);
+      }
+    });
+
+    /**
+     * Edition version of wishlist function.
+     */
+    $(document).on("click", ".edumall-course-like-btn", function (e) {
+      e.preventDefault();
+
+      if ($("body").hasClass("logged-in")) {
+        var $button = $(this);
+        const likeCount = parseInt($button.siblings().text());
+        var courseId = $button.attr("data-course-id");
+        var likeEmpty = $button.attr("data-empty");
+        var likeFilled = $button.attr("data-filled");
+
+        $.ajax({
+          url: $edumall.ajaxurl,
+          type: "POST",
+          data: {
+            course_id: courseId,
+            action: "tutor_course_add_to_wishlist",
+          },
+          beforeSend: function () {
+            $button
+              .children(".button-content-wrapper")
+              .addClass("updating-icon");
+          },
+          success: function (data) {
+            if (data.success) {
+              if (data.data.status === "added") {
+                $button.addClass("has-wish-listed");
+                $button.attr("src", likeFilled);
+                $button.siblings().text(likeCount + 1);
+              } else {
+                $button.removeClass("has-wish-listed");
+                $button.attr("src", likeEmpty);
+                $button.siblings().text(likeCount - 1);
+              }
+            } else {
+              window.location = data.data.redirect_to;
+            }
+          },
+          complete: function () {
+            $button
+              .children(".button-content-wrapper")
+              .removeClass("updating-icon");
+          },
+        });
+      }
+    });
+
+    /**
+     * Edition version of edit review form in single.
+     */
+    $(document).on("click", ".tutor-submit-review-btn", function (e) {
+      e.preventDefault();
+      var $that = $(this);
+      var rating = $that
+        .closest("form")
+        .find('input[name="tutor_rating_gen_input"]')
+        .val();
+      var review = $that.closest("form").find('textarea[name="review"]').val();
+      review = review.trim();
+
+      var course_id = $('input[name="tutor_course_id"]').val();
+      var data = {
+        course_id: course_id,
+        rating: rating,
+        review: review,
+        action: "place_rating",
+      };
+
+      if (review) {
+        $.ajax({
+          url: _tutorobject.ajaxurl,
+          type: "POST",
+          data: data,
+          beforeSend: function () {
+            $that.addClass("updating-icon");
+          },
+          success: function (data) {
+            var review_id = data.data.review_id;
+            var review = data.data.review;
+            $(".tutor-review-" + review_id + " .review-content").html(review);
+            location.reload();
+          },
+          error: function (error) {
+            toast("لطفا روی ستاره کلیک کنید", "error");
+          },
+        });
+      }
+    });
+
+    $(".btn-toggle-lesson-sidebar").on("click", function (evt) {
+      evt.preventDefault();
+
+      $body.toggleClass("lesson-sidebar-on");
+    });
+
+    $(document).on("click", ".tutor-single-lesson-a", function () {
+      $body.removeClass("lesson-sidebar-on");
+    });
+
+    $(document).on("click", function (evt) {
+      if (evt.target.id === "tutor-lesson-sidebar") {
+        return;
+      }
+
+      if ($(evt.target).closest("#tutor-lesson-sidebar").length) {
+        return;
+      }
+
+      if ($(evt.target).closest(".btn-toggle-lesson-sidebar").length) {
+        return;
+      }
+
+      if (window.innerWidth >= 992) {
+        return;
+      }
+
+      $body.removeClass("lesson-sidebar-on");
+    });
+
+    $(".dashboard-header-toggle-menu").on("click", function () {
+      $body.toggleClass("dashboard-nav-opened");
+    });
+
+    $("#tutor-dashboard-left-menu").on("click", function (evt) {
+      if (evt.target.id === "dashboard-nav-wrapper") {
+        return;
+      }
+
+      if ($(evt.target).closest("#dashboard-nav-wrapper").length) {
+        return;
+      }
+
+      $body.removeClass("dashboard-nav-opened");
+    });
+
+    handleDashboardMenuBar();
+
+    $(window).on("resize", function () {
+      handleDashboardMenuBar();
+    });
+  });
+
+  function handleDashboardMenuBar() {
+    var wWidth = window.innerWidth;
+
+    if (wWidth >= 1200) {
+      $body.addClass("dashboard-nav-fixed");
+      // Fix when resize from mobile to desktop.
+      $body.removeClass("dashboard-nav-opened");
+    } else {
+      $body.removeClass("dashboard-nav-fixed");
+    }
+
+    var wHeight = window.innerHeight;
+    var navHeaderHeight = $(".dashboard-nav-header").outerHeight();
+    var bottomSpacing = 50;
+    var navContentHeight = wHeight - navHeaderHeight - bottomSpacing;
+
+    $(".dashboard-nav-content-inner")
+      .height(navContentHeight)
+      .perfectScrollbar({ suppressScrollX: true });
+  }
+
+  function saveBookmark(e) {
+    e.preventDefault();
+    const type = $(this).data("type");
+    const id = $(this).data("id");
+    const callback = $(this).data("callback");
+    let timer = null;
+    const current = this;
+
+    $.ajax({
+      url: $edumall.ajaxurl,
+      type: "POST",
+      data: {
+        action: "save_bookmark",
+        type,
+        id,
+        callback,
+      },
+      dataType: "json",
+      beforeSend: function () {},
+      success: function (response) {
+        if (response.data.status === "added") {
+          $(current).find(".filled").addClass("active");
+          $(current).find(".empty").removeClass("active");
+          $(current).find("p")?.text("حذف از نشان شده ها");
+        } else {
+          $(current).find(".filled").removeClass("active");
+          $(current).find(".empty").addClass("active");
+          $(current).find("p")?.text("نشان کردن");
+        }
+      },
+      complete: function () {},
+    });
+  }
+})(jQuery);

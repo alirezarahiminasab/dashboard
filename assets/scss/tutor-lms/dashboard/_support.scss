@@ -1,0 +1,345 @@
+.support {
+  @apply bg-[#F3F3F4];
+
+  &-title {
+    @apply flex items-center gap-2 px-6 py-3;
+
+    h3 {
+      @apply text-[color:var(--Generic-Black,#121212)] text-right text-sm font-normal leading-[110%];
+    }
+  }
+
+  &-wrap {
+    @apply flex flex-col items-start gap-2 shrink-0 [background:var(--Generic-White,#FFF)] p-6 rounded-[32px_32px_0px_0px];
+
+    @media (min-width: theme("screens.tablet")) {
+      @apply p-8 rounded-2xl gap-6;
+    }
+
+    &-empty {
+      @apply flex flex-col gap-6 justify-center items-center border border-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] px-[81px] py-12 rounded-lg border-solid w-full;
+
+      &-placeholder {
+        @apply flex flex-col items-center gap-2;
+      }
+    }
+
+    &-new {
+      a {
+        @apply flex items-center justify-center h-full  border border-[color:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg border-solid;
+        @apply text-[color:var(--Primary-500,#C22E58)] text-sm font-medium leading-[110%];
+
+        &.tickets-items {
+          @apply [background:var(--Primary-500,#C22E58)] border-0 text-white;
+        }
+      }
+    }
+
+    &-filter {
+      @apply hidden;
+
+      a {
+        @apply flex items-center gap-2 border border-[color:var(--Generic-Black,#121212)] px-8 py-4 rounded-lg border-solid;
+        @apply text-[color:var(--Generic-Black,#121212)] text-xs font-medium leading-[110%];
+      }
+    }
+
+    &-tickets {
+      @apply flex flex-col gap-6 w-full;
+
+      &-title {
+        h3 {
+          @apply text-[color:var(--Generic-Black,#121212)] text-lg font-semibold leading-[110%];
+        }
+      }
+
+      &-buttons {
+        @apply flex justify-between items-center;
+      }
+
+      &-content {
+        @apply flex flex-col border border-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] rounded-lg border-solid overflow-hidden;
+
+        &-header {
+          @apply flex justify-between items-center [background:var(--Generic-Background,#F3F3F4)]  px-4 py-1;
+        }
+
+        &-title {
+          p {
+            @apply text-[color:var(--Generic-Black,#121212)] text-xs font-medium leading-[110%];
+          }
+        }
+
+        &-sort {
+          @apply flex gap-2 items-center py-3 pr-3 rounded-lg invisible;
+        }
+
+        &-footer {
+          &-item {
+            @apply flex flex-col gap-2 border-b-[color:var(--Generic-Background,#F3F3F4)] [background:var(--Generic-White,#FFF)] px-4 py-2 border-b border-solid;
+
+            &.active {
+              @apply bg-[#CCDDE3];
+            }
+          }
+
+          &-meta {
+            @apply flex items-center justify-between;
+
+            &-status {
+              @apply flex items-center gap-1;
+
+              p {
+                @apply text-[color:var(--Secondary-500,#6C757D)] text-center [font-family:IRANSansXFaNum] text-xs font-normal leading-[110%];
+
+                &.ticket-status-wait {
+                  @apply text-[color:var(--Secondary-500,#015372)];
+                }
+
+                &.ticket-status-check {
+                  @apply text-[color:var(--Secondary-500,#EC8909)];
+                }
+
+                &.ticket-status-replied {
+                  @apply text-[color:var(--Secondary-500,#1DAB45)];
+                }
+
+                &.ticket-status-closed {
+                  @apply text-[color:var(--Secondary-500,#F62E2E)];
+                }
+              }
+            }
+
+            &-date {
+              p {
+                @apply text-[color:var(--Neutral-600,#6C757D)] text-center text-xs font-light leading-[110%];
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-buttons-wrap {
+    @apply flex gap-4;
+  }
+}
+
+.new-ticket {
+  @apply bg-[#F3F3F4];
+
+  @media (min-width: theme("screens.tablet")) {
+    @apply flex flex-col gap-12 bg-white rounded-2xl p-8;
+  }
+
+  &-title {
+    @apply flex items-center gap-2 px-6 py-3;
+
+    @media (min-width: theme("screens.tablet")) {
+      @apply p-0;
+    }
+
+    h3 {
+      @apply text-[color:var(--Generic-Black,#121212)] text-right text-sm font-normal leading-[110%];
+
+      @media (min-width: theme("screens.tablet")) {
+        @apply text-lg font-semibold;
+      }
+    }
+  }
+
+  &-form {
+    @apply flex flex-col gap-4 [background:var(--Generic-White,#FFF)] p-6 rounded-[32px_32px_0px_0px];
+
+    @media (min-width: theme("screens.tablet")) {
+      @apply rounded-none p-0 w-1/2;
+      background: none;
+    }
+
+    &-group {
+      @apply flex flex-col gap-2;
+
+      label {
+        @apply text-[color:var(--Generic-Black,#121212)] text-sm font-medium leading-[110%];
+        font-family: $main-font;
+      }
+
+      input {
+        @apply border border-[color:var(--Neutral-500,#ADB5BD)] [background:var(--Generic-White,#FFF)] p-3 rounded-lg border-solid outline-0;
+        @apply text-[color:var(--Generic-Black,#121212)] text-sm font-medium leading-[110%];
+        font-family: $main-font;
+
+        &::placeholder {
+          @apply text-[color:var(--Neutral-500,#ADB5BD)] text-sm font-normal leading-[110%];
+        }
+      }
+
+      select {
+        @apply relative border border-[color:var(--Neutral-500,#ADB5BD)] p-3 rounded-lg border-solid cursor-pointer z-10;
+        @apply text-[color:var(--Neutral-500,#ADB5BD)] text-sm font-normal leading-[110%];
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        background: none;
+        font-family: $main-font;
+
+        &::selection {
+          @apply text-[color:var(--Generic-Black,#121212)] text-sm font-medium leading-[110%];
+        }
+
+        option {
+          @apply text-[color:var(--Generic-Black,#121212)] text-xs font-normal leading-[100%];
+          font-family: $main-font;
+        }
+      }
+
+      textarea {
+        @apply border border-[color:var(--Neutral-500,#ADB5BD)] [background:var(--Generic-White,#FFF)] px-3 py-4 rounded-lg border-solid;
+        @apply text-[color:var(--Generic-Black,#121212)] text-sm font-medium leading-[110%];
+        font-family: $main-font;
+
+        &::placeholder {
+          @apply text-[color:var(--Neutral-500,#ADB5BD)] text-sm font-normal leading-[110%];
+        }
+      }
+
+      &.new-ticket-form-button {
+        @apply mt-6 self-end;
+
+        @media (min-width: theme("screens.tablet")) {
+          @apply w-2/5;
+        }
+
+        button {
+          @apply [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg border-0;
+          @apply text-[color:var(--Generic-White,#FFF)] text-sm font-medium leading-[110%];
+        }
+      }
+
+      &.new-ticket-form-attachment {
+        .ticket-attachment-container {
+          .before-upload {
+            @apply flex flex-col justify-center items-center gap-3 border border-[color:var(--Generic-Black,#121212)] py-6 rounded-lg border-dashed cursor-pointer;
+
+            &.active {
+              @apply flex;
+            }
+
+            p {
+              @apply text-[color:var(--Neutral-700,#495057)] text-[10px] font-normal leading-[110%];
+
+              &.title {
+                @apply text-[color:var(--Generic-Black,#121212)] text-sm font-medium leading-[110%];
+              }
+            }
+          }
+        }
+
+        .after-upload {
+          @apply hidden flex-col gap-3 relative p-3 border border-solid border-[color:var(--Generic-Black,#ADB5BD)] rounded-lg;
+
+          #delete-file {
+            @apply absolute left-3 top-3 cursor-pointer z-50;
+          }
+
+          .upload-info {
+            @apply flex gap-1;
+
+            .video {
+              @apply flex w-8 h-8 justify-center items-center border border-[color:var(--Neutral-500,#ADB5BD)] p-1 rounded-lg border-solid;
+            }
+
+            .file-meta {
+              @apply flex flex-col justify-between h-auto;
+
+              p {
+                @apply text-black text-xs font-normal leading-[100%];
+
+                &#file-name {
+                  @apply w-11/12;
+                }
+              }
+            }
+          }
+
+          #progress-bar {
+            @apply flex items-center gap-3 w-full relative rounded-full overflow-hidden;
+          }
+
+          .progress-wrap {
+            @apply w-5/6;
+
+            .progress {
+              @apply h-2 bg-[#1DAB45] w-0 rounded-full;
+            }
+          }
+
+          .progress-text {
+            @apply absolute left-0 bottom-0 text-black text-xs font-normal leading-[100%];
+          }
+        }
+      }
+    }
+  }
+}
+
+.single-ticket {
+  @apply bg-[#F3F3F4];
+
+  &-title {
+    @apply flex items-center gap-2 px-6 py-3;
+
+    h3 {
+      @apply text-[color:var(--Generic-Black,#121212)] text-right text-sm font-normal leading-[110%];
+    }
+  }
+
+  &-messages {
+    @apply flex flex-col gap-6 justify-between shrink-0 [background:var(--Generic-White,#FFF)] p-6 rounded-[32px_32px_0px_0px] h-full;
+
+    &-wrap {
+      @apply flex flex-col gap-6 flex-grow;
+    }
+
+    &-chat {
+      p {
+        @apply text-[color:var(--Generic-Black,#121212)] text-xs font-normal leading-[110%];
+      }
+
+      &.user {
+        @apply [background:var(--Secondary-100,#CCDDE3)]  rounded-[16px_0px_16px_16px] px-4 py-5;
+      }
+
+      &.admin {
+        @apply flex items-end gap-2;
+
+        p {
+          @apply flex-grow [background:var(--Neutral-200,#E9ECEF)] rounded-[16px_16px_16px_0px] px-4 py-5;
+        }
+
+        img {
+          @apply w-6 h-6 [background:var(--Generic-White,#FFF)] shadow-[0px_2px_4px_0px_rgba(16,24,40,0.10)] rounded-full;
+        }
+      }
+    }
+
+    &-form {
+      @apply relative;
+
+      input {
+        @apply [background:var(--Generic-White,#FFF)] shadow-[0px_4px_8px_-1px_rgba(16,24,40,0.15)] px-12 py-5 rounded-full border-0;
+        @apply text-[color:var(--Generic-Black,#121212)] text-xs font-normal leading-[110%];
+        font-family: $main-font;
+
+        &::placeholder {
+          @apply text-[color:var(--Neutral-500,#ADB5BD)] text-xs font-normal leading-[110%];
+        }
+      }
+
+      button {
+        @apply w-6 h-6 top-0 bottom-0 m-auto absolute right-4 border-0 p-0;
+      }
+    }
+  }
+}

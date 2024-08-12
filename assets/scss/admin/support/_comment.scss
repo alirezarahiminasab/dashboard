@@ -1,0 +1,81 @@
+.admin-messages-wrap {
+  direction: rtl;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+
+  p {
+    font-family: "IRANSansXFa";
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+
+    &:first-child {
+      font-weight: 700;
+    }
+  }
+
+  .admin-chat {
+    display: flex;
+    width: fit-content;
+    gap: 0.5rem;
+
+    &.user {
+      padding: 1rem;
+      border-radius: 16px 0px 16px 16px;
+      background: var(--Secondary-100, #ccdde3);
+    }
+
+    &.admin {
+      align-self: flex-end;
+      padding: 1rem;
+      border-radius: 16px 16px 16px 0px;
+      background: var(--Neutral-200, #e9ecef);
+    }
+  }
+}
+
+.admin-ticket-reply {
+  direction: rtl;
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+
+  p {
+    font-family: "IRANSansXFa";
+    padding: 0;
+    margin: 0;
+  }
+
+  input {
+    border-radius: 8px;
+    border: 1px solid var(--Neutral-500, #adb5bd);
+    background: var(--Generic-White, #fff);
+    padding: 12px;
+    flex-grow: 1;
+    font-family: "IRANSansXFa";
+
+    &::placeholder {
+      font-family: "IRANSansXFa";
+    }
+  }
+
+  button {
+    padding: 0rem 2rem;
+    cursor: pointer;
+    border-radius: 8px;
+    border: none;
+    background: var(--Primary-500, #c22e58);
+    color: var(--Generic-White, #fff);
+
+    text-align: center;
+
+    /* Body Small/Medium */
+    font-family: "IRANSansXFa";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 110%; /* 15.4px */
+  }
+}

@@ -1,0 +1,12 @@
+.edumall-dark-scheme {
+	.tm-swiper {
+		.swiper-pagination-bullet {
+			color: rgba(255, 255, 255, .3);
+
+			&.swiper-pagination-bullet-active,
+			&:hover {
+				color: $heading-color;
+			}
+		}
+	}
+}

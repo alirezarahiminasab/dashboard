@@ -1,0 +1,26 @@
+name: Deploy to Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          repository: "merzat68/hanil-new"
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Copy files via SSH
+        run: |
+          rsync -avz --no-perms --no-times -e 'ssh -o StrictHostKeyChecking=no' ./ ubuntu@5.34.201.122:/var/www/hanil.life/wp-content/themes/edumall-child

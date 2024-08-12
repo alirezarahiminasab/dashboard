@@ -1,0 +1,66 @@
+.edumall-dark-scheme {
+	.dashboard-nav-content .ps-container {
+		> .ps-scrollbar-y-rail {
+			background: rgba(255, 255, 255, .1);
+
+			> .ps-scrollbar-y {
+				background: rgba(255, 255, 255, .2);
+			}
+		}
+	}
+
+	.tutor-dashboard-header-wrap {
+		border-color: transparent;
+	}
+
+	.dashboard-header-toggle-menu {
+		color: $secondary-color;
+	}
+
+	.tutor-dashboard-permalinks {
+		li {
+			a {
+				&:hover {
+					background: rgba(255, 255, 255, 0.1);
+				}
+			}
+		}
+	}
+
+	.dashboard-table {
+		th {
+			background: $box-border;
+		}
+	}
+
+	.tutor-dashboard-content-inner .tutor-progress-bar {
+		background: #2b3643;
+	}
+
+	.withdraw-status {
+		&.status-rejected,
+		&.status-pending,
+		&.status-approved {
+			border-color: transparent;
+			background: rgba(0, 0, 0, .7);
+		}
+	}
+
+	.withdraw-method-select-wrap {
+		.withdraw-method-select {
+			label {
+				background: rgba(255, 255, 255, .1);
+				border-color: rgba(255, 255, 255, .1);
+				color: #fff;
+			}
+
+			input:checked + label,
+			&:hover label {
+				border-color: $form-focus-border;
+				background: $form-focus-background;
+				box-shadow: none;
+				color: $secondary-color;
+			}
+		}
+	}
+}

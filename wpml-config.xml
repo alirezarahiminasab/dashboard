@@ -1,0 +1,115 @@
+<wpml-config>
+	<custom-types>
+		<custom-type translate="1">portfolio</custom-type>
+	</custom-types>
+	<taxonomies>
+		<taxonomy translate="1">portfolio_category</taxonomy>
+		<taxonomy translate="1">portfolio_tags</taxonomy>
+	</taxonomies>
+	<admin-texts>
+		<key name="theme_mods_edumall">
+			<key name="top_bar_style_01_text"/>
+			<key name="top_bar_style_02_text"/>
+			<key name="top_bar_style_03_text"/>
+			<key name="top_bar_style_04_text"/>
+			<key name="top_bar_style_05_text"/>
+			<key name="header_style_01_button_text"/>
+			<key name="header_style_01_button_link"/>
+			<key name="header_style_02_button_text"/>
+			<key name="header_style_02_button_link"/>
+			<key name="header_style_03_button_text"/>
+			<key name="header_style_03_button_link"/>
+			<key name="header_style_04_button_text"/>
+			<key name="header_style_04_button_link"/>
+			<key name="header_style_05_button_text"/>
+			<key name="header_style_05_button_link"/>
+			<key name="header_style_06_button_text"/>
+			<key name="header_style_06_button_link"/>
+			<key name="header_style_07_button_text"/>
+			<key name="header_style_07_button_link"/>
+			<key name="header_style_08_button_text"/>
+			<key name="header_style_08_button_link"/>
+			<key name="navigation_minimal_01_menu_title"/>
+			<key name="title_bar_search_title"/>
+			<key name="title_bar_home_title"/>
+			<key name="title_bar_archive_category_title"/>
+			<key name="title_bar_archive_tag_title"/>
+			<key name="title_bar_archive_author_title"/>
+			<key name="title_bar_archive_year_title"/>
+			<key name="title_bar_archive_month_title"/>
+			<key name="title_bar_archive_day_title"/>
+			<key name="footer_copyright_text"/>
+			<key name="notice_cookie_messages"/>
+			<key name="notice_cookie_button_text"/>
+			<key name="error404_page_title"/>
+			<key name="error404_page_text"/>
+			<key name="blog_single_title_bar_title"/>
+			<key name="event_archive_title_bar_title"/>
+			<key name="single_event_speaker_text"/>
+			<key name="single_event_comment_help_title"/>
+			<key name="single_event_comment_help_desc"/>
+			<key name="single_event_comment_help_email"/>
+			<key name="portfolio_archive_title_bar_title"/>
+			<key name="portfolio_single_title_bar_title"/>
+			<key name="portfolio_related_title"/>
+			<key name="product_archive_title_bar_title"/>
+			<key name="product_single_title_bar_title"/>
+			<key name="search_page_no_results_text"/>
+			<key name="contact_info_phone"/>
+			<key name="contact_info_email"/>
+		</key>
+	</admin-texts>
+	<admin-texts>
+		<key name="theme_mods_edumall-child">
+			<key name="top_bar_style_01_text"/>
+			<key name="top_bar_style_02_text"/>
+			<key name="top_bar_style_03_text"/>
+			<key name="top_bar_style_04_text"/>
+			<key name="top_bar_style_05_text"/>
+			<key name="header_style_01_button_text"/>
+			<key name="header_style_01_button_link"/>
+			<key name="header_style_02_button_text"/>
+			<key name="header_style_02_button_link"/>
+			<key name="header_style_03_button_text"/>
+			<key name="header_style_03_button_link"/>
+			<key name="header_style_04_button_text"/>
+			<key name="header_style_04_button_link"/>
+			<key name="header_style_05_button_text"/>
+			<key name="header_style_05_button_link"/>
+			<key name="header_style_06_button_text"/>
+			<key name="header_style_06_button_link"/>
+			<key name="header_style_07_button_text"/>
+			<key name="header_style_07_button_link"/>
+			<key name="header_style_08_button_text"/>
+			<key name="header_style_08_button_link"/>
+			<key name="navigation_minimal_01_menu_title"/>
+			<key name="title_bar_search_title"/>
+			<key name="title_bar_home_title"/>
+			<key name="title_bar_archive_category_title"/>
+			<key name="title_bar_archive_tag_title"/>
+			<key name="title_bar_archive_author_title"/>
+			<key name="title_bar_archive_year_title"/>
+			<key name="title_bar_archive_month_title"/>
+			<key name="title_bar_archive_day_title"/>
+			<key name="footer_copyright_text"/>
+			<key name="notice_cookie_messages"/>
+			<key name="notice_cookie_button_text"/>
+			<key name="error404_page_title"/>
+			<key name="error404_page_text"/>
+			<key name="blog_single_title_bar_title"/>
+			<key name="event_archive_title_bar_title"/>
+			<key name="single_event_speaker_text"/>
+			<key name="single_event_comment_help_title"/>
+			<key name="single_event_comment_help_desc"/>
+			<key name="single_event_comment_help_email"/>
+			<key name="portfolio_archive_title_bar_title"/>
+			<key name="portfolio_single_title_bar_title"/>
+			<key name="portfolio_related_title"/>
+			<key name="product_archive_title_bar_title"/>
+			<key name="product_single_title_bar_title"/>
+			<key name="search_page_no_results_text"/>
+			<key name="contact_info_phone"/>
+			<key name="contact_info_email"/>
+		</key>
+	</admin-texts>
+</wpml-config>

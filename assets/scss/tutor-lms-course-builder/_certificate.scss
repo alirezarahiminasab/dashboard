@@ -1,0 +1,15 @@
+.tutor-course-certificate-tabs.tutor-nav {
+	background: $box-white-border;
+
+	> li > a.is-active {
+		color: $primary-color;
+	}
+}
+
+.tutor-certificate-template {
+	.tutor-btn {
+		padding: 0 20px;
+		line-height: 32px;
+		min-width: 100px;
+	}
+}

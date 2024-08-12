@@ -1,0 +1,32 @@
+.edumall-button-align-start {
+	.form-submit {
+		justify-content: flex-start;
+		text-align: start;
+	}
+}
+
+.edumall-button-align-center {
+	.form-submit {
+		justify-content: center;
+		text-align: center;
+	}
+}
+
+.edumall-button-align-end {
+	.form-submit {
+		justify-content: flex-end;
+		text-align: end;
+	}
+}
+
+.edumall-button-align-stretch {
+	.form-submit {
+		input[type='submit'],
+		button {
+			text-align: center;
+			-webkit-flex-basis: 100%;
+			-ms-flex-preferred-size: 100%;
+			flex-basis: 100%;
+		}
+	}
+}

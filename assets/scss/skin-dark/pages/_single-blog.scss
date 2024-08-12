@@ -1,0 +1,17 @@
+.edumall-dark-scheme {
+	.blog-nav-links {
+		.inner {
+			a {
+				background: $box-white-background;
+			}
+		}
+	}
+}
+
+.post-share {
+	&.style-01 {
+		.share-icon{
+			border-color: $box-border;
+		}
+	}
+}

@@ -1,0 +1,816 @@
+.home {
+  @apply [background:var(--Generic-Background,#F3F3F4)];
+
+  &-more-slides {
+    a {
+      @apply flex flex-col gap-2 justify-center items-center h-full;
+      @apply text-[color:var(--Primary-500,#C22E58)] text-base font-medium leading-[110%];
+    }
+  }
+
+  &-slider {
+    @apply overflow-hidden relative;
+
+    @media (min-width: theme("screens.laptop")) {
+      @apply col-span-8 row-span-2;
+    }
+
+    &-wrapper {
+      &-item {
+        @apply bg-[#E76C6C] overflow-hidden;
+
+        @media (min-width: theme("screens.laptop")) {
+          @apply rounded-2xl;
+        }
+
+        &-image {
+          @apply w-full h-[160px];
+
+          @media (min-width: theme("screens.laptop")) {
+            @apply h-full;
+          }
+
+          a {
+            @apply block min-h-full h-full;
+
+            img {
+              @apply min-h-full w-full;
+            }
+          }
+        }
+      }
+    }
+
+    &-pagination {
+      @apply flex gap-1 justify-center;
+
+      span {
+        @apply w-2 h-2 m-0 [background:#9D9D9D] opacity-100 #{!important};
+
+        &.swiper-pagination-bullet-active {
+          @apply w-4 h-2 rounded-3xl [background:var(--Generic-White,#FFF)] #{!important};
+        }
+      }
+    }
+  }
+
+  &-desktop-slider {
+    @apply grid grid-cols-12 grid-rows-2 gap-6 px-20 pt-3;
+
+    &-ads {
+      @apply row-span-1 col-span-4 rounded-3xl overflow-hidden;
+
+      img {
+        @apply w-full;
+      }
+    }
+  }
+
+  &-tags {
+    @apply overflow-hidden py-4;
+
+    @media (min-width: theme("screens.laptop")) {
+      @apply py-8;
+    }
+
+    &-wrapper {
+      &-item {
+        &.swiper-slide {
+          @apply flex justify-center items-center gap-2 [background:var(--Secondary-500,#015372)] px-3 py-2 rounded-[100px];
+        }
+
+        a {
+          @apply text-[color:var(--Generic-White,#FFF)] text-center text-xs font-normal leading-[110%] line-clamp-1;
+        }
+      }
+    }
+  }
+
+  &-events {
+    @apply flex flex-col gap-4 [background:var(--Generic-White,#F3F3F4)] p-6 relative;
+
+    @media (min-width: theme("screens.laptop")) {
+      @apply gap-8 px-20 py-10;
+    }
+
+    &-bg {
+      @apply absolute top-0 bottom-0 left-0 right-0 [background:var(--Generic-Background,#fff)] rounded-[32px_32px_0px_0px];
+    }
+
+    &-title {
+      @apply z-10;
+
+      h2 {
+        @apply text-[color:var(--Generic-Black,#121212)] text-lg font-medium leading-[110%];
+
+        @media (min-width: theme("screens.laptop")) {
+          @apply text-2xl font-bold;
+        }
+      }
+    }
+
+    &-categories {
+      @apply flex items-center flex-wrap z-10;
+
+      p {
+        @apply text-[color:var(--Generic-Black,#121212)] text-base font-normal leading-[110%] p-2;
+
+        @media (min-width: theme("screens.laptop")) {
+          @apply font-semibold;
+        }
+      }
+    }
+
+    &-content {
+      @apply flex justify-center relative;
+
+      &-slider {
+        @apply overflow-hidden w-full border-2 border-[color:var(--Neutral-400,#CED4DA)]  rounded-[16px_0px_16px_16px] border-solid;
+
+        @media (min-width: theme("screens.laptop")) {
+          @apply border-0 rounded-none;
+        }
+
+        &-wrap {
+          &-item {
+            @media (min-width: theme("screens.laptop")) {
+              @apply border-2 border-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] border-solid rounded-[16px_0px_16px_16px] overflow-hidden;
+            }
+
+            &.swiper-slide {
+              @apply flex flex-col gap-4;
+            }
+
+            .pics {
+              @apply h-52 overflow-hidden relative;
+
+              &-author {
+                @apply w-14 h-14  border border-[color:var(--Generic-White,#FFF)] rounded-[8px_0px_8px_8px] border-solid absolute top-2 right-2 bg-[#bdd5c5] overflow-hidden;
+
+                img {
+                  @apply h-full w-full;
+                }
+              }
+
+              &-thumbnail {
+                img {
+                  @apply w-full min-h-full object-cover;
+                }
+              }
+
+              .bookmark {
+                @apply w-fit h-fit absolute bg-white p-2  [background:var(--Generic-White,#FFF)] rounded-[8px_8px_0px_0px] bottom-0 left-8 cursor-pointer;
+
+                img {
+                  @apply hidden w-6 h-6;
+
+                  &.active {
+                    @apply block;
+                  }
+                }
+              }
+            }
+
+            .captions {
+              @apply flex flex-col gap-8 p-4 flex-grow;
+
+              &-meta {
+                @apply flex flex-col gap-2 flex-grow;
+
+                &-title {
+                  @apply h-[52px] flex-grow;
+
+                  a {
+                    @apply text-[color:var(--Generic-Black,#121212)] text-base font-normal leading-[160%];
+                  }
+                }
+
+                &-info {
+                  @apply flex flex-col gap-3;
+
+                  p {
+                    @apply text-[color:var(--Generic-Black,#121212)] text-xs font-normal leading-[110%];
+                  }
+
+                  &-item {
+                    @apply flex items-center gap-2;
+
+                    &:nth-child(3) {
+                      @apply gap-1;
+
+                      img {
+                        @apply ml-1;
+                      }
+                    }
+
+                    &-category {
+                      &:not(:last-child) {
+                        &::after {
+                          content: "،";
+                        }
+                      }
+                    }
+
+                    &-reviews {
+                      @apply text-[color:var(--Neutral-600,#6C757D)] #{!important};
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-free {
+    @apply flex flex-col gap-4 [background:var(--Generic-White,#F3F3F4)] p-6 relative;
+
+    @media (min-width: theme("screens.laptop")) {
+      @apply gap-8 px-20 py-10;
+    }
+
+    &-bg {
+      @apply absolute top-0 bottom-0 left-0 right-0 [background:var(--Generic-Background,#fff)] rounded-[32px_32px_0px_0px];
+    }
+
+    &-title {
+      @apply z-10;
+
+      h2 {
+        @apply text-[color:var(--Generic-Black,#121212)] text-lg font-medium leading-[110%];
+
+        @media (min-width: theme("screens.laptop")) {
+          @apply text-2xl font-bold;
+        }
+      }
+    }
+
+    &-categories {
+      @apply flex items-center flex-wrap z-10;
+
+      a {
+        @apply text-[color:var(--Generic-Black,#121212)] text-base font-normal leading-[110%] p-2;
+
+        &.active {
+          @apply border-b-[color:var(--Primary-500,#C22E58)] p-2 border-b-2 border-solid  text-[color:var(--Generic-Black,#C22E58)];
+
+          @media (min-width: theme("screens.laptop")) {
+            @apply font-semibold;
+          }
+        }
+      }
+    }
+
+    &-content {
+      @apply flex justify-center relative;
+
+      &-slider {
+        @apply overflow-hidden w-full border-2 border-[color:var(--Neutral-400,#CED4DA)]  rounded-[16px_0px_16px_16px] border-solid;
+
+        @media (min-width: theme("screens.laptop")) {
+          @apply border-0 rounded-none;
+        }
+
+        &-wrap {
+          &-item {
+            @media (min-width: theme("screens.laptop")) {
+              @apply border-2 border-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] border-solid rounded-[16px_0px_16px_16px] overflow-hidden;
+            }
+
+            &.swiper-slide {
+              @apply flex flex-col gap-4;
+            }
+
+            .pics {
+              @apply h-52 overflow-hidden relative;
+
+              &-author {
+                @apply w-14 h-14  border border-[color:var(--Generic-White,#FFF)] rounded-[8px_0px_8px_8px] border-solid absolute top-2 right-2 bg-[#bdd5c5] overflow-hidden;
+
+                img {
+                  @apply h-full w-full;
+                }
+              }
+
+              &-thumbnail {
+                img {
+                  @apply w-full min-h-full object-cover;
+                }
+              }
+
+              .bookmark {
+                @apply w-fit h-fit absolute bg-white p-2  [background:var(--Generic-White,#FFF)] rounded-[8px_8px_0px_0px] bottom-0 left-8 cursor-pointer;
+
+                img {
+                  @apply hidden w-6 h-6;
+
+                  &.active {
+                    @apply block;
+                  }
+                }
+              }
+            }
+
+            .captions {
+              @apply flex flex-col gap-8 p-4 flex-grow;
+
+              &-meta {
+                @apply flex flex-col gap-2 flex-grow;
+
+                &-title {
+                  @apply h-[52px] flex-grow;
+
+                  a {
+                    @apply text-[color:var(--Generic-Black,#121212)] text-base font-normal leading-[160%];
+                  }
+                }
+
+                &-info {
+                  @apply flex flex-col gap-3;
+
+                  p {
+                    @apply text-[color:var(--Generic-Black,#121212)] text-xs font-normal leading-[110%];
+                  }
+
+                  &-item {
+                    @apply flex items-center gap-2;
+
+                    &:nth-child(3) {
+                      @apply gap-1;
+
+                      img {
+                        @apply ml-1;
+                      }
+                    }
+
+                    &-category {
+                      &:not(:last-child) {
+                        &::after {
+                          content: "،";
+                        }
+                      }
+                    }
+
+                    &-reviews {
+                      @apply text-[color:var(--Neutral-600,#6C757D)] #{!important};
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-all {
+    @apply flex flex-col gap-6 relative bg-[#fff] p-6;
+
+    @media (min-width: theme("screens.laptop")) {
+      @apply gap-8 px-20 py-10;
+    }
+
+    &-desktop {
+      @apply flex z-50 gap-8;
+    }
+
+    .swiper-notification {
+      @apply hidden;
+    }
+
+    &-bg {
+      @apply absolute top-0 bottom-0 left-0 right-0 [background:var(--Generic-Background,#F3F3F4)] rounded-[32px_32px_0px_0px] z-20;
+    }
+
+    &-title {
+      @apply z-20;
+
+      h2 {
+        @apply text-[color:var(--Generic-Black,#121212)] text-lg font-medium leading-[110%];
+
+        @media (min-width: theme("screens.laptop")) {
+          @apply text-2xl font-bold;
+        }
+      }
+    }
+
+    &-category {
+      @apply flex flex-col gap-4 z-20 cursor-pointer;
+
+      &-meta {
+        @apply flex justify-between items-center;
+
+        &-title {
+          @apply flex items-center gap-2;
+
+          p {
+            @apply text-[color:var(--Generic-Black,#121212)] text-lg font-normal leading-[110%];
+
+            @media (min-width: theme("screens.laptop")) {
+              @apply text-base;
+            }
+          }
+        }
+
+        &-link {
+          @apply flex items-center gap-4;
+
+          a {
+            @apply text-[color:var(--Generic-Black,#121212)] text-center text-xs font-normal leading-[110%];
+          }
+
+          &-minus {
+            @apply hidden;
+          }
+        }
+      }
+
+      &.active {
+        .home-all-category-meta-title {
+          p {
+            @apply font-medium;
+
+            @media (min-width: theme("screens.laptop")) {
+              @apply text-[color:var(--Primary-500,#C22E58)] text-base font-semibold;
+            }
+          }
+        }
+
+        .home-all-category-meta-link {
+          a {
+            @apply text-[color:var(--Primary-500,#C22E58)] text-center text-xs font-normal leading-[110%];
+          }
+
+          &-add {
+            @apply hidden;
+          }
+
+          &-minus {
+            @apply block;
+          }
+        }
+      }
+    }
+
+    &-content {
+      @apply flex justify-center relative z-50;
+
+      &-slider {
+        @apply overflow-hidden w-full;
+
+        &-wrap {
+          &-item {
+            @apply border-2 border-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] rounded-[16px_0px_16px_16px] border-solid overflow-hidden;
+
+            &.swiper-slide {
+              @apply flex flex-col gap-4;
+            }
+
+            a {
+              @apply flex flex-col h-full;
+            }
+
+            .pics {
+              @apply h-52 overflow-hidden relative;
+
+              &-author {
+                @apply w-14 h-14  border border-[color:var(--Generic-White,#FFF)] rounded-[8px_0px_8px_8px] border-solid absolute top-2 right-2 bg-[#bdd5c5] overflow-hidden;
+
+                img {
+                  @apply h-full w-full;
+                }
+              }
+
+              &-thumbnail {
+                img {
+                  @apply w-full min-h-full object-cover;
+                }
+              }
+
+              .bookmark {
+                @apply w-fit h-fit absolute bg-white p-2  [background:var(--Generic-White,#FFF)] rounded-[8px_8px_0px_0px] bottom-0 left-8 cursor-pointer;
+
+                img {
+                  @apply hidden w-6 h-6;
+
+                  &.active {
+                    @apply block;
+                  }
+                }
+              }
+            }
+
+            .captions {
+              @apply flex flex-col gap-8 p-4 flex-grow;
+
+              &-meta {
+                @apply flex flex-col gap-2 flex-grow;
+
+                &-title {
+                  @apply h-[52px] flex-grow;
+
+                  a {
+                    @apply text-[color:var(--Generic-Black,#121212)] text-base font-normal leading-[160%];
+                  }
+                }
+
+                &-info {
+                  @apply flex flex-col gap-3;
+
+                  p {
+                    @apply text-[color:var(--Generic-Black,#121212)] text-xs font-normal leading-[110%];
+                  }
+
+                  &-item {
+                    @apply flex items-center gap-2;
+
+                    &:nth-child(3) {
+                      @apply gap-1;
+
+                      img {
+                        @apply ml-1;
+                      }
+                    }
+
+                    &-category {
+                      &:not(:last-child) {
+                        &::after {
+                          content: "،";
+                        }
+                      }
+                    }
+
+                    &-reviews {
+                      @apply text-[color:var(--Neutral-600,#6C757D)] #{!important};
+                    }
+                  }
+                }
+              }
+
+              &-price {
+                @apply flex flex-col items-end self-end;
+
+                &-regular {
+                  @apply flex gap-1;
+
+                  &-num {
+                    @apply text-[color:var(--Generic-Black,#121212)] text-base font-normal leading-[110%];
+                  }
+
+                  &-sign {
+                    @apply text-[color:var(--Neutral-700,#495057)] text-xs font-normal leading-[110%];
+                  }
+                }
+
+                &-sale {
+                  @apply flex items-end gap-3;
+
+                  &-percent {
+                    @apply inline-flex justify-center items-center gap-2 rounded [background:var(--Primary-500,#C22E58)] p-1;
+                    @apply text-[color:var(--Generic-White,#FFF)] text-xs font-normal leading-[110%];
+                  }
+                  &-num {
+                    @apply flex gap-1;
+
+                    p {
+                      @apply text-[color:var(--Neutral-500,#ADB5BD)] text-xs font-normal leading-[110%];
+
+                      &:first-child {
+                        @apply text-[color:var(--Neutral-500,#ADB5BD)] text-sm font-normal leading-[110%] line-through;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &-nav-btn {
+        @apply flex w-full items-center justify-between absolute left-0 right-0 top-0 bottom-0 m-auto z-50 h-fit bg-transparent;
+
+        img {
+          @apply cursor-pointer;
+
+          &.btn-right {
+            @apply translate-x-4;
+          }
+
+          &.btn-left {
+            @apply -translate-x-4;
+          }
+        }
+      }
+    }
+  }
+
+  &-instructors {
+    @apply flex flex-col gap-6 p-6 bg-[#fff] relative;
+
+    @media (min-width: theme("screens.laptop")) {
+      @apply py-10 px-20;
+    }
+
+    &-bg {
+      @apply absolute top-0 bottom-0 left-0 right-0 [background:var(--Generic-Background,#C22E58)] rounded-[32px_32px_0px_0px] z-10;
+    }
+
+    &-title {
+      @apply z-20;
+
+      h2 {
+        @apply text-[color:var(--Generic-White,#FFF)] text-lg font-medium leading-[110%];
+      }
+    }
+
+    &-content {
+      @apply relative;
+
+      &-desktop {
+        @apply grid grid-cols-3 gap-6;
+
+        &-item {
+          @apply [background:var(--Generic-White,#FFF)] p-2 rounded-[16px_0px_16px_16px] col-span-1 z-50;
+
+          &-wrap {
+            @apply flex gap-3;
+          }
+
+          &-header {
+            @apply w-24 h-24 rounded-[8px_0px_8px_8px] overflow-hidden;
+
+            img {
+              @apply h-full w-full;
+            }
+          }
+
+          &-footer {
+            @apply flex flex-col justify-between gap-6 py-2;
+
+            &-specs {
+              @apply flex flex-col gap-2;
+
+              h6 {
+                @apply text-[color:var(--Generic-Black,#121212)] text-base font-medium leading-[110%];
+              }
+
+              p {
+                @apply text-[color:var(--Generic-Black,#121212)] text-sm font-normal leading-[110%];
+              }
+            }
+
+            &-review {
+              @apply flex items-center gap-2;
+
+              p {
+                @apply text-[color:var(--Generic-Black,#121212)] text-sm font-light leading-[110%];
+              }
+
+              .info {
+                &-meta-rating {
+                  @apply flex gap-1;
+                }
+
+                &-meta-separator {
+                  @apply w-1 h-1 [background:var(--Primary-100,#F3D5DE)] rounded-[1px];
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &-slider {
+        @apply relative z-20 overflow-hidden;
+
+        &-item {
+          @apply flex flex-col gap-2 [background:var(--Generic-White,#FFF)] rounded-[16px_0px_16px_16px] bg-white overflow-hidden h-auto #{!important};
+
+          &-wrap {
+            @apply flex flex-col flex-grow h-full;
+          }
+
+          &-header {
+            @apply w-full h-[72px];
+
+            img {
+              @apply w-full h-full object-cover;
+            }
+          }
+
+          &-footer {
+            @apply flex flex-col flex-grow gap-4 p-3;
+
+            &-specs {
+              @apply flex flex-col gap-2 flex-grow;
+
+              .info-meta {
+                &-name {
+                  @apply text-[color:var(--Generic-Black,#121212)] text-xs font-normal leading-[110%];
+                }
+
+                &-job {
+                  @apply text-[color:var(--Generic-Black,#121212)] text-xs font-light leading-[110%];
+                }
+              }
+            }
+
+            &-review {
+              @apply flex items-center gap-1;
+
+              .info-meta {
+                &-rating {
+                  @apply flex items-center gap-1;
+
+                  p {
+                    @apply text-[color:var(--Generic-Black,#121212)] text-xs font-light;
+                  }
+                }
+
+                &-separator {
+                  @apply w-1 h-1 [background:var(--Primary-100,#F3D5DE)] rounded-[1px];
+                }
+
+                &-students {
+                  @apply flex-grow;
+
+                  p {
+                    @apply text-[color:var(--Generic-Black,#121212)] text-xs font-light leading-[110%];
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &-nav-btn {
+        @apply flex w-full items-center justify-between absolute left-0 right-0 top-0 bottom-0 m-auto z-50 h-fit bg-transparent;
+
+        img {
+          @apply cursor-pointer;
+
+          &.btn-right {
+            @apply translate-x-4;
+          }
+
+          &.btn-left {
+            @apply -translate-x-4;
+          }
+        }
+      }
+    }
+  }
+
+  &-become-instructor {
+    @apply flex relative bg-[#C22E58];
+
+    &-banner {
+      @apply flex flex-col w-full items-center gap-2 shrink-0 [background:var(--Generic-Background,#F3F3F4)] p-6 rounded-[32px_32px_0px_0px];
+
+      img {
+        @apply w-full;
+      }
+
+      p {
+        @apply absolute w-fit h-fit top-0 bottom-0 left-0 right-0 m-auto text-[color:var(--Generic-White,#FFF)] text-center text-base font-normal leading-[110%];
+      }
+    }
+  }
+
+  .loader {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #646464;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+  }
+
+  @keyframes rotation {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  &-slider-nav-btn {
+    @apply flex w-fit items-center justify-between absolute top-0 bottom-0 m-auto z-50 h-fit bg-transparent cursor-pointer;
+
+    &.btn-right {
+      @apply translate-x-4 right-0;
+    }
+
+    &.btn-left {
+      @apply -translate-x-4 left-0;
+    }
+  }
+}

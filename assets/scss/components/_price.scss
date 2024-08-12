@@ -1,0 +1,46 @@
+.price {
+  @apply flex flex-col gap-2 self-end;
+
+  &-free {
+    p {
+      @apply text-[color:var(--Primary-500,#C22E58)] text-center text-base font-normal leading-[110%] #{!important};
+    }
+  }
+
+  &-sale {
+    @apply flex items-center gap-1;
+
+    &-num {
+      @apply text-[color:var(--Generic-Black,#121212)] text-base font-normal leading-[110%] #{!important};
+    }
+
+    &-sign {
+      @apply text-[color:var(--Neutral-700,#495057)] text-xs font-normal leading-[110%] #{!important};
+    }
+  }
+
+  &-regular {
+    @apply flex items-center gap-2;
+
+    &-num {
+      @apply text-[color:var(--Generic-Black,#121212)] text-base font-normal leading-[110%] #{!important};
+    }
+
+    &-sign {
+      @apply text-[color:var(--Neutral-700,#495057)] text-xs font-normal leading-[110%] #{!important};
+    }
+
+    &.on-sale {
+      .price-regular {
+        &-num {
+          @apply text-[color:var(--Neutral-500,#ADB5BD)] text-sm font-normal leading-[110%] line-through #{!important};
+        }
+
+        &-percent {
+          @apply rounded [background:var(--Primary-500,#C22E58)] p-1 #{!important};
+          @apply text-[color:var(--Generic-White,#FFF)] text-xs font-normal leading-[110%] #{!important};
+        }
+      }
+    }
+  }
+}

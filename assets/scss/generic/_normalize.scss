@@ -1,0 +1,23 @@
+body {
+  @apply w-full m-auto bg-[#F3F3F4];
+
+  @media (min-width: theme("screens.tablet")) {
+    @apply m-auto #{!important};
+  }
+}
+
+.page-mobile-main-menu {
+  @apply hidden;
+}
+
+.tutor-snackbar-wrapper {
+  @apply hidden;
+}
+
+span {
+  font-family: $main-font !important;
+}
+
+.site {
+  @apply max-w-[1440px] w-full m-auto;
+}

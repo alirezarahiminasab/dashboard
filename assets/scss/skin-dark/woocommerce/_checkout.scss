@@ -1,0 +1,12 @@
+.edumall-dark-scheme {
+	.wc_payment_methods {
+		.payment_title {
+			border-color: $box-white-border;
+		}
+
+		.payment-selected .payment_title {
+			background-color: $box-white-background;
+			border-color: $box-white-border;
+		}
+	}
+}

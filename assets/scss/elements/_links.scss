@@ -1,0 +1,39 @@
+a {
+  color: royalblue;
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    outline: 0;
+    color: midnightblue;
+  }
+
+  &[href^="tel"] {
+    text-decoration: none;
+  }
+}
+
+.link-secret {
+  color: inherit !important;
+}
+
+.link-in-title {
+  color: inherit !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+
+  &:hover {
+  }
+}
+
+.title-has-link {
+  a {
+    color: inherit !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+
+    &:hover {
+    }
+  }
+}

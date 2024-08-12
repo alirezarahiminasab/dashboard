@@ -1,0 +1,386 @@
+.instructor-courses {
+  @apply bg-[#F3F3F4];
+
+  &-wrap {
+    @apply flex flex-col items-center gap-4 [background:var(--Generic-White,#FFF)] p-6 rounded-[32px_32px_0px_0px];
+
+    @media (min-width: theme("screens.laptop")) {
+      @apply rounded-2xl gap-6;
+    }
+
+    &-setting {
+      @apply flex justify-between items-center w-full;
+
+      &-title {
+        @apply text-[color:var(--Generic-Black,#121212)] text-lg font-semibold leading-[110%];
+      }
+
+      &-buttons {
+        @apply flex gap-4;
+
+        &-create {
+          @apply [background:var(--Secondary-500,#015372)] px-8 py-4 rounded-lg h-auto;
+          @apply text-[color:var(--Generic-White,#FFF)] text-sm font-medium leading-[110%];
+        }
+      }
+
+      &-button {
+        @apply flex justify-center items-center border border-[color:var(--Generic-Black,#121212)] rounded-lg border-solid;
+
+        &.instructor-courses-filter-btn {
+          @apply p-3 gap-2;
+        }
+
+        &.instructor-courses-sort-btn {
+          @media (min-width: theme("screens.laptop")) {
+            @apply relative;
+          }
+
+          span:nth-child(2) {
+            @apply flex gap-2 items-center p-3 border-r-[color:var(--Neutral-900,#212529)] border-r border-solid;
+          }
+
+          span:first-child {
+            @apply p-3;
+          }
+        }
+      }
+    }
+
+    &-boxes {
+      @apply w-full flex flex-col gap-4;
+
+      @media (min-width: theme("screens.laptop")) {
+        @apply grid grid-cols-9;
+      }
+
+      &-course {
+        @apply w-full flex flex-col gap-3 border border-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] rounded-[8px_0px_8px_8px] border-solid;
+
+        @media (min-width: theme("screens.laptop")) {
+          @apply col-span-3 gap-2;
+        }
+
+        &-header {
+          @apply flex items-center gap-2 p-3 relative;
+
+          @media (min-width: theme("screens.laptop")) {
+            @apply flex-col px-3 pt-3 pb-0;
+          }
+
+          h3 {
+            @apply text-[color:var(--Generic-Black,#121212)] text-right text-sm font-medium line-clamp-2;
+
+            @media (min-width: theme("screens.laptop")) {
+              @apply w-full;
+            }
+          }
+
+          a {
+            @media (min-width: theme("screens.laptop")) {
+              @apply w-full;
+            }
+          }
+
+          img {
+            @apply w-12 h-11  rounded-[4px_0px_4px_4px];
+
+            @media (min-width: theme("screens.laptop")) {
+              @apply w-full h-[132px] object-cover rounded-[8px_0px_8px_8px];
+            }
+          }
+
+          .instructor-dropdown-parent {
+            @apply absolute top-3 left-3 w-fit;
+
+            @media (min-width: theme("screens.laptop")) {
+              @apply flex w-full justify-between items-center relative top-0 left-0;
+            }
+
+            &-status {
+              @apply flex items-center gap-1;
+
+              img {
+                @apply w-4 h-4;
+              }
+
+              p {
+                @apply text-center text-[10px] font-medium;
+
+                &.pending {
+                  @apply text-[color:var(--Warning-500,#EC8909)];
+                }
+
+                &.published {
+                  @apply text-[color:var(--Warning-500,#1DAB45)];
+                }
+
+                &.declined {
+                  @apply text-[color:var(--Warning-500,#F62E2E)];
+                }
+              }
+            }
+
+            &-icon {
+              @apply w-4 h-4 cursor-pointer;
+
+              @media (min-width: theme("screens.laptop")) {
+                @apply relative top-0 left-0;
+              }
+            }
+
+            &-menu {
+              @apply hidden flex-col absolute left-3 items-center gap-4 border border-[color:var(--Neutral-400,#CED4DA)] [background:var(--Generic-White,#FFF)] p-3 rounded-lg border-solid translate-y-3 z-50 w-max;
+
+              @media (min-width: theme("screens.laptop")) {
+                @apply top-0;
+              }
+
+              img {
+                @apply w-4 h-4;
+              }
+
+              input {
+                @apply m-0;
+
+                &::after {
+                  font-family: "Font Awesome 5 Pro";
+                }
+              }
+
+              p {
+                @apply text-[color:var(--Generic-Black,#121212)] text-center text-xs font-normal;
+              }
+
+              .instructor-dropdown-item {
+                @apply flex items-center gap-2 w-full;
+
+                #instructor-dropdown-item-delete {
+                  @apply text-[color:var(--Error-500,#F62E2E)];
+                }
+              }
+            }
+          }
+        }
+
+        &-declined {
+          @apply flex flex-col justify-center gap-4 border border-[color:var(--Error-500,#F62E2E)] [background:var(--Generic-White,#FFF)] px-3 py-4 rounded-lg border-solid mx-3;
+
+          p {
+            @apply text-[color:var(--Error-500,#F62E2E)] text-right text-xs font-normal;
+          }
+
+          a {
+            @apply text-[color:var(--Secondary-500,#015372)] text-center  text-xs font-normal;
+          }
+
+          .declined-contact {
+            @apply flex justify-between;
+
+            &-item {
+              @apply flex items-center gap-1;
+            }
+          }
+        }
+
+        &-meta {
+          @apply flex justify-between items-center [background:var(--Neutral-100,#F8F9FA)] p-3 rounded-[0px_0px_8px_8px];
+
+          .instructor-course-metadata {
+            @apply flex justify-between w-full;
+            &-status {
+              @apply flex items-center gap-1;
+
+              p {
+                @apply text-center text-[10px] font-medium;
+
+                &.pending {
+                  @apply text-[color:var(--Warning-500,#EC8909)];
+                }
+
+                &.published {
+                  @apply text-[color:var(--Warning-500,#1DAB45)];
+                }
+
+                &.declined {
+                  @apply text-[color:var(--Warning-500,#F62E2E)];
+                }
+              }
+            }
+
+            &-enrolled,
+            &-reviews,
+            &-category {
+              @apply flex items-center gap-1;
+
+              p {
+                @apply text-[color:var(--Neutral-900,#212529)] text-center text-xs font-normal;
+
+                &:not(:last-child)::after {
+                  content: ",";
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &-empty {
+      @apply flex flex-col items-center mt-12;
+
+      p {
+        @apply text-[color:var(--Generic-Black,#121212)] text-center text-lg font-medium;
+      }
+
+      a {
+        @apply flex justify-center items-center [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg mt-8;
+        @apply text-[color:var(--Generic-White,#FFF)] text-center text-sm font-medium;
+      }
+    }
+
+    &-create-btn {
+      @apply self-start;
+
+      a {
+        @apply flex justify-center items-center gap-2 z-10 relative;
+      }
+    }
+  }
+
+  &-sort {
+    @apply fixed top-0 bottom-0 left-0 right-0 z-[90] hidden;
+
+    @media (min-width: theme("screens.laptop")) {
+      @apply absolute h-max;
+    }
+
+    &-bg {
+      @apply absolute top-0 bottom-0 left-0 right-0 bg-[#121212] opacity-60;
+    }
+
+    &-wrap {
+      @apply absolute bottom-0 w-full translate-y-full z-50;
+
+      @media (min-width: theme("screens.laptop")) {
+        @apply relative;
+      }
+
+      &-header {
+        @apply flex items-center justify-between px-6 py-4 rounded-[24px_24px_0px_0px] bg-white border-b-[color:var(--Neutral-400,#CED4DA)] border-b border-solid;
+
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-center text-sm font-medium;
+        }
+
+        .sort-header {
+          &-logo {
+            @apply absolute left-0 right-0 m-auto w-8 h-8;
+          }
+
+          &-close {
+            @apply cursor-pointer;
+          }
+        }
+      }
+
+      &-radio {
+        @apply flex flex-col bg-white;
+
+        span:not(.loader) {
+          @apply flex items-center gap-2 py-3 px-6;
+
+          input[type="radio"]:after {
+            @apply bg-[#C22E58];
+          }
+
+          p {
+            @apply text-[color:var(--Generic-Black,#121212)] text-center text-sm font-normal;
+          }
+        }
+      }
+    }
+  }
+
+  &-filter {
+    @apply overflow-y-auto fixed top-0 bottom-0 left-0 right-0 z-[90] bg-white translate-y-full hidden;
+
+    &-header {
+      @apply grid grid-cols-3 items-center justify-between px-6 py-3 bg-white border-b-[color:var(--Neutral-400,#CED4DA)] border-b border-solid;
+
+      p {
+        @apply justify-self-start col-span-1 text-[color:var(--Generic-Black,#121212)] text-center text-sm font-medium;
+      }
+
+      .sort-header {
+        &-logo {
+          @apply h-auto justify-self-center col-span-1 w-8;
+        }
+
+        &-close {
+          @apply justify-self-end col-span-1 cursor-pointer;
+        }
+      }
+    }
+
+    &-wrap {
+      input[type="checkbox"] {
+        @apply rounded-md;
+        font-family: "Font Awesome 5 Pro";
+
+        &:checked:before {
+          @apply bg-[#F3D5DE] border border-[color:var(--Primary-500,#C22E58)] border-solid rounded-md;
+        }
+
+        &:checked:after {
+          @apply text-[#C22E58] rounded-md;
+        }
+      }
+
+      .filter-wrap-setting {
+        @apply flex flex-col gap-4 p-6;
+
+        &-header {
+          @apply flex items-center justify-between border-b border-b-[#ADB5BD] border-solid pb-2;
+
+          &-title {
+            @apply flex gap-2;
+
+            p {
+              @apply text-[color:var(--Generic-Black,#121212)] text-center text-sm font-medium;
+            }
+          }
+        }
+
+        &-content {
+          span {
+            @apply flex gap-2 py-3;
+
+            p {
+              @apply text-[color:var(--Generic-Black,#121212)] text-center text-xs font-normal;
+            }
+          }
+        }
+      }
+    }
+
+    &-buttons {
+      @apply flex justify-center items-center gap-2 w-full bottom-0 [background:var(--Generic-White,#FFF)] px-6 py-2 border-t-[rgba(204,221,227,0.50)] border-t border-solid;
+      a {
+        @apply text-center text-sm font-medium;
+
+        &:hover {
+          color: inherit;
+        }
+      }
+
+      &-show {
+        @apply flex-1 [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg text-[color:var(--Generic-White,#FFF)];
+      }
+
+      &-reset {
+        @apply flex-1 border border-[color:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg border-solid text-[color:var(--Primary-500,#C22E58)];
+      }
+    }
+  }
+}

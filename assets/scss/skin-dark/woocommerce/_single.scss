@@ -1,0 +1,17 @@
+.edumall-dark-scheme {
+	.woocommerce-product-attributes th {
+		color: #b3b6bb;
+	}
+
+	.entry-product-meta .meta-label {
+		color: #b3b6bb;
+	}
+
+	&.single-product {
+		form.cart {
+			.single_add_to_cart_button.disabled {
+				background: #19222D;
+			}
+		}
+	}
+}

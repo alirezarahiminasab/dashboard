@@ -1,0 +1,42 @@
+.edumall-dark-scheme {
+	.tutor-frontend-course-builder {
+		.page-header-inner {
+			background: #020c18 !important;
+		}
+	}
+
+	.tutor-frontend-course-builder-section {
+		background: #031f42;
+	}
+
+	.tutor-course-builder-section,
+	.tutor-course-builder-upload-tips {
+		background: #020d1b;
+	}
+
+	.tutor-form-group span.tutor-input-prepand {
+		border-color: $form-border;
+	}
+
+	.tutor-topic-title span.expand-collapse-wrap {
+		border-color: rgba(255, 255, 255, .1);
+	}
+
+	.tutor-metabox-add-topics {
+		background: #020d1b;
+	}
+}
+
+.tutor-topic-title a {
+	color: #fff;
+}
+
+#tutor-zoom-metabox-wrap {
+	.zoom-meetings-heading {
+		border-color: rgba(255, 255, 255, .1);
+	}
+}
+
+.zoom-meetings-container .tutor-zoom-meeting-item {
+	border-color: rgba(255, 255, 255, .1);
+}

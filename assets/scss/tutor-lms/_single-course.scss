@@ -1,0 +1,1299 @@
+.single-course {
+  @apply bg-[#F3F3F4];
+
+  &-breadcrumb {
+    @apply flex px-6 py-3 items-center gap-1;
+
+    img {
+      @apply w-3 h-3;
+    }
+
+    a {
+      @apply text-[color:var(--Generic-Black,#121212)] text-center text-sm not-italic font-normal leading-[100%];
+    }
+
+    p.title {
+      @apply text-[color:var(--Neutral-700,#495057)] text-center text-sm not-italic font-light leading-[100%];
+    }
+  }
+
+  &-wrap {
+    @apply flex flex-col relative;
+  }
+
+  &-meta {
+    @apply flex flex-col justify-center items-start gap-4 p-6 rounded-[32px_32px_0px_0px] bg-white;
+
+    @media (min-width: theme("screens.laptop")) {
+      @apply rounded-2xl;
+    }
+
+    &-cover-image {
+      @apply w-full h-[211px] shrink-0 rounded-2xl overflow-hidden relative;
+
+      img {
+        @apply h-full w-full object-cover;
+      }
+
+      .bookmark {
+        @apply absolute bottom-0 left-6 [background:var(--Generic-White,#FFF)] p-2 rounded-[8px_8px_0px_0px] cursor-pointer;
+
+        img {
+          @apply hidden w-6 h-6;
+
+          &.active {
+            @apply block;
+          }
+        }
+      }
+    }
+
+    &-title {
+      p {
+        @apply text-[color:var(--Generic-Black,#121212)] text-2xl not-italic font-medium leading-[100%];
+      }
+    }
+
+    &-content {
+      p {
+        @apply text-[color:var(--Generic-Black,#121212)] text-sm not-italic font-normal leading-[160%];
+      }
+    }
+
+    &-instructor {
+      @apply flex items-center gap-1;
+
+      &-title {
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-xs not-italic font-normal leading-[100%];
+        }
+      }
+
+      &-image {
+        @apply w-6 h-6 overflow-hidden rounded-[4px_0px_4px_4px];
+
+        img {
+          @apply w-full h-full;
+        }
+      }
+
+      &-name {
+        p {
+          @apply text-[color:var(--Primary-500,#C22E58)]  text-xs not-italic font-medium leading-[100%];
+        }
+      }
+    }
+
+    &-rating {
+      @apply flex flex-col gap-2;
+
+      &-value {
+        @apply flex items-center gap-1;
+
+        &-star {
+          @apply w-4 h-4;
+        }
+
+        &-value {
+          p {
+            @apply text-[color:var(--Generic-Black,#121212)] text-xs not-italic font-normal leading-[100%];
+          }
+        }
+
+        &-count {
+          p {
+            @apply text-[color:var(--Generic-Black,#121212)] text-xs not-italic font-normal leading-[100%] opacity-40;
+          }
+        }
+      }
+
+      &-students {
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-xs not-italic font-light leading-[100%];
+        }
+      }
+    }
+  }
+
+  &-benefits {
+    @apply flex flex-col gap-4 shrink-0 rounded-2xl p-4 my-8 mx-6 bg-white;
+
+    &-content {
+      @apply flex flex-col gap-4;
+    }
+
+    &-title {
+      @apply text-[color:var(--Generic-Black,#121212)] text-lg not-italic font-medium leading-[100%] m-0;
+    }
+
+    &-item {
+      @apply flex gap-2;
+    }
+
+    .benefits-content {
+      @apply flex items-center gap-2;
+    }
+
+    .benefits-icon {
+      @apply w-2 h-2;
+    }
+
+    .benefits-text {
+      @apply text-[color:var(--Neutral-800,#343A40)] text-sm not-italic font-normal leading-[160%];
+    }
+  }
+
+  &-includes {
+    @apply flex flex-col gap-4 rounded-[32px_32px_0px_0px] bg-white p-6;
+
+    &-title {
+      @apply text-[color:var(--Generic-Black,#121212)] text-lg not-italic font-medium leading-[100%];
+    }
+
+    &-content {
+      @apply flex flex-col gap-3;
+
+      .content-box {
+        @apply flex items-center gap-1;
+
+        img {
+          @apply w-4 h-4;
+        }
+
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-xs not-italic font-normal leading-[100%];
+        }
+      }
+    }
+  }
+
+  &-reviews {
+    @apply bg-white;
+
+    @media (min-width: theme("screens.laptop")) {
+      @apply rounded-[32px_32px_0px_0px];
+    }
+
+    &-wrap {
+      @apply shrink-0 rounded-[32px_32px_0px_0px] p-6 bg-[#F3F3F4];
+
+      @media (min-width: theme("screens.laptop")) {
+        background: none;
+      }
+
+      .tutor-segment-title {
+        @apply text-[color:var(--Generic-Black,#121212)] text-lg not-italic font-medium leading-[100%];
+      }
+
+      .reviews-rating {
+        @apply flex items-center gap-2 mb-6;
+
+        img {
+          @apply w-4 h-4;
+        }
+
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-xs not-italic font-normal leading-[100%];
+        }
+      }
+    }
+  }
+
+  &-prerequisite {
+    @apply flex flex-col mt-12 mb-0 gap-5 p-6 rounded-[32px_32px_0px_0px];
+
+    @media (min-width: theme("screens.laptop")) {
+      @apply m-0;
+    }
+
+    .tutor-segment-title {
+      @apply text-[color:var(--Generic-Black,#121212)] text-lg not-italic font-medium leading-[100%];
+    }
+
+    .course-prerequisite-lists-wrap {
+      .prerequisite-course-lists {
+        @apply m-0 p-0;
+
+        li {
+          a {
+            @apply flex items-center gap-4 p-4 rounded-md bg-white text-[color:var(--Generic-Black,#121212)] text-sm not-italic font-normal leading-[100%];
+          }
+        }
+      }
+    }
+  }
+
+  &-topics {
+    @apply p-6;
+
+    &-header {
+      @apply flex flex-wrap justify-between mb-6;
+    }
+
+    &-header-left {
+      h4 {
+        @apply text-[color:var(--Generic-Black,#121212)] text-lg not-italic font-medium leading-[100%];
+      }
+    }
+
+    &-header-right {
+      @apply flex gap-2 items-center;
+
+      p {
+        @apply m-0 text-[color:var(--Generic-Black,#121212)] text-sm not-italic font-normal leading-[100%];
+      }
+    }
+
+    &-contents {
+      @apply flex flex-col gap-3;
+
+      &-item {
+        @apply flex flex-col justify-center items-start m-0 rounded-[8px_0px_8px_8px] overflow-hidden;
+
+        &-title {
+          @apply flex justify-between items-center w-full py-3 px-4 bg-white cursor-pointer;
+
+          h4 {
+            @apply text-[color:var(--Generic-White,#000)] text-base not-italic font-normal leading-[100%];
+          }
+
+          img {
+            @apply block w-3 h-3;
+          }
+        }
+
+        &-lessons {
+          @apply hidden flex-col w-full p-4 gap-4;
+
+          .title {
+            @apply flex items-center gap-1;
+
+            a,
+            p {
+              @apply text-[color:var(--Generic-Black,#121212)] text-sm not-italic font-normal leading-[100%];
+            }
+
+            .right {
+              @apply flex gap-1;
+            }
+
+            .left {
+              img {
+                @apply w-4 h-4;
+              }
+            }
+          }
+
+          .duration {
+            @apply flex items-center gap-1;
+
+            img {
+              @apply w-4 h-4;
+            }
+
+            p {
+              @apply text-[color:var(--Generic-Black,#121212)] text-xs not-italic font-normal leading-[100%];
+            }
+          }
+        }
+
+        &.topic-active {
+          @apply border border-[color:var(--Generic-Black,#121212)] border-solid;
+
+          .single-course-topics-contents-item-title {
+            @apply bg-[#C22E58];
+
+            h4 {
+              @apply text-[color:var(--Generic-White,#FFF)];
+            }
+
+            img {
+              &.arrow-up {
+                @apply block;
+              }
+
+              &.arrow-down {
+                @apply hidden;
+              }
+            }
+          }
+
+          .single-course-topics-contents-item-lessons {
+            @apply flex;
+          }
+        }
+      }
+    }
+  }
+
+  .tutor_question_answer_wrap {
+    @apply rounded-[var(--border-radius-rounded-lg,8px)] border border-[color:var(--gray-100,#DEE9E6)] p-2 border-solid;
+
+    .tutor-question-wrap {
+      @apply flex flex-col gap-4 self-stretch p-4 rounded-lg;
+      background: var(--white, #fff);
+    }
+
+    .tutor-question-avatar {
+      @apply flex justify-end m-0 items-center w-auto gap-[var(--border-radius-rounded-lg,8px)];
+
+      .avatar-wrap {
+        @apply w-8 h-8 rounded-[100px] overflow-hidden;
+      }
+    }
+
+    .tutor-question-info {
+      @apply flex justify-between;
+      flex-grow: 1;
+    }
+
+    .tutor-question-meta {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 0 9px;
+    }
+
+    .question-user-name {
+      font-size: 14px;
+      line-height: 26px;
+      font-weight: 700;
+      margin: 0 10px 0 0;
+
+      a {
+        display: block;
+        color: inherit;
+      }
+    }
+
+    .question-post-date {
+      position: relative;
+      font-size: 13px;
+      line-height: 26px;
+      color: $text-bit-lighten-color;
+      padding: 0 0 0 12px;
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 11px;
+        left: 0;
+        height: 4px;
+        width: 4px;
+        border-radius: 50%;
+        background: #ccc;
+      }
+    }
+
+    .tutor-question-content {
+      @apply bg-white m-0 p-0;
+      p {
+        @apply self-stretch text-[color:var(--gray-500,#8698AB)] text-right text-base not-italic font-normal leading-[150%];
+      }
+    }
+
+    .question-title {
+      font-size: 14px;
+      line-height: 1.86;
+      color: $text-color;
+      margin: 0 0 5px;
+    }
+  }
+
+  .tutor_original_question {
+    @apply border-none m-0 p-0;
+  }
+
+  .tutor_admin_answers_list_wrap {
+    @apply m-0 pt-4 pb-8 pr-4 pl-0;
+
+    .tutor_individual_answer {
+      @apply bg-white m-0 pt-8 border-r-2 border-[#C7DAD9] border-solid;
+    }
+  }
+
+  .tutor-answer-wrap {
+    @apply flex justify-between items-center self-stretch;
+
+    .tutor-answer-like {
+      @apply flex items-center gap-1;
+    }
+
+    .tutor_add_answer_row {
+      @apply flex items-center gap-2 pl-3 pr-[11px] py-2 rounded-lg;
+
+      .tutor_add_answer_wrap {
+        a {
+          @apply p-0 text-[#7F0F2E] text-right text-xs not-italic font-medium leading-[150%];
+
+          &::after,
+          &::before {
+            @apply bg-white;
+          }
+        }
+      }
+    }
+  }
+
+  &-instructors {
+    @apply flex flex-col gap-4 p-6;
+
+    .tutor-segment-title {
+      @apply m-0;
+    }
+
+    .single-instructor-wrap {
+      @apply flex flex-col gap-4 p-4 shrink-0 rounded-[16px_0px_16px_16px] bg-white m-0;
+
+      .instructor-avatar-meta {
+        @apply flex items-center gap-2;
+
+        .instructor-avatar {
+          @apply w-16 h-16 rounded-[4px_0px_4px_4px] m-0 overflow-hidden;
+        }
+
+        .instructor-meta {
+          @apply flex flex-col gap-2 grow m-0;
+
+          .instructor-name {
+            @apply text-[color:var(--Generic-Black,#121212)]  text-base not-italic font-normal leading-[100%] m-0;
+          }
+
+          .instructor-job {
+            @apply text-[color:var(--Generic-Black,#121212)] text-xs not-italic font-light leading-[100%] m-0;
+          }
+
+          .instructor-students-courses {
+            @apply flex gap-2 m-0 p-0;
+
+            p {
+              @apply text-[color:var(--Generic-Black,#121212)] text-xs not-italic font-light leading-[100%];
+            }
+          }
+        }
+      }
+
+      .instructor-bio {
+        @apply m-0;
+
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-right text-xs not-italic font-normal leading-[160%];
+        }
+      }
+
+      .instructor-profile-url {
+        @apply text-[color:var(--Primary-500,#C22E58)]  text-xs not-italic font-medium leading-[100%] m-0;
+      }
+    }
+  }
+
+  .review-individual-item {
+    @apply p-4 bg-white mb-4 my-0 mt-0 rounded-[16px_0px_16px_16px] border-0;
+
+    &:last-child {
+      margin: 0;
+    }
+
+    .review-header {
+      @apply flex justify-between items-center gap-2 mb-2;
+
+      .header {
+        @apply flex items-center gap-2;
+
+        .tutor-review-user-info {
+          @apply flex flex-col justify-between;
+
+          .tm-star-rating {
+            @apply flex-row-reverse justify-end;
+
+            span {
+              font-family: "Font Awesome 5 Pro";
+              font-size: 8px;
+            }
+          }
+        }
+      }
+
+      .report {
+        @apply w-4 h-4;
+      }
+    }
+
+    .review-content {
+      @apply mb-4;
+
+      p {
+        @apply w-[295px] text-[color:var(--Generic-Black,#121212)] text-xs not-italic font-normal leading-[160%];
+      }
+    }
+
+    .review-avatar {
+      @apply w-8 h-8 overflow-hidden rounded-[4px_0px_4px_4px];
+    }
+
+    .review-name {
+      @apply text-[color:var(--Generic-Black,#121212)] text-xs not-italic font-normal leading-[100%];
+    }
+
+    .review-date {
+      @apply text-[color:var(--Neutral-600,#6C757D)] text-xs not-italic font-light leading-[100%];
+    }
+  }
+
+  .tutor-single-course-thumbnail {
+    .tutor-single-lesson-segment {
+      margin-bottom: 0;
+    }
+  }
+
+  .tutor-course-review-form-wrap {
+    @apply flex flex-col my-6 shrink-0 border border-[color:var(--Neutral-400,#CED4DA)] rounded-[16px_0px_16px_16px] border-solid overflow-hidden;
+
+    .user-wrap {
+      @apply flex items-center gap-2;
+
+      img {
+        @apply w-8 h-8 shrink-0 rounded-[4px_0px_4px_4px];
+      }
+
+      h4 {
+        @apply text-[color:var(--Generic-Black,#121212)] text-xs not-italic font-normal leading-[100%];
+      }
+
+      input {
+        @apply w-full [background:var(--Generic-Background,#F3F3F4)] text-[color:var(--Neutral-600,#6C757D)] text-xs not-italic font-normal leading-[160%] p-4 outline-0;
+      }
+    }
+
+    .tm-button-wrapper {
+      @apply mt-4 self-end;
+
+      .btn-write-course-review {
+        @apply border border-[color:var(--Primary-500,#C22E58)] p-3 rounded-lg border-solid block w-fit text-[color:var(--Primary-500,#C22E58)] text-center text-xs not-italic font-normal leading-[100%];
+      }
+    }
+  }
+
+  .single-courses {
+    .page-content {
+      .container {
+        max-width: 1200px;
+      }
+    }
+
+    &.single-course-01 {
+      .tutor-course-top-info {
+        @apply relative p-0;
+        background: #fff;
+
+        &.course-top-info-light {
+          background: $third-color;
+          color: #fff;
+
+          .tutor-course-header-h1 {
+            color: #fff;
+          }
+
+          .heading-color {
+            color: #fff;
+          }
+
+          .tutor-single-course-lead-meta {
+            color: #fff;
+
+            .tutor-single-course-rating .rating-count,
+            .student-enrolled,
+            .instructor-name {
+              color: #fff;
+            }
+          }
+        }
+
+        .lead-meta-profile {
+          @apply absolute left-4 top-4 z-50 bg-white outline outline-[6px] outline-white rounded-full overflow-hidden;
+        }
+      }
+    }
+
+    &.single-course-02 {
+      .page-content {
+        margin-bottom: 0;
+      }
+
+      .tutor-lead-info-btn-group {
+        display: flex;
+        flex-wrap: wrap;
+
+        .tutor-btn {
+          width: auto !important;
+          margin: 10px 24px 0 0;
+        }
+      }
+
+      .tutor-single-course-thumbnail {
+        overflow: hidden;
+        border: 7px solid #fff;
+        border-radius: 15px;
+        box-shadow: 1px 0 30px rgba(0, 0, 0, 0.38);
+      }
+
+      .tutor-full-width-course-body {
+        padding: 50px 0 80px;
+        background: #f8f8f8;
+      }
+
+      .tutor-single-course-main-content {
+        .tutor-single-course-segment {
+          background: #fff;
+          border: 0;
+          border-radius: 5px;
+          margin: 0 0 10px;
+          padding: 23px 30px 30px;
+        }
+      }
+
+      .tutor-price-preview-box {
+        margin: 0 0 10px;
+      }
+
+      .tutor-single-course-sidebar {
+        .widget {
+          border-color: transparent !important;
+
+          + .widget {
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+
+    &.single-course-03 {
+      .tutor-single-course-lead-info {
+        @apply m-0;
+      }
+
+      .tutor-single-course-thumbnail {
+        margin-bottom: 30px;
+        overflow: hidden;
+        border-radius: 5px;
+
+        > img {
+          border-radius: inherit;
+        }
+      }
+    }
+  }
+
+  .single-courses {
+    &.single-course-01 {
+      &:not(.required-login) {
+        .page-title-bar {
+          margin-bottom: 0 !important;
+        }
+      }
+    }
+  }
+
+  .course-rating-box {
+    @apply flex p-0 items-center gap-2 rounded-[20px];
+
+    p {
+      @apply text-[color:var(--gray-900,#402C47)] font-bold text-right text-[11px] not-italic leading-[normal];
+    }
+  }
+
+  .tutor-course-duration {
+    @apply flex justify-center items-center gap-1 absolute -top-4 py-1 px-2 rounded-[20px];
+    background: #f5eedc;
+  }
+
+  .tutor-single-course-lead-info {
+    @apply m-0 bg-[#F3F3F4] w-full;
+
+    .tutor-course-header-categories {
+      @apply flex gap-2;
+
+      a,
+      p {
+        @apply text-white text-right text-xs not-italic font-normal leading-[19px];
+      }
+    }
+
+    .tutor-course-header-h1 {
+      @apply text-white text-right text-[22px] not-italic font-bold leading-[35px] uppercase;
+    }
+
+    .tutor-course-header-caption {
+      @apply text-white text-right text-sm not-italic font-normal leading-[22px];
+    }
+
+    .tutor-single-course-lead-meta {
+      @apply p-0;
+
+      .meta-instructor {
+        @apply flex m-0 w-full rounded-lg;
+        background: var(--white, #fff);
+
+        .lead-meta-label {
+          img {
+            @apply w-20 h-20;
+          }
+        }
+
+        .lead-meta-info {
+          @apply flex items-center gap-1;
+
+          p {
+            @apply text-base;
+          }
+        }
+      }
+    }
+
+    .tutor-name {
+      @apply flex items-center gap-1;
+    }
+
+    .tutor-single-course-info {
+      @apply flex flex-col gap-4 p-0 relative bottom-0 w-full bg-black right-0 z-50;
+
+      .tutor-course-meta {
+        @apply flex items-center gap-[var(--border-radius-rounded-lg,8px)];
+
+        .meta-label {
+          @apply text-white text-right text-sm not-italic font-medium leading-[150%];
+        }
+
+        .meta-value {
+          @apply text-white text-right text-sm not-italic font-light leading-[150%];
+        }
+      }
+    }
+
+    .courses-qna {
+      ul {
+        @apply flex justify-center self-stretch p-0;
+
+        li {
+          @apply w-1/2 pb-[13px] m-0 border-b border-[#8698AB] border-solid text-center;
+
+          a {
+            @apply text-[color:var(--gray-500,#8698AB)] text-center text-sm not-italic font-medium leading-[150%];
+          }
+
+          &.active {
+            @apply border-[#7F0F2E];
+
+            a {
+              @apply text-[#7F0F2E];
+            }
+          }
+        }
+      }
+    }
+
+    .tutor-single-course-segment {
+      @apply block;
+
+      &.active {
+        @apply block;
+      }
+    }
+
+    .question-and-answer-title-wrap {
+      @apply flex flex-col justify-center items-center gap-6 shadow-[0px_1px_2px_-1px_rgba(0,0,0,0.10),0px_1px_3px_0px_rgba(0,0,0,0.10)] p-4 rounded-lg;
+      background: var(--white, #fff);
+
+      .tutor-question-ask {
+        p {
+          @apply self-stretch text-[color:var(--gray-500,#8698AB)] text-center text-base not-italic font-medium leading-[150%];
+        }
+      }
+
+      .tutor-question-top {
+        @apply w-full;
+
+        .tm-button-wrapper {
+          @apply w-full;
+
+          a {
+            @apply flex justify-center items-center self-stretch px-3 py-2 rounded-lg text-[color:var(--white,#FFF)] text-right text-sm not-italic font-medium leading-[150%];
+
+            &::before,
+            &::after {
+              background: #7f0f2e;
+            }
+          }
+        }
+      }
+    }
+
+    .tutor-info-box {
+      @apply flex gap-4 p-4;
+    }
+
+    .tutor-other-courses {
+      @apply p-4;
+
+      .other-title {
+        @apply mb-4;
+
+        p {
+          @apply text-xl font-bold;
+        }
+      }
+
+      .courses-list {
+        .content {
+          @apply flex flex-col gap-2 mt-4;
+
+          .rating {
+            @apply flex gap-1;
+          }
+
+          .price-wrapper {
+            @apply flex items-center gap-1;
+
+            .regular {
+              @apply line-through;
+            }
+          }
+        }
+      }
+    }
+
+    .course-faq-wrap {
+      @apply bg-white pt-2;
+
+      .course-faq {
+        @apply flex flex-col justify-center gap-6 p-6 rounded-[32px_32px_0px_0px] bg-[#F3F3F4];
+
+        .faq-title {
+          h4 {
+            @apply text-[color:var(--Generic-Black,#121212)]  text-lg not-italic font-medium leading-[100%];
+          }
+        }
+
+        .faq-items {
+          @apply flex flex-col gap-3 m-0 p-0;
+
+          .faq-item {
+            @apply overflow-hidden rounded-[8px_0px_8px_8px] bg-white;
+
+            .question {
+              @apply flex justify-between items-center p-3 bg-white cursor-pointer;
+
+              p {
+                @apply text-black  text-base not-italic font-normal leading-[100%];
+              }
+
+              img {
+                @apply w-3 h-3;
+
+                &.arrow-up {
+                  @apply hidden;
+                }
+              }
+            }
+
+            .answer {
+              @apply hidden p-3 h-0;
+
+              p {
+                @apply text-[color:var(--Generic-Black,#121212)] text-xs not-italic font-normal leading-[160%];
+              }
+            }
+
+            &.active {
+              @apply border-[color:var(--Generic-Black,#121212)]  border-[0.5px] border-solid;
+
+              .question {
+                @apply bg-[#C22E58];
+
+                p {
+                  @apply text-[color:var(--Generic-White,#FFF)];
+                }
+
+                img {
+                  &.arrow-up {
+                    @apply block;
+                  }
+
+                  &.arrow-down {
+                    @apply hidden;
+                  }
+                }
+              }
+
+              .answer {
+                @apply block p-3 h-full;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .review-modal {
+    @apply fixed z-[9999999] top-0 bottom-0 left-0 right-0 px-6 py-36;
+
+    &-overlay {
+      @apply absolute top-0 bottom-0 left-0 right-0 bg-[var(--Generic-Black,#121212)] opacity-50 -z-10;
+    }
+
+    &-content {
+      @apply flex flex-col gap-6 [background:var(--Generic-White,#FFF)] p-4 rounded-[16px_0px_16px_16px] relative;
+    }
+
+    &-header {
+      @apply flex items-center justify-between;
+
+      h3 {
+        @apply text-[color:var(--Generic-Black,#121212)] text-base font-medium leading-[110%];
+      }
+
+      .close-modal {
+        @apply absolute left-4 top-4 cursor-pointer;
+      }
+    }
+
+    &-body {
+      form {
+        @apply flex flex-col gap-6;
+
+        .tutor-form-group {
+          @apply p-0 m-0;
+
+          &.tm-button-wrapper {
+            @apply self-end mt-2;
+          }
+
+          .tutor-icon-star-line {
+            @apply text-[#ADB5BD] text-3xl;
+          }
+
+          .tutor-icon-star-bold {
+            @apply text-[#ADB5BD] text-3xl;
+          }
+
+          textarea {
+            @apply border border-[color:var(--Neutral-500,#ADB5BD)] [background:var(--Generic-White,#FFF)] rounded-lg border-solid m-0 p-3;
+            @apply text-[color:var(--Neutral-600,#6C757D)] text-xs font-normal leading-[160%];
+            font-family: $main-font;
+          }
+
+          button {
+            @apply flex justify-center items-center gap-2 border border-[color:var(--Neutral-200,#E9ECEF)] px-8 py-4 rounded-lg border-solid;
+            @apply text-[color:var(--Neutral-500,#ADB5BD)] text-sm font-medium leading-[110%];
+          }
+        }
+      }
+    }
+  }
+
+  .tutor-course-enroll-wrap {
+    button {
+      @apply flex w-full justify-center items-center gap-2 [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg border-0;
+      @apply text-[color:var(--Generic-White,#FFF)] text-center text-sm font-medium leading-[110%];
+    }
+  }
+
+  &-more-details {
+    @apply flex flex-col gap-4 p-6 rounded-[32px_32px_0px_0px] bg-white;
+
+    h4 {
+      @apply text-[color:var(--Generic-Black,#121212)] text-lg not-italic font-medium leading-[100%];
+    }
+
+    p {
+      @apply text-[color:var(--Generic-Black,#121212)] text-right text-sm not-italic font-normal leading-[160%];
+    }
+  }
+
+  &-others {
+    @apply flex flex-col gap-6 p-6 shrink-0 rounded-[32px_32px_0px_0px] bg-white;
+
+    @media (min-width: theme("screens.laptop")) {
+      @apply col-span-12;
+    }
+
+    .title {
+      p {
+        @apply text-[color:var(--Generic-Black,#121212)]  text-lg not-italic font-medium leading-[100%];
+      }
+    }
+
+    &-wrap {
+      @apply relative;
+
+      &-slider {
+        @apply bg-white relative overflow-hidden rounded-[16px_0px_16px_16px];
+
+        .swiper-wrapper {
+          .swiper-slide {
+            @apply flex flex-col h-auto overflow-hidden shrink-0 border border-[color:var(--Neutral-400,#CED4DA)] rounded-[16px_0px_16px_16px] border-solid;
+
+            .image-wrapper {
+              @apply relative;
+
+              .profile {
+                @apply absolute bg-[#BFD6C4] top-2 right-2 w-14 h-14 shrink-0 border border-[color:var(--Generic-White,#FFF)] rounded-[8px_0px_8px_8px] border-solid overflow-hidden;
+
+                img {
+                  @apply w-full h-full;
+                }
+              }
+
+              .background {
+                @apply h-[210px];
+
+                img {
+                  @apply w-full h-full;
+                }
+              }
+
+              .bookmark {
+                @apply flex justify-center items-center gap-2 absolute bottom-0 left-8 p-2 rounded-[8px_8px_0px_0px] bg-white cursor-pointer;
+
+                img {
+                  @apply hidden w-6 h-6;
+
+                  &.active {
+                    @apply block;
+                  }
+                }
+              }
+            }
+
+            .content-wrapper {
+              @apply flex flex-col gap-2 p-4;
+
+              p {
+                @apply text-[color:var(--Generic-Black,#000)] text-center text-xs not-italic font-normal leading-[100%];
+              }
+
+              .title {
+                @apply line-clamp-2 h-14;
+
+                a {
+                  @apply text-[color:var(--Generic-Black,#000)] text-center text-base not-italic font-normal leading-[160%];
+                }
+              }
+
+              .tutor,
+              .category,
+              .rating-wrapper {
+                @apply flex items-center gap-2 mb-1;
+
+                img {
+                  @apply w-4 h-4;
+                }
+              }
+
+              .rating-wrapper {
+                .rating {
+                  @apply flex gap-1;
+
+                  p {
+                    &.rating-count {
+                      @apply text-[color:var(--Generic-Black,#000)] text-center text-xs not-italic font-normal leading-[100%] opacity-40;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+
+      .slider-button {
+        @apply absolute w-12 h-12 -top-[15%] bottom-0 m-auto z-50 cursor-pointer;
+
+        &-prev {
+          @apply -left-4;
+        }
+
+        &-next {
+          @apply -right-4;
+        }
+      }
+    }
+  }
+
+  .buy-now {
+    @apply flex items-center gap-4 bottom-0 right-0 w-full z-50;
+
+    &-button {
+      @apply grow;
+
+      a {
+        @apply flex w-full justify-center items-center gap-2 [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg border-0;
+        @apply text-[color:var(--Generic-White,#FFF)] text-center text-sm font-medium leading-[110%];
+      }
+    }
+
+    &-price {
+      &-wrap {
+        @apply self-end;
+
+        &-sale {
+          @apply flex justify-end items-center gap-1;
+
+          .value {
+            @apply text-[rgba(18,18,18,1)] text-base not-italic font-semibold leading-[100%];
+          }
+
+          .currency {
+            @apply text-[rgba(0,0,0,1)] text-[10px] not-italic font-normal leading-[100%];
+          }
+        }
+
+        &-regular {
+          @apply flex justify-end items-center gap-1;
+
+          .value {
+            @apply text-[rgba(18,18,18,1)] text-base not-italic font-semibold leading-[100%];
+          }
+
+          .currency {
+            @apply text-[rgba(0,0,0,1)] text-[10px] not-italic font-normal leading-[100%];
+          }
+
+          &.sale {
+            .value {
+              @apply text-[rgba(0,0,0,0.60)]  text-xs font-normal line-through;
+            }
+
+            .currency {
+              @apply text-[rgba(0,0,0,0.60)] text-[8px] font-normal;
+            }
+          }
+        }
+      }
+    }
+
+    .loader {
+      @apply block w-4 h-4 rounded-full box-border border-2 border-solid border-white;
+      border-bottom-color: transparent;
+      animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+
+  .course-action-btn {
+    @apply bg-white;
+
+    button {
+      @apply w-full [background:var(--Primary-500,#C22E58)] border-0;
+    }
+
+    &.float-button {
+      @apply fixed left-0 right-0 m-auto  px-6 py-2 bottom-[59px]  z-50;
+      box-shadow: 0 -8px 10px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    &.inline-button {
+      @apply relative bottom-0 shadow-none border-0 p-6;
+    }
+
+    .view-cart-button {
+      @apply flex justify-center items-center gap-2 [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg;
+
+      a {
+        @apply text-[color:var(--Generic-White,#FFF)] text-sm font-medium leading-[110%];
+      }
+    }
+  }
+
+  .continue-course {
+    @apply fixed left-0 right-0 bottom-[59px] bg-white px-6 py-2 z-50;
+
+    a {
+      @apply flex w-full justify-center items-center gap-2 [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg;
+      @apply text-[color:var(--Generic-White,#FFF)] text-center text-sm font-medium leading-[110%];
+    }
+  }
+
+  &-item {
+    @media (min-width: theme("screens.laptop")) {
+      @apply grid grid-cols-12 gap-0;
+    }
+  }
+
+  &-desktop {
+    @apply flex flex-col gap-6 col-span-7;
+  }
+
+  &-action {
+    @apply flex flex-col gap-4 absolute w-2/6 left-20 top-10 border border-[color:var(--Neutral-600,#6C757D)] [background:var(--Generic-White,#FFF)] rounded-3xl border-solid overflow-hidden p-4;
+
+    &-cover-image {
+      @apply h-[273px] rounded-2xl overflow-hidden relative;
+
+      img {
+        @apply h-full w-full;
+      }
+
+      .bookmark {
+        @apply absolute bottom-0 left-8 [background:var(--Generic-White,#FFF)] p-2 rounded-[8px_8px_0px_0px] cursor-pointer;
+
+        img {
+          @apply hidden;
+
+          &.active {
+            @apply block;
+          }
+        }
+      }
+    }
+
+    &-includes {
+      @apply flex flex-col gap-3;
+
+      .content-box {
+        @apply flex items-center gap-1;
+
+        img {
+          @apply w-6 h-6;
+        }
+
+        p {
+          @apply text-[color:var(--Generic-Black,#121212)] text-sm font-normal leading-[110%];
+        }
+      }
+    }
+
+    &-cart {
+      .tutor-course-enroll-wrap {
+        button {
+          @apply [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg;
+        }
+      }
+    }
+
+    &-continue {
+      @apply relative bg-white z-50;
+
+      a {
+        @apply flex w-full justify-center items-center gap-2 [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg;
+        @apply text-[color:var(--Generic-White,#FFF)] text-center text-sm font-medium leading-[110%];
+      }
+    }
+
+    .view-cart-button {
+      @apply flex justify-center items-center gap-2 [background:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg;
+
+      a {
+        @apply text-[color:var(--Generic-White,#FFF)] text-sm font-medium leading-[110%];
+      }
+    }
+  }
+}
