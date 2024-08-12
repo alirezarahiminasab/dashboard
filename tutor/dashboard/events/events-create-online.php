@@ -412,8 +412,10 @@ if ($event_id) {
                     </div>
 
                     <!-- Pre-filled session cards -->
-                    <?php foreach ($event_data['sessions'] as $session): ?>
-                        <div class="card-type1">
+                    <?php 
+                    $session_counter = 1; // Initialize counter for sessions
+                    foreach ($event_data['sessions'] as $session): ?>
+                        <div class="card-type1" data-id="<?php echo $session_counter; ?>">
                             <div class="flex justify-between p-3">
                                 <p><?php echo esc_html($session['title']); ?></p>
                                 <span>
@@ -444,8 +446,10 @@ if ($event_id) {
                                 </div>
                             </div>
                         </div>
-                    <?php endforeach; ?>
-                    
+                        <?php 
+                        $session_counter++; // Increment the counter
+                        endforeach; 
+                        ?>                    
                 </div>
 
             </div>
@@ -565,10 +569,11 @@ if ($event_id) {
                         </div>
                     </div>
 
-
                     <!-- Pre-filled ticket cards -->
-                    <?php foreach ($tickets as $ticket): ?>
-                        <div class="card-type1">
+                    <?php 
+                    $ticket_counter = 1; // Initialize counter for tickets
+                    foreach ($tickets as $ticket): ?>
+                        <div class="card-type1 " data-id="<?php echo $ticket_counter; ?>">
                             <div class="flex justify-between p-3">
                                 <p><?php echo esc_html($ticket['title']); ?></p>
                                 <span>
@@ -599,9 +604,10 @@ if ($event_id) {
                                 </div>
                             </div>
                         </div>
-                    <?php endforeach; ?>
-
-
+                    <?php 
+                    $ticket_counter++; // Increment the counter
+                    endforeach; 
+                    ?>
                 </div>
             </div>
 
@@ -703,8 +709,10 @@ if ($event_id) {
                     </div>
 
                     <!-- Pre-filled companion cards -->
-                    <?php foreach ($event_data['companions'] as $companion): ?>
-                        <div class="card-type2">
+                    <?php 
+                    $companion_counter = 1; // Initialize counter for companions
+                    foreach ($event_data['companions'] as $companion): ?>
+                        <div class="card-type2 " data-id="<?php echo $companion_counter; ?>">
                             <div class="flex justify-between p-3">
                                 <span>
                                     <img src="<?php echo esc_attr($companion['logoURL']); ?>" class="rounded-full" ref="event-create-companion-logo">
@@ -716,8 +724,10 @@ if ($event_id) {
                                 </span>
                             </div>
                         </div>
-                    <?php endforeach; ?>
-
+                    <?php 
+                    $companion_counter++; // Increment the counter
+                    endforeach; 
+                    ?>
                 </div>
 
             </div>

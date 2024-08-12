@@ -21,8 +21,82 @@ console.log("_js file");
       this.counter = 0;
       this.companionCounter = 0;
       this.ticketCounter = 0;
+
+      this.editModeInit();
     }
 
+    ////////////////////////EDIT_MODE/////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+
+    editModeInit() {
+      this.isEdit = $("#create_online_event_edit_mode").text() === "true";
+      this.eventData = JSON.parse($("#create_online_event_data").text());
+      this.ticketsData = JSON.parse($("#create_online_event_tickets").text());
+
+      console.log(this.eventData);
+      // Remove the <p> tags after reading the data
+      $(
+        "#create_online_event_edit_mode, #create_online_event_data, #create_online_event_tickets"
+      ).remove();
+
+      if (this.isEdit) {
+        this.prefillSessions();
+        this.prefillCompanions();
+        this.prefillTickets();
+      }
+    }
+
+    prefillSessions() {
+      const _this = this;
+      this.eventData["sessions"].forEach(function (session) {
+        const cardId = _this.addCard({
+          sessionTitleValue: session["title"],
+          sessionPlatformValue: session["platform"],
+          sessionDateValue: moment
+            .unix(session["startDateTime"])
+            .format("jYYYY/jMM/jDD"),
+          sessionStartTimeValue: moment
+            .unix(session["startDateTime"])
+            .format("HH:mm"),
+          sessionFinishTimeValue: moment
+            .unix(session["finishDateTime"])
+            .format("HH:mm"),
+          sessionDescription: session["description"],
+          sessionClassUrl: session["classUrl"],
+        });
+      });
+    }
+
+    prefillCompanions() {
+      const _this = this;
+      this.eventData["companions"].forEach(function (companion) {
+        const companionId = _this.addCompanion({
+          companionName: companion["name"],
+          companionLogo: companion["logoURL"],
+          companionLogoName: "", // Placeholder, replace with logic to extract from URL if needed
+        });
+      });
+    }
+
+    prefillTickets() {
+      const _this = this;
+      this.ticketsData.forEach(function (ticket) {
+        const ticketId = _this.addTicket({
+          ticketTitle: ticket["title"],
+          ticketNumber: ticket["count"],
+          ticketPrice: ticket["price"],
+          saleStartDate: moment
+            .unix(ticket["startDateTime"])
+            .format("jYYYY/jMM/jDD"),
+          saleFinishDate: moment
+            .unix(ticket["finishDateTime"])
+            .format("jYYYY/jMM/jDD"),
+        });
+      });
+    }
+
+    //////////////////////////////////////////////////////////
     dateTime2unix(dateTime) {
       return dateTime
         ? moment(`${dateTime}`, "jYYYY-jMM-jDD HH:mm").unix()
@@ -130,76 +204,6 @@ console.log("_js file");
         saleStartDate: this.dateTime2unix(card.saleStartDate),
         saleFinishDate: this.dateTime2unix(card.saleFinishDate),
       }));
-    }
-
-    ////////////////////////EDIT_MODE/////////////////////////
-    //////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////
-
-    editModeInit() {
-      this.isEdit = $("#create_online_event_edit_mode").text() === "true";
-      this.eventData = JSON.parse($("#create_online_event_data").text());
-      this.ticketsData = JSON.parse($("#create_online_event_tickets").text());
-
-      // Remove the <p> tags after reading the data
-      $(
-        "#create_online_event_edit_mode, #create_online_event_data, #create_online_event_tickets"
-      ).remove();
-
-      if (this.isEdit) {
-        prefillSessions();
-        prefillCompanions();
-        prefillTickets();
-      }
-    }
-
-    prefillSessions() {
-      const _this = this;
-      this.eventData["sessions"].forEach(function (session) {
-        const cardId = _this.addCard({
-          sessionTitleValue: session["title"],
-          sessionPlatformValue: session["platform"],
-          sessionDateValue: moment
-            .unix(session["startDateTime"])
-            .format("jYYYY/jMM/jDD"),
-          sessionStartTimeValue: moment
-            .unix(session["startDateTime"])
-            .format("HH:mm"),
-          sessionFinishTimeValue: moment
-            .unix(session["finishDateTime"])
-            .format("HH:mm"),
-          sessionDescription: session["description"],
-          sessionClassUrl: session["classUrl"],
-        });
-      });
-    }
-
-    prefillCompanions() {
-      const _this = this;
-      this.eventData["companions"].forEach(function (companion) {
-        const companionId = _this.addCompanion({
-          companionName: companion["name"],
-          companionLogo: companion["logoURL"],
-          companionLogoName: "", // Placeholder, replace with logic to extract from URL if needed
-        });
-      });
-    }
-
-    prefillTickets() {
-      const _this = this;
-      this.ticketsData.forEach(function (ticket) {
-        const ticketId = _this.addTicket({
-          ticketTitle: ticket["title"],
-          ticketNumber: ticket["count"],
-          ticketPrice: ticket["price"],
-          saleStartDate: moment
-            .unix(ticket["startDateTime"])
-            .format("jYYYY/jMM/jDD"),
-          saleFinishDate: moment
-            .unix(ticket["finishDateTime"])
-            .format("jYYYY/jMM/jDD"),
-        });
-      });
     }
   }
 
