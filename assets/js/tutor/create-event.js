@@ -69,12 +69,15 @@ console.log("_js file");
     }
 
     prefillCompanions() {
+      const defaultImg = $("#base-companion-card-template img").attr("src");
+
       const _this = this;
       this.eventData["companions"].forEach(function (companion) {
         const companionId = _this.addCompanion({
           companionName: companion["name"],
-          companionLogo: companion["logoURL"],
-          companionLogoName: companion["logoURL"], // Placeholder, replace with logic to extract from URL if needed
+          companionLogo:
+            companion["logoURL"] !== "" ? companion["logoURL"] : defaultImg,
+          companionLogoName: companion["logoURL"] !== "" ? "from_database" : "",
         });
       });
     }
@@ -140,7 +143,6 @@ console.log("_js file");
         ),
       }));
     }
-    //TODO
     /////////////////////////////Companion/////////////////////////////
     addCompanion(companion) {
       this.companionCounter++;
@@ -288,10 +290,8 @@ console.log("_js file");
           "fileName"
         );
 
-        if (coverImage !== "") {
-          formData.append("event-create-cover-data", coverImage);
-          formData.append("event-create-cover-fileName", coverImageFileName);
-        }
+        formData.append("event-create-cover-data", coverImage);
+        formData.append("event-create-cover-fileName", coverImageFileName);
 
         // Add card data to the form data
         formData.append("sessions", JSON.stringify(_this.getAllCards()));
@@ -382,7 +382,7 @@ console.log("_js file");
         // Clear the file input and remove the uploaded image
         const defaultImg = $("#base-companion-card-template img").attr("src");
         $(".event-create-logo-uploaded-file").attr("src", defaultImg);
-        $(".event-create-logo-uploaded-file").attr("fileName", "");
+        $(".event-create-logo-uploaded-file").attr("fileName", "empty");
         $("#event-create-logo").val("");
       }
     }
@@ -926,16 +926,14 @@ console.log("_js file");
         ".event-create-cover-uploaded a",
         (e) => {
           e.preventDefault();
-          $(".event-create-cover-uploaded-file").attr("src", "");
-          $(".event-create-cover-uploaded-file").attr("fileName", "");
+          $(".event-create-cover-uploaded-file").attr("src", "empty");
+          $(".event-create-cover-uploaded-file").attr("fileName", "empty");
           $("#event-create-cover").val("");
           $(".event-create-cover-input").addClass("active");
           $(".event-create-cover-uploaded").removeClass("active");
         }
       );
     }
-
-    //TODO
 
     handleTags() {
       const _this = this;

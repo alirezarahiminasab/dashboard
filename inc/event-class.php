@@ -59,30 +59,31 @@ class Events
     {
         try {
             $event_create_cover_URL = "";
-            if(isset($_POST['event-create-cover-data'])){
-                $event_create_cover_data = $_POST['event-create-cover-data']; 
-                $event_create_cover_fileName = $_POST['event-create-cover-fileName']; 
+            $event_create_cover_data = $_POST['event-create-cover-data']; 
+            $event_create_cover_fileName = $_POST['event-create-cover-fileName']; 
 
-                // URL of the file
-                $file_url = 'https://www.modir-shabake.com/wp-content/uploads/2019/10/java-programming.jpg';
-                $file_url = $event_create_cover_data;
-                $upload_dir = wp_upload_dir();
-                $file_path = str_replace($upload_dir['baseurl'], $upload_dir['basedir'], $file_url);
-                error_log(print_r($file_url,true));
-                error_log(print_r($upload_dir,true));
-                error_log(print_r($file_path,true));
+            // if(){
+                // // URL of the file
+                // $file_url = 'https://www.modir-shabake.com/wp-content/uploads/2019/10/java-programming.jpg';
+                // $file_url = $event_create_cover_data;
+                // $upload_dir = wp_upload_dir();
+                // $file_path = str_replace($upload_dir['baseurl'], $upload_dir['basedir'], $file_url);
+                // error_log(print_r($file_url,true));
+                // error_log(print_r($upload_dir,true));
+                // error_log(print_r($file_path,true));
 
-                // Check if the file exists
-                if (file_exists($file_path)) {
-                    echo 'File exists.';
-                } else {
-                    echo 'File does not exist.';
-                }
+                // // Check if the file exists
+                // if (file_exists($file_path)) {
+                //     echo 'File exists.';
+                // } else {
+                //     echo 'File does not exist.';
+                // }
 
 
-                if(!empty($event_create_cover_fileName) && strpos($event_create_cover_fileName, 'wp-content/upload') === false){
-                    $event_create_cover_URL = $this->upload_image($event_create_cover_data,$event_create_cover_fileName);
-                }
+            if($event_create_cover_fileName === "from_database" || $event_create_cover_fileName === "empty" ){
+                $event_create_cover_URL = $event_create_cover_data;
+            } else {
+                $event_create_cover_URL = $this->upload_image($event_create_cover_data,$event_create_cover_fileName);
             }
             
             $event_create_tags = $_POST['event-create-tags']; 
@@ -113,9 +114,13 @@ class Events
             $companions = [];
             foreach ($companionsCards as $card) {
                 $companion = ["name" => $card['companionName']];
-                if(!empty($card['companionLogoName']) && strpos($card['companionLogoName'], 'wp-content/upload') === false){
-                    $event_create_companion_logo_URL = $this->upload_image($card['companionLogo'],$card['companionLogoName']);
-                    $companion["logoURL"] = $event_create_companion_logo_URL;
+                // if(!empty($card['companionLogoName']) && strpos($card['companionLogoName'], 'wp-content/upload') === false){
+                if($card['companionLogoName'] === "from_database"){
+                    $companion["logoURL"] = $card['companionLogo'];
+                } elseif($card['companionLogoName'] === ""){
+                    $event_create_companion_logo_URL = "";
+                } else {
+                    $companion["logoURL"] = $this->upload_image($card['companionLogo'],$card['companionLogoName']);;
                 }
                 $companions[] = $companion;
             }

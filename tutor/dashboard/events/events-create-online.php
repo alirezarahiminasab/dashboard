@@ -180,7 +180,7 @@ if ($event_id) {
                         </label>
 
                         <div class="event-create-cover-uploaded <?php echo $is_edit ? 'active' : ''; ?>">
-                            <img class="event-create-cover-uploaded-file" src="<?php echo esc_attr($is_edit ? $event_data['imageURL'] : get_stylesheet_directory_uri().'/assets/images/404-1.png'); ?>" fileName="<?php echo esc_attr($is_edit ? $event_data['imageURL'] : get_stylesheet_directory_uri().'/assets/images/404-1.png'); ?>" alt="">
+                            <img class="event-create-cover-uploaded-file" src="<?php echo esc_attr($is_edit ? $event_data['imageURL'] : 'empty'); ?>" fileName="<?php echo $is_edit ? "from_database" : "empty"; ?>" alt="">
                        
                             <a>
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash-create-course.svg'?>" alt="">
@@ -413,6 +413,7 @@ if ($event_id) {
 
                     <!-- Pre-filled session cards -->
                     <?php 
+                    if($is_edit){                    
                     $session_counter = 1; // Initialize counter for sessions
                     foreach ($event_data['sessions'] as $session): ?>
                         <div class="card-type1" data-id="<?php echo $session_counter; ?>">
@@ -448,7 +449,7 @@ if ($event_id) {
                         </div>
                         <?php 
                         $session_counter++; // Increment the counter
-                        endforeach; 
+                        endforeach;} 
                         ?>
         
                 </div>
@@ -572,6 +573,8 @@ if ($event_id) {
 
                     <!-- Pre-filled ticket cards -->
                     <?php 
+                    if($is_edit){                    
+
                     $ticket_counter = 1; // Initialize counter for tickets
                     foreach ($tickets as $ticket): ?>
                         <div class="card-type1 " data-id="<?php echo $ticket_counter; ?>">
@@ -607,7 +610,7 @@ if ($event_id) {
                         </div>
                     <?php 
                     $ticket_counter++; // Increment the counter
-                    endforeach; 
+                    endforeach; }
                     ?>
 
                 </div>
@@ -662,7 +665,7 @@ if ($event_id) {
                         </label>
 
                         <div class="event-create-logo-uploaded ">
-                            <img class="event-create-logo-uploaded-file" src="<?php echo get_stylesheet_directory_uri().'/assets/images/404-1.png'?>" alt="">
+                            <img class="event-create-logo-uploaded-file" src="<?php echo tutor()->url . 'assets/images/placeholder.svg'?>" fileName="" alt="">
 
                             <a>
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash-create-course.svg'?>" alt="">
@@ -712,12 +715,13 @@ if ($event_id) {
 
                     <!-- Pre-filled companion cards -->
                     <?php 
+                    if($is_edit){                    
                     $companion_counter = 1; // Initialize counter for companions
                     foreach ($event_data['companions'] as $companion): ?>
                         <div class="card-type2 " data-id="<?php echo $companion_counter; ?>">
                             <div class="flex justify-between p-3">
                                 <span>
-                                    <img src="<?php echo esc_attr($companion['logoURL']); ?>" class="rounded-full" ref="event-create-companion-logo">
+                                    <img src="<?php echo esc_attr(!empty($companion['logoURL'])?$companion['logoURL']:tutor()->url . 'assets/images/placeholder.svg'); ?>" class="rounded-full" ref="event-create-companion-logo">
                                     <p ref="event-create-companion-name"><?php echo esc_html($companion['name']); ?></p>
                                 </span>
                                 <span>
@@ -728,7 +732,7 @@ if ($event_id) {
                         </div>
                     <?php 
                     $companion_counter++; // Increment the counter
-                    endforeach; 
+                    endforeach; }
                     ?>
 
                 </div>
