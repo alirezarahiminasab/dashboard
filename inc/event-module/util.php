@@ -68,7 +68,7 @@ class EventUtil
 
             switch (strtoupper($method)) {
                 case 'POST':
-                case 'PUT':
+                case 'PATCH':
                     $headers = [
                         'Content-Type: application/json',
                         'Content-Length: ' . strlen($jsonData),
@@ -92,8 +92,8 @@ class EventUtil
                     curl_setopt($ch, CURLOPT_POST, 1);
                     curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
                     break;
-                case 'PUT':
-                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+                case 'PATCH':
+                    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
                     curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
                     break;
                 case 'DELETE':

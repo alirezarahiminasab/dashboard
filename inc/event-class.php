@@ -33,8 +33,6 @@ class Events
         // add_action('wp_ajax_test', [$this, 'test_']);
     }
 
-
-
     public function upload_image($file_data,$file_name){
         $file_name = sanitize_file_name($file_name);
 
@@ -64,10 +62,29 @@ class Events
             if(isset($_POST['event-create-cover-data'])){
                 $event_create_cover_data = $_POST['event-create-cover-data']; 
                 $event_create_cover_fileName = $_POST['event-create-cover-fileName']; 
-                $event_create_cover_URL = $this->upload_image($event_create_cover_data,$event_create_cover_fileName);
+
+                // URL of the file
+                $file_url = 'https://www.modir-shabake.com/wp-content/uploads/2019/10/java-programming.jpg';
+                $file_url = $event_create_cover_data;
+                $upload_dir = wp_upload_dir();
+                $file_path = str_replace($upload_dir['baseurl'], $upload_dir['basedir'], $file_url);
+                error_log(print_r($file_url,true));
+                error_log(print_r($upload_dir,true));
+                error_log(print_r($file_path,true));
+
+                // Check if the file exists
+                if (file_exists($file_path)) {
+                    echo 'File exists.';
+                } else {
+                    echo 'File does not exist.';
+                }
+
+
+                if(!empty($event_create_cover_fileName) && strpos($event_create_cover_fileName, 'wp-content/upload') === false){
+                    $event_create_cover_URL = $this->upload_image($event_create_cover_data,$event_create_cover_fileName);
+                }
             }
             
-
             $event_create_tags = $_POST['event-create-tags']; 
             $event_create_title = $_POST['event-create-title']; 
 
@@ -78,7 +95,6 @@ class Events
             $event_create_category = $_POST['event-create-category']; 
             $event_create_description = $_POST['event-create-description']; 
             
-
             $sessionsCards = json_decode(stripslashes($_POST['sessions']), true);
             
             $sessions = [];
@@ -97,7 +113,7 @@ class Events
             $companions = [];
             foreach ($companionsCards as $card) {
                 $companion = ["name" => $card['companionName']];
-                if($card['companionName'] !== ""){
+                if(!empty($card['companionLogoName']) && strpos($card['companionLogoName'], 'wp-content/upload') === false){
                     $event_create_companion_logo_URL = $this->upload_image($card['companionLogo'],$card['companionLogoName']);
                     $companion["logoURL"] = $event_create_companion_logo_URL;
                 }
@@ -131,13 +147,12 @@ class Events
                 "tickets" => $tickets,
                 "companions" => $companions 
             ];
-            // $result = EventService::createEvent($data);
-            $result = EventUtil::callApi('events', $data, 'POST');
-                  
-            // $result = CallSample::createEvent();
+            if($_POST['is_edit']==="true"){
+                $result = EventUtil::callApi('events/'.$_POST['eventID'], $data, 'PATCH');
+            } else {
+                $result = EventUtil::callApi('events', $data, 'POST');
+            }
             wp_send_json_success($result);
-
-
         
         } catch (Exception $e) {
             wp_send_json_error(['message' => $e->getMessage()]);

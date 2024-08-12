@@ -74,7 +74,7 @@ console.log("_js file");
         const companionId = _this.addCompanion({
           companionName: companion["name"],
           companionLogo: companion["logoURL"],
-          companionLogoName: "", // Placeholder, replace with logic to extract from URL if needed
+          companionLogoName: companion["logoURL"], // Placeholder, replace with logic to extract from URL if needed
         });
       });
     }
@@ -213,7 +213,6 @@ console.log("_js file");
     constructor() {
       super();
 
-      this.coverImage = {};
       this.tags = [];
       this.elements = {
         eventInputCounter: $(".event-create-input"),
@@ -251,24 +250,11 @@ console.log("_js file");
     }
 
     eventCreateAjax() {
-      // formData.append("action", "test");
-      // formData.append(
-      //   "data",
-      //   array(
-      //     (a) => "123",
-      //     (b) => "xsadc"
-      //   )
-      // );
-
       const _this = this;
       $("#event-create-form").on("submit", function () {
         const formData = new FormData(this);
 
         const _formData = $(this).serializeArray();
-
-        // _formData.forEach(function (field) {
-        //   console.log(field.name + ": " + field.value);
-        // });
         const field = (name) => _formData.find((x) => x.name === name).value;
 
         const dateTime2unix = (date) =>
@@ -294,14 +280,17 @@ console.log("_js file");
 
         // formData.append("action", "create_event");
         formData.append("event-create-tags", _this.tags.join("-"));
+        formData.append("is_edit", _this.isEdit);
+        formData.append("eventID", _this.eventData?._id);
 
-        if (_this.coverImage.data) {
-          formData.append("event-create-cover-data", _this.coverImage.data);
+        const coverImage = $(".event-create-cover-uploaded-file").attr("src");
+        const coverImageFileName = $(".event-create-cover-uploaded-file").attr(
+          "fileName"
+        );
 
-          formData.append(
-            "event-create-cover-fileName",
-            _this.coverImage.fileName
-          );
+        if (coverImage !== "") {
+          formData.append("event-create-cover-data", coverImage);
+          formData.append("event-create-cover-fileName", coverImageFileName);
         }
 
         // Add card data to the form data
@@ -924,10 +913,7 @@ console.log("_js file");
 
           reader.onload = (e) => {
             $(".event-create-cover-uploaded-file").attr("src", e.target.result);
-
-            this.coverImage.data = e.target.result;
-            this.coverImage.fileName = file.name;
-
+            $(".event-create-cover-uploaded-file").attr("fileName", file.name);
             $(".event-create-cover-input").removeClass("active");
             $(".event-create-cover-uploaded").addClass("active");
           };
@@ -940,10 +926,8 @@ console.log("_js file");
         ".event-create-cover-uploaded a",
         (e) => {
           e.preventDefault();
-
-          // Clear the file input and remove the uploaded image
-          this.coverImage = {};
           $(".event-create-cover-uploaded-file").attr("src", "");
+          $(".event-create-cover-uploaded-file").attr("fileName", "");
           $("#event-create-cover").val("");
           $(".event-create-cover-input").addClass("active");
           $(".event-create-cover-uploaded").removeClass("active");

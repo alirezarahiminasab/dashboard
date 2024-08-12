@@ -180,7 +180,7 @@ if ($event_id) {
                         </label>
 
                         <div class="event-create-cover-uploaded <?php echo $is_edit ? 'active' : ''; ?>">
-                            <img class="event-create-cover-uploaded-file" src="<?php echo esc_attr($is_edit ? $event_data['imageURL'] : get_stylesheet_directory_uri().'/assets/images/404-1.png'); ?>" alt="">
+                            <img class="event-create-cover-uploaded-file" src="<?php echo esc_attr($is_edit ? $event_data['imageURL'] : get_stylesheet_directory_uri().'/assets/images/404-1.png'); ?>" fileName="<?php echo esc_attr($is_edit ? $event_data['imageURL'] : get_stylesheet_directory_uri().'/assets/images/404-1.png'); ?>" alt="">
                        
                             <a>
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash-create-course.svg'?>" alt="">
@@ -417,7 +417,7 @@ if ($event_id) {
                     foreach ($event_data['sessions'] as $session): ?>
                         <div class="card-type1" data-id="<?php echo $session_counter; ?>">
                             <div class="flex justify-between p-3">
-                                <p><?php echo esc_html($session['title']); ?></p>
+                                <p ref="event-create-session-title"><?php echo esc_html($session['title']); ?></p>
                                 <span>
                                     <img class="h-fit edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
                                     <img class="h-fit delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
@@ -427,7 +427,7 @@ if ($event_id) {
                                 <div class="column">
                                     <span>
                                         <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/3d-cube-scan.png'?>" alt="">
-                                        <p><?php echo esc_html($session['platform']); ?></p>
+                                        <p ref="event-create-session-platform"><?php echo esc_html($session['platform']); ?></p>
                                     </span>
                                     <span>
                                         <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/toggle-off-circle.png'?>" alt="">
@@ -437,11 +437,11 @@ if ($event_id) {
                                 <div class="column">
                                     <span>
                                         <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
-                                        <p><?php echo jdate('Y/m/d - H:i', $session['startDateTime'], 'none', 'Asia/Tehran', 'en'); ?></p>
+                                        <p ref="event-create-session-start-date"><?php echo jdate('Y/m/d - H:i', $session['startDateTime'], 'none', 'Asia/Tehran', 'en'); ?></p>
                                     </span>
                                     <span>
                                         <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
-                                        <p><?php echo jdate('Y/m/d - H:i', $session['finishDateTime'], 'none', 'Asia/Tehran', 'en'); ?></p>
+                                        <p ref="event-create-session-finish-date"><?php echo jdate('Y/m/d - H:i', $session['finishDateTime'], 'none', 'Asia/Tehran', 'en'); ?></p>
                                     </span>
                                 </div>
                             </div>
@@ -449,7 +449,8 @@ if ($event_id) {
                         <?php 
                         $session_counter++; // Increment the counter
                         endforeach; 
-                        ?>                    
+                        ?>
+        
                 </div>
 
             </div>
@@ -575,7 +576,7 @@ if ($event_id) {
                     foreach ($tickets as $ticket): ?>
                         <div class="card-type1 " data-id="<?php echo $ticket_counter; ?>">
                             <div class="flex justify-between p-3">
-                                <p><?php echo esc_html($ticket['title']); ?></p>
+                                <p ref="event-create-ticket-title"><?php echo esc_html($ticket['title']); ?></p>
                                 <span>
                                     <img class="h-fit edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
                                     <img class="h-fit delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
@@ -585,21 +586,21 @@ if ($event_id) {
                                 <div class="column">
                                     <span>
                                         <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/profile-2user.png'?>" alt="">
-                                        <p><?php echo esc_html($ticket['count']); ?></p>
+                                        <p ref="event-create-ticket-number"><?php echo esc_html($ticket['count']); ?></p>
                                     </span>
                                     <span>
                                         <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/money.png'?>" alt="">
-                                        <p><?php echo esc_html(number_format($ticket['price'])); ?> تومان</p>
+                                        <p ref="event-create-ticket-price"><?php echo esc_html(number_format($ticket['price'])); ?> تومان</p>
                                     </span>
                                 </div>
                                 <div class="column">
                                     <span>
                                         <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
-                                        <p><?php echo jdate('Y/m/d - H:i', $ticket['startDateTime'], 'none', 'Asia/Tehran', 'en'); ?></p>
+                                        <p ref="event-create-sale-start-date"><?php echo jdate('Y/m/d - H:i', $ticket['startDateTime'], 'none', 'Asia/Tehran', 'en'); ?></p>
                                     </span>
                                     <span>
                                         <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
-                                        <p><?php echo jdate('Y/m/d - H:i', $ticket['finishDateTime'], 'none', 'Asia/Tehran', 'en'); ?></p>
+                                        <p ref="event-create-sale-finish-date"><?php echo jdate('Y/m/d - H:i', $ticket['finishDateTime'], 'none', 'Asia/Tehran', 'en'); ?></p>
                                     </span>
                                 </div>
                             </div>
@@ -608,6 +609,7 @@ if ($event_id) {
                     $ticket_counter++; // Increment the counter
                     endforeach; 
                     ?>
+
                 </div>
             </div>
 
@@ -716,7 +718,7 @@ if ($event_id) {
                             <div class="flex justify-between p-3">
                                 <span>
                                     <img src="<?php echo esc_attr($companion['logoURL']); ?>" class="rounded-full" ref="event-create-companion-logo">
-                                    <p><?php echo esc_html($companion['name']); ?></p>
+                                    <p ref="event-create-companion-name"><?php echo esc_html($companion['name']); ?></p>
                                 </span>
                                 <span>
                                     <img class="with-black-border edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
@@ -728,6 +730,7 @@ if ($event_id) {
                     $companion_counter++; // Increment the counter
                     endforeach; 
                     ?>
+
                 </div>
 
             </div>
@@ -752,7 +755,7 @@ if ($event_id) {
                         <input type="text" name="action" value="create_event" hidden/>
 
                         <button type="submit" disabled="true">
-                            انتشار</button>
+                        <?php echo $is_edit ? 'ثبت تغییرات' : 'انتشار'; ?></button>
                     </div>
                 </div>
             </div>
