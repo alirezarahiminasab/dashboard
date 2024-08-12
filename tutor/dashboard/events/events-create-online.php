@@ -31,7 +31,7 @@ class EventManager {
                 throw new Exception('Failed to retrieve event data for event ID: ' . $this->event_id);
             }
 
-            $this->event_data = $decoded_response['data'];
+            $this->event_data = $decoded_response['data']['event'];
             return $this->event_data;
 
         } catch (Exception $e) {
@@ -54,7 +54,7 @@ class EventManager {
                 throw new Exception('Failed to retrieve tickets data for event ID: ' . $this->event_id);
             }
 
-            $this->tickets = $decoded_response['data'];
+            $this->tickets = $decoded_response['data']['tickets'];
             return $this->tickets;
 
         } catch (Exception $e) {
@@ -95,9 +95,7 @@ if ($event_id) {
             <a href="profile_url">
                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/arrow-right.png'?>" alt="">
             </a>
-            <h3>
-                ایجاد رویداد
-            </h3>
+            <h3><?php echo $is_edit ? 'ویرایش رویداد' : 'ایجاد رویداد'; ?></h3>
         </div>
 
         <form action="" id="event-create-form" class="event-create-form" method="post" enctype="multipart/form-data">
@@ -105,7 +103,7 @@ if ($event_id) {
             <!-- SECTION -->
             <div id="event-create-topic" class="event-create-section ">
                 <div class="event-create-section-inner event-create-topic">
-                    <h1>ایجاد رویداد</h1>
+                    <h1><?php echo $is_edit ? 'ویرایش رویداد' : 'ایجاد رویداد'; ?></h1>
 
 
                     <h2 for="event-create-topic">مشخصات رویداد</h2>
@@ -119,10 +117,10 @@ if ($event_id) {
                             <span>
                                 <p>60</p>
                                 <p>/</p>
-                                <p class="event-create-counter-limit">0</p>
+                                <p class="event-create-counter-limit"><?php echo $is_edit ? strlen($event_data['title']) : '0'; ?></p>
                             </span>
                             <input type="text" class="event-create-input" name="event-create-title" id="event-create-title"
-                                placeholder="عنوان رویداد" data-limit="60" _require >
+                                placeholder="عنوان رویداد" data-limit="60" _require value="<?php echo esc_attr($is_edit ? $event_data['title'] : ''); ?>">
                         </div>
                     </div>
 
@@ -136,10 +134,11 @@ if ($event_id) {
                             <select type="text" name="event-create-category" id="event-create-category" _require>
                                 <option value="" hidden selected>
                                     انتخاب کنید</option>
-                                <option value="برچسب اول">برچسب اول</option>
-                                <option value="برچسب دوم">برچسب دوم</option>
-                                <option value="برچسب سوم">برچسب سوم</option>
-                                <option value="برچسب چهارم">برچسب چهارم</option>
+                                <option value="برچسب اول" <?php echo $is_edit && $event_data['category'] === 'برچسب اول' ? 'selected' : ''; ?>>برچسب اول</option>
+                                <option value="برچسب دوم" <?php echo $is_edit && $event_data['category'] === 'برچسب دوم' ? 'selected' : ''; ?>>برچسب دوم</option>
+                                <option value="برچسب سوم" <?php echo $is_edit && $event_data['category'] === 'برچسب سوم' ? 'selected' : ''; ?>>برچسب سوم</option>
+                                <option value="برچسب چهارم" <?php echo $is_edit && $event_data['category'] === 'برچسب چهارم' ? 'selected' : ''; ?>>برچسب چهارم</option>
+                            
                             </select>
                         </div>
                     </div>
@@ -170,7 +169,7 @@ if ($event_id) {
                             کاور رویداد<sup>*</sup>
                         </p>
 
-                        <label for="event-create-cover" class="event-create-cover-input active">
+                        <label for="event-create-cover" class="event-create-cover-input <?php echo $is_edit ? '' : 'active'; ?>">
                             <span>
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/gallery-export.svg'?>" alt="">
                                 <p>حجم: حداکثر 20 مگابایت
@@ -180,9 +179,9 @@ if ($event_id) {
                                 آپلود کاور</a>
                         </label>
 
-                        <div class="event-create-cover-uploaded">
-                            <img class="event-create-cover-uploaded-file" src="<?php echo get_stylesheet_directory_uri().'/assets/images/404-1.png'?>" alt="">
-
+                        <div class="event-create-cover-uploaded <?php echo $is_edit ? 'active' : ''; ?>">
+                            <img class="event-create-cover-uploaded-file" src="<?php echo esc_attr($is_edit ? $event_data['imageURL'] : get_stylesheet_directory_uri().'/assets/images/404-1.png'); ?>" alt="">
+                       
                             <a>
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash-create-course.svg'?>" alt="">
                                 <p>
@@ -199,8 +198,7 @@ if ($event_id) {
                         <label for="event-create-description-extra">
                             توضیحات رویداد<sup>*</sup>
                         </label>
-                        <textarea name="event-create-description" rows="6" id="event-create-description-extra"
-                            placeholder="توضیحات خود را درباره رویداد اینجا بنویسید..." _require></textarea>
+                        <textarea name="event-create-description" rows="6" id="event-create-description-extra" placeholder="توضیحات خود را درباره رویداد اینجا بنویسید..." _require><?php echo esc_textarea($is_edit ? $event_data['description'] : ''); ?></textarea>
                     </div>
 
 
@@ -216,7 +214,7 @@ if ($event_id) {
                             <div class="event-create-section-inner-input-wrap">
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/arrow-down.svg'?>" alt="">
                                 <input name="event-create-start-date" data-jdp data-jdp-only-date type="text" class="input-time"
-                                    placeholder="تاریخ شروع" _require>
+                                    placeholder="تاریخ شروع" _require value="<?php echo $is_edit ? jdate('Y/m/d', $event_data['startDateTime'], 'none', 'Asia/Tehran', 'en') : ''; ?>">
                             </div>
                         </div>
 
@@ -224,7 +222,7 @@ if ($event_id) {
                             <label for="start-time">
                                 ساعت شروع <sup>*</sup>
                             </label>
-                            <input name="event-create-start-time" data-jdp data-jdp-only-time type="text" placeholder="00:00" class="input-time" _require>
+                            <input name="event-create-start-time" data-jdp data-jdp-only-time type="text" placeholder="00:00" class="input-time" _require value="<?php echo $is_edit ? jdate('H:i', $event_data['startDateTime'], 'none', 'Asia/Tehran', 'en') : ''; ?>">
                         </div>
 
                         <div class="event-create-section-inner-input">
@@ -234,7 +232,7 @@ if ($event_id) {
                             <div class="event-create-section-inner-input-wrap">
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/arrow-down.svg'?>" alt="">
                                 <input name="event-create-finish-date" data-jdp data-jdp-only-date type="text" class="input-time"
-                                    placeholder="تاریخ پایان" _require>
+                                    placeholder="تاریخ پایان" _require value="<?php echo $is_edit ? jdate('Y/m/d', $event_data['finishDateTime'], 'none', 'Asia/Tehran', 'en') : ''; ?>">
                             </div>
                         </div>
 
@@ -242,7 +240,7 @@ if ($event_id) {
                             <label for="start-time">
                                 ساعت پایان <sup>*</sup>
                             </label>
-                            <input name="event-create-finish-time" data-jdp data-jdp-only-time type="text" placeholder="00:00" class="input-time" _require>
+                            <input name="event-create-finish-time" data-jdp data-jdp-only-time type="text" placeholder="00:00" class="input-time" _require value="<?php echo $is_edit ? jdate('H:i', $event_data['finishDateTime'], 'none', 'Asia/Tehran', 'en') : ''; ?>">
                             <!-- <input class="input-time" maxlength="5" type="text" placeholder="00:00"> -->
                         </div>
 
@@ -255,7 +253,7 @@ if ($event_id) {
 
             <div id="event-create-sessions" class="event-create-section ">
 
-                <div class="event-create-section-inner event-create-sessions active">
+                <div class="event-create-section-inner event-create-sessions <?php echo empty($event_data['sessions']) ? 'active' : ''; ?>">
 
                     <div class="event-create-section-inner-input">
                         <h2>
@@ -366,7 +364,7 @@ if ($event_id) {
                 </div>
 
 
-                <div class="event-create-section-inner event-create-sessions-full ">
+                <div class="event-create-section-inner event-create-sessions-full <?php echo empty($event_data['sessions']) ? '' : 'active'; ?>">
                     <h2>
                         جلسات رویداد
                     </h2>
@@ -409,6 +407,40 @@ if ($event_id) {
                         </div>
                     </div>
 
+                    <!-- Pre-filled session cards -->
+                    <?php foreach ($event_data['sessions'] as $session): ?>
+                        <div class="card-type1">
+                            <div class="flex justify-between p-3">
+                                <p><?php echo esc_html($session['title']); ?></p>
+                                <span>
+                                    <img class="h-fit edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
+                                    <img class="h-fit delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
+                                </span>
+                            </div>
+                            <div class="more">
+                                <div class="column">
+                                    <span>
+                                        <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/3d-cube-scan.png'?>" alt="">
+                                        <p><?php echo esc_html($session['platform']); ?></p>
+                                    </span>
+                                    <span>
+                                        <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/toggle-off-circle.png'?>" alt="">
+                                        <p>فعال</p>
+                                    </span>
+                                </div>
+                                <div class="column">
+                                    <span>
+                                        <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
+                                        <p><?php echo jdate('Y/m/d - H:i', $session['startDateTime'], 'none', 'Asia/Tehran', 'en'); ?></p>
+                                    </span>
+                                    <span>
+                                        <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
+                                        <p><?php echo jdate('Y/m/d - H:i', $session['finishDateTime'], 'none', 'Asia/Tehran', 'en'); ?></p>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
                     
                 </div>
 
@@ -417,7 +449,7 @@ if ($event_id) {
             <!-- SECTION -->
 
             <div id="event-create-tickets" class="event-create-section ">
-                <div class="event-create-section-inner event-create-tickets active">
+                <div class="event-create-section-inner event-create-tickets <?php echo empty($tickets) ? 'active' : ''; ?>">
 
 
                     <h2 for="event-create-topic">بلیط ها</h2>
@@ -487,7 +519,7 @@ if ($event_id) {
                 </div>
 
 
-                <div class="event-create-section-inner event-create-tickets-full ">
+                <div class="event-create-section-inner event-create-tickets-full <?php echo empty($tickets) ? '' : 'active'; ?> ">
                     <h2>
                         بلیط ها
                     </h2>
@@ -496,45 +528,6 @@ if ($event_id) {
                         + افزودن بلیط</a>
 
                     <span class="dash-line"></span>
-
-                    <!-- <div class="card-type1">
-
-                        <div class="flex justify-between p-3">
-                            <p>
-                                بلیط زود هنگام برای 10 نفر اول
-                            </p>
-                            <span>
-                                <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
-                            </span>
-                        </div>
-
-                        <div class="more  ">
-                            <div class="column">
-                                <span>
-                                    <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/profile-2user.png'?>" alt="">
-                                    <p>120</p>
-                                </span>
-                                <span>
-                                    <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/money.png'?>" alt="">
-                                    <p>1،200،000 تومان</p>
-                                </span>
-
-                            </div>
-                            <div class="column">
-
-                                <span>
-                                    <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
-                                    <p>1402/08/14 - 18:00</p>
-                                </span>
-                                <span>
-                                    <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
-                                    <p>1402/05/12 - 11:00</p>
-                                </span>
-                            </div>
-                        </div>
-
-                    </div> -->
-
 
                     <div id="base-ticket-card-template" class="card-type1" style="display: none;">
                         <div class="flex justify-between p-3">
@@ -569,6 +562,40 @@ if ($event_id) {
                     </div>
 
 
+                    <!-- Pre-filled ticket cards -->
+                    <?php foreach ($tickets as $ticket): ?>
+                        <div class="card-type1">
+                            <div class="flex justify-between p-3">
+                                <p><?php echo esc_html($ticket['title']); ?></p>
+                                <span>
+                                    <img class="h-fit edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
+                                    <img class="h-fit delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
+                                </span>
+                            </div>
+                            <div class="more">
+                                <div class="column">
+                                    <span>
+                                        <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/profile-2user.png'?>" alt="">
+                                        <p><?php echo esc_html($ticket['count']); ?></p>
+                                    </span>
+                                    <span>
+                                        <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/money.png'?>" alt="">
+                                        <p><?php echo esc_html(number_format($ticket['price'])); ?> تومان</p>
+                                    </span>
+                                </div>
+                                <div class="column">
+                                    <span>
+                                        <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
+                                        <p><?php echo jdate('Y/m/d - H:i', $ticket['startDateTime'], 'none', 'Asia/Tehran', 'en'); ?></p>
+                                    </span>
+                                    <span>
+                                        <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
+                                        <p><?php echo jdate('Y/m/d - H:i', $ticket['finishDateTime'], 'none', 'Asia/Tehran', 'en'); ?></p>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
 
 
                 </div>
@@ -577,7 +604,7 @@ if ($event_id) {
             <!-- SECTION -->
 
             <div id="event-create-companions" class="event-create-section ">
-                <div class="event-create-section-inner event-create-companions active">
+                <div class="event-create-section-inner event-create-companions <?php echo empty($event_data['companions']) ? 'active' : ''; ?>">
 
                     <div class="event-create-section-inner-input">
                         <h2>
@@ -648,7 +675,7 @@ if ($event_id) {
                 </div>
 
 
-                <div class="event-create-section-inner event-create-companions-full  ">
+                <div class="event-create-section-inner event-create-companions-full <?php echo empty($event_data['companions']) ? '' : 'active'; ?> ">
                     <h2>
                         همراهان
                     </h2>
@@ -671,6 +698,21 @@ if ($event_id) {
                         </div>
                     </div>
 
+                    <!-- Pre-filled companion cards -->
+                    <?php foreach ($event_data['companions'] as $companion): ?>
+                        <div class="card-type2">
+                            <div class="flex justify-between p-3">
+                                <span>
+                                    <img src="<?php echo esc_attr($companion['logoURL']); ?>" class="rounded-full" ref="event-create-companion-logo">
+                                    <p><?php echo esc_html($companion['name']); ?></p>
+                                </span>
+                                <span>
+                                    <img class="with-black-border edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
+                                    <img class="with-pink-border delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
+                                </span>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
 
                 </div>
 

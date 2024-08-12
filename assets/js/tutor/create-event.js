@@ -130,6 +130,59 @@ console.log("_js file");
         saleFinishDate: this.dateTime2unix(card.saleFinishDate),
       }));
     }
+
+    ////////////////////////EDIT_MODE/////////////////////////
+    //////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////
+
+    prefillSessions() {
+      const _this = this;
+      eventData["sessions"].forEach(function (session) {
+        const cardId = _this.addCard({
+          sessionTitleValue: session["title"],
+          sessionPlatformValue: session["platform"],
+          sessionDateValue: moment
+            .unix(session["startDateTime"])
+            .format("jYYYY/jMM/jDD"),
+          sessionStartTimeValue: moment
+            .unix(session["startDateTime"])
+            .format("HH:mm"),
+          sessionFinishTimeValue: moment
+            .unix(session["finishDateTime"])
+            .format("HH:mm"),
+          sessionDescription: session["description"],
+          sessionClassUrl: session["classUrl"],
+        });
+      });
+    }
+
+    prefillCompanions() {
+      const _this = this;
+      eventData["companions"].forEach(function (companion) {
+        const companionId = _this.addCompanion({
+          companionName: companion["name"],
+          companionLogo: companion["logoURL"],
+          companionLogoName: "", // Placeholder, replace with logic to extract from URL if needed
+        });
+      });
+    }
+
+    prefillTickets() {
+      const _this = this;
+      ticketsData.forEach(function (ticket) {
+        const ticketId = _this.addTicket({
+          ticketTitle: ticket["title"],
+          ticketNumber: ticket["count"],
+          ticketPrice: ticket["price"],
+          saleStartDate: moment
+            .unix(ticket["startDateTime"])
+            .format("jYYYY/jMM/jDD"),
+          saleFinishDate: moment
+            .unix(ticket["finishDateTime"])
+            .format("jYYYY/jMM/jDD"),
+        });
+      });
+    }
   }
 
   // SECTION
