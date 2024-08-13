@@ -1,7 +1,5 @@
 <?php
 
-use CourseExtend\CourseExtend;
-
 require_once get_stylesheet_directory() . '\\inc\\event-module\\util.php' ; 
 
 
@@ -31,15 +29,6 @@ if (json_last_error() === JSON_ERROR_NONE) {
 
 $profile_url  = apply_filters('edumall_user_profile_url', '');
 $instructor_id = get_current_user_id();
-// $course_args = array(
-//     'post_type' => 'courses',
-//     'posts_per_page' => 5,
-//     'author' => $instructor_id
-// );
-
-$course_query = new WP_Query($course_args);
-
-$course_extend = new CourseExtend();
 
 ?>
 
@@ -50,10 +39,10 @@ $course_extend = new CourseExtend();
     <h3><?php esc_html_e('آمار رویداد‌ها', 'edumall-child'); ?></h3>
 </div>
 
-<div class="course-statistics">
-    <div class="course-statistics-wrap">
-        <div class="course-statistics-header">
-            <a class="course-statistics-sort-btn" href="#">
+<div class="event-statistics">
+    <div class="event-statistics-wrap">
+        <div class="event-statistics-header">
+            <a class="event-statistics-sort-btn" href="#">
                 <span>
                     <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/sort.png' ?>" alt="">
                 </span>
@@ -64,8 +53,8 @@ $course_extend = new CourseExtend();
             </a>
         </div>
 
-        <div class="course-statistics-footer">
-            <div class="course-statistics-footer-title">
+        <div class="event-statistics-footer">
+            <div class="event-statistics-footer-title">
                 <span>
                     <p>
                         عنوان رویداد
@@ -82,11 +71,11 @@ $course_extend = new CourseExtend();
                     </p>
                 </span>
             </div>
-            <div class="course-statistics-footer-wrap">
+            <div class="event-statistics-footer-wrap">
                 <?php if (is_array($results) && count($results)) : 
                     foreach ($results as $event) : 
                     ?>
-                        <div class="course-statistics-footer-item" data-students="<?php echo $event['count'] ?>">
+                        <div class="event-statistics-footer-item" data-students="<?php echo $event['count'] ?>">
                             <span>
                                 <p>
                                     <?php echo $event['title'] ?>
@@ -109,23 +98,23 @@ $course_extend = new CourseExtend();
         </div>
     </div>
 
-    <div class="course-statistics-sort">
-        <div class="course-statistics-sort-bg"></div>
-        <div class="course-statistics-sort-wrap">
-            <div class="course-statistics-sort-wrap-header">
+    <div class="event-statistics-sort">
+        <div class="event-statistics-sort-bg"></div>
+        <div class="event-statistics-sort-wrap">
+            <div class="event-statistics-sort-wrap-header">
                 <p>مرتب سازی بر اساس</p>
                 <img class="sort-header-logo" src="<?php echo get_stylesheet_directory_uri() . '/assets/images/logo-hanil-2.png' ?>" alt="">
                 <img class="sort-header-close" src="<?php echo get_stylesheet_directory_uri() . '/assets/images/close-circle.svg' ?>" alt="">
             </div>
-            <div class="course-statistics-sort-wrap-radio">
+            <div class="event-statistics-sort-wrap-radio">
                 <span>
-                    <input type="radio" name="course-statistics-sort-radio" class="course-statistics-sort-radio" data-sort="students" data-author-id="<?php echo $instructor_id ?>">
+                    <input type="radio" name="event-statistics-sort-radio" class="event-statistics-sort-radio" data-sort="students" data-author-id="<?php echo $instructor_id ?>">
                     <p>
                         <?php esc_html_e('تعداد فراگیران', 'edumall-child'); ?>
                     </p>
                 </span>
                 <span>
-                    <input type="radio" name="course-statistics-sort-radio" class="course-statistics-sort-radio" data-sort="earn" data-author-id="<?php echo $instructor_id ?>">
+                    <input type="radio" name="event-statistics-sort-radio" class="event-statistics-sort-radio" data-sort="earn" data-author-id="<?php echo $instructor_id ?>">
                     <p>
                         <?php esc_html_e('کل درآمد', 'edumall-child'); ?>
                     </p>
