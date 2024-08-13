@@ -142,6 +142,17 @@ if ($event_id) {
                         </div>
                     </div>
 
+                    <?php
+                    $allTags = ["برچسب اول", "برچسب دوم", "برچسب سوم", "برچسب چهارم"];
+                    // If it's edit mode, remove selected tags from all tags for the dropdown options
+                    if ($is_edit) {
+                        $selectedTags = $event_data['tags'];
+                        $unselectedTags = array_diff($allTags, $selectedTags);
+                    } else {
+                        $unselectedTags = $allTags; // If not in edit mode, show all tags
+                    }
+                    ?>
+
                     <div class="event-create-section-inner-input event-create-tags">
                         <label for="event-create-tags">
                             برچسب‌ها <sup>*</sup>
@@ -150,19 +161,30 @@ if ($event_id) {
                             <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/arrow-down.svg'?>" alt="">
                             <select type="text" name="event-create-tags" id="event-create-tags-dropdown"
                                 class=" event-create-tags-dropdown">
-                                <option value="" hidden selected>
+                                <option value="" hidden>
                                     انتخاب کنید (حداکثر 5 برچسب)
                                 </option>
-                                <option value="برچسب اول">برچسب اول</option>
-                                <option value="برچسب دوم">برچسب دوم</option>
-                                <option value="برچسب سوم">برچسب سوم</option>
-                                <option value="برچسب چهارم">برچسب چهارم</option>
+                                <?php foreach ($unselectedTags as $tag): ?>
+                                    <option value="<?php echo $tag; ?>"><?php echo $tag; ?></option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
 
-                        <div class="event-create-tags-list"></div>
+                        <div class="event-create-tags-list">
+                            <?php if ($is_edit): ?>
+                                <?php foreach ($selectedTags as $tag): ?>
+                                    <span>
+                                        <p><?php echo $tag; ?></p>
+                                        <svg class='event-create-tag-delete' width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path id="Vector" d="M12 22C17.5 22 22 17.5 22 12C22 6.5 17.5 2 12 2C6.5 2 2 6.5 2 12C2 17.5 6.5 22 12 22Z" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path id="Vector_2" d="M9.16992 14.8299L14.8299 9.16992" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
+                                            <path id="Vector_3" d="M14.8299 14.8299L9.16992 9.16992" stroke="#121212" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
                     </div>
-
                     <div class="event-create-section-inner-input">
                         <p>
                             کاور رویداد<sup>*</sup>

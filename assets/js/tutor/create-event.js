@@ -221,7 +221,6 @@ console.log("_js file");
         eventTopic: $("#event-create-topic"),
         eventTags: $(".event-create-tags"),
         eventSubmit: $(".event-create-submit"),
-        // eventInputTime: $(".input-time"),
         eventSessions: $(".event-create-sessions"),
         eventSessionsForm: $(".event-create-sessions-form"),
         eventSessionsFull: $(".event-create-sessions-full"),
@@ -235,102 +234,15 @@ console.log("_js file");
       };
 
       this.timer = null;
-
       this.handleInputCounter();
       this.handleCover();
       this.handleTags();
-      // this.handleCreateGoals();
       this.handleInputPrice();
-      // this.handleeventPrerequisite();
       this.handleSubmit();
-      // this.handleInputTime();
       this.handleSessions();
       this.handleCompanions();
       this.handleTickets();
       this.handleDatePicker();
-      this.eventCreateAjax();
-    }
-
-    eventCreateAjax() {
-      const _this = this;
-      $("#event-create-form").on("submit", function () {
-        const formData = new FormData(this);
-
-        const _formData = $(this).serializeArray();
-        const field = (name) => _formData.find((x) => x.name === name).value;
-
-        const dateTime2unix = (date) =>
-          date ? moment(date, "jYYYY-jMM-jDD HH:mm").unix() : date;
-
-        formData.append(
-          "event-create-start-dateTime",
-          dateTime2unix(
-            `${field("event-create-start-date")} ${field(
-              "event-create-start-time"
-            )}`
-          )
-        );
-
-        formData.append(
-          "event-create-finish-dateTime",
-          dateTime2unix(
-            `${field("event-create-finish-date")} ${field(
-              "event-create-finish-time"
-            )}`
-          )
-        );
-
-        // formData.append("action", "create_event");
-        formData.append("event-create-tags", _this.tags.join("-"));
-        formData.append("is_edit", _this.isEdit);
-        formData.append("eventID", _this.eventData?._id);
-
-        const coverImage = $(".event-create-cover-uploaded-file").attr("src");
-        const coverImageFileName = $(".event-create-cover-uploaded-file").attr(
-          "fileName"
-        );
-
-        formData.append("event-create-cover-data", coverImage);
-        formData.append("event-create-cover-fileName", coverImageFileName);
-
-        // Add card data to the form data
-        formData.append("sessions", JSON.stringify(_this.getAllCards()));
-        formData.append("companions", JSON.stringify(_this.getAllCompanions()));
-        formData.append("tickets", JSON.stringify(_this.getAllTickets()));
-
-        $.ajax({
-          url: ajax_object.ajax_url,
-          type: "POST",
-          data: formData,
-          processData: false, // Required for FormData
-          contentType: false, // Required for FormData
-          beforeSend() {
-            // $(".event-create-pre-dropdown").html("");
-            // $(".event-create-pre-wrap-input").append(
-            //   "<span class='loader'></span>"
-            // );
-          },
-          success: function (response) {
-            console.log(response);
-            // $(".event-create-pre-wrap-input .loader").remove();
-            // if (response.success) {
-            //   $(".event-create-pre-dropdown").addClass("active");
-            //   const events = response.data.events;
-
-            //   events.map(function (item) {
-            //     $(".event-create-pre-dropdown").append(
-            //       `<a class='event-create-pre-item' href='#' data-id='${
-            //         item.ID
-            //       }'>${decodeURIComponent(item.post_name)}</a>`
-            //     );
-            //   });
-            // }
-          },
-          error: function (response) {
-            console.error(response);
-          },
-        });
-      });
     }
 
     handleDatePicker() {
@@ -937,6 +849,13 @@ console.log("_js file");
 
     handleTags() {
       const _this = this;
+      $(".event-create-tags-list span p").each(function () {
+        const tagText = $(this).text();
+        _this.tags.push(tagText);
+        console.log(_this.tags);
+      });
+
+      console.log(_this.tags);
       this.elements.eventTags.on(
         "change",
         ".event-create-tags-dropdown",
@@ -996,9 +915,84 @@ console.log("_js file");
         }
       );
 
-      $(".event-create-form").on("submit", function (e) {
+      const _this = this;
+      $("#event-create-form").on("submit", function () {
         e.preventDefault();
-        console.log(239);
+        const formData = new FormData(this);
+
+        const _formData = $(this).serializeArray();
+        const field = (name) => _formData.find((x) => x.name === name).value;
+
+        const dateTime2unix = (date) =>
+          date ? moment(date, "jYYYY-jMM-jDD HH:mm").unix() : date;
+
+        formData.append(
+          "event-create-start-dateTime",
+          dateTime2unix(
+            `${field("event-create-start-date")} ${field(
+              "event-create-start-time"
+            )}`
+          )
+        );
+
+        formData.append(
+          "event-create-finish-dateTime",
+          dateTime2unix(
+            `${field("event-create-finish-date")} ${field(
+              "event-create-finish-time"
+            )}`
+          )
+        );
+
+        // formData.append("action", "create_event");
+        formData.append("event-create-tags", _this.tags.join("-"));
+        formData.append("is_edit", _this.isEdit);
+        formData.append("eventID", _this.eventData?._id);
+
+        const coverImage = $(".event-create-cover-uploaded-file").attr("src");
+        const coverImageFileName = $(".event-create-cover-uploaded-file").attr(
+          "fileName"
+        );
+        formData.append("event-create-cover-data", coverImage);
+        formData.append("event-create-cover-fileName", coverImageFileName);
+
+        // Add card data to the form data
+        formData.append("sessions", JSON.stringify(_this.getAllCards()));
+        formData.append("companions", JSON.stringify(_this.getAllCompanions()));
+        formData.append("tickets", JSON.stringify(_this.getAllTickets()));
+
+        $.ajax({
+          url: ajax_object.ajax_url,
+          type: "POST",
+          data: formData,
+          processData: false, // Required for FormData
+          contentType: false, // Required for FormData
+          beforeSend() {
+            // $(".event-create-pre-dropdown").html("");
+            // $(".event-create-pre-wrap-input").append(
+            //   "<span class='loader'></span>"
+            // );
+          },
+          success: function (response) {
+            console.log(response);
+            // $(".event-create-pre-wrap-input .loader").remove();
+            // if (response.success) {
+            //   $(".event-create-pre-dropdown").addClass("active");
+            //   const events = response.data.events;
+
+            //   events.map(function (item) {
+            //     $(".event-create-pre-dropdown").append(
+            //       `<a class='event-create-pre-item' href='#' data-id='${
+            //         item.ID
+            //       }'>${decodeURIComponent(item.post_name)}</a>`
+            //     );
+            //   });
+            // }
+          },
+          error: function (response) {
+            console.error(response);
+          },
+        });
       });
     }
   }
