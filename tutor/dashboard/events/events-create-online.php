@@ -122,7 +122,6 @@ if ($event_id) {
                                 placeholder="عنوان رویداد" data-limit="60" _require value="<?php echo esc_attr($is_edit ? $event_data['title'] : ''); ?>">
                         </div>
                     </div>
-
                     
                     <div class="event-create-section-inner-input">
                         <label for="event-create-category">

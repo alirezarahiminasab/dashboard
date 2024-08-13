@@ -1,5 +1,9 @@
 import toast from "../toast";
 import gsap from "gsap";
+
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
+
 import moment from "moment-jalaali";
 console.log("_js file");
 
@@ -855,7 +859,6 @@ console.log("_js file");
         console.log(_this.tags);
       });
 
-      console.log(_this.tags);
       this.elements.eventTags.on(
         "change",
         ".event-create-tags-dropdown",
@@ -916,8 +919,138 @@ console.log("_js file");
       );
 
       const _this = this;
-      $("#event-create-form").on("submit", function () {
+
+      // Validation function to check if a field is empty
+      const validateField = (selector, message) => {
+        const field = $(selector);
+        const fieldValue = field.val();
+
+        if (fieldValue === undefined || !fieldValue.trim()) {
+          if (!field.next(".validation-error").length) {
+            field.after(
+              `<p class="validation-error" style="color:red;">${message}</p>`
+            );
+          }
+          return false;
+        } else {
+          field.next(".validation-error").remove();
+          return true;
+        }
+      };
+
+      // Specific validation function for the tags field
+      const validateTags = (selector, message) => {
+        const tagList = $(selector);
+        if (tagList.children("span").length === 0) {
+          // No tags selected
+          if (!tagList.next(".validation-error").length) {
+            tagList.after(
+              `<p class="validation-error" style="color:red;">${message}</p>`
+            );
+          }
+          return false;
+        } else {
+          tagList.next(".validation-error").remove();
+          return true;
+        }
+      };
+
+      $("#event-create-form").on("submit", function (e) {
         e.preventDefault();
+
+        let isValid = true;
+
+        // Validate required fields
+        isValid &= validateField(
+          '[name="event-create-title"]',
+          "پر کردن این فیلد الزامی است."
+        );
+        isValid &= validateField(
+          '[name="event-create-category"]',
+          "پر کردن این فیلد الزامی است."
+        );
+        isValid &= validateTags(
+          ".event-create-tags-list",
+          "پر کردن این فیلد الزامی است."
+        );
+        // Validate description
+        isValid &= validateField(
+          '[name="event-create-description"]',
+          "پر کردن این فیلد الزامی است."
+        );
+        // Validate date fields
+        isValid &= validateField(
+          '[name="event-create-start-date"]',
+          "پر کردن این فیلد الزامی است."
+        );
+        isValid &= validateField(
+          '[name="event-create-start-time"]',
+          "پر کردن این فیلد الزامی است."
+        );
+        isValid &= validateField(
+          '[name="event-create-finish-date"]',
+          "پر کردن این فیلد الزامی است."
+        );
+        isValid &= validateField(
+          '[name="event-create-finish-time"]',
+          "پر کردن این فیلد الزامی است."
+        );
+        // Check if cover image is uploaded
+        const _coverImage = $(".event-create-cover-uploaded-file").attr("src");
+        if (!_coverImage || _coverImage === "empty") {
+          if (
+            !$(".event-create-cover-input").next(".validation-error").length
+          ) {
+            $(".event-create-cover-input").after(
+              `<p class="validation-error" style="color:red;">پر کردن این فیلد الزامی است.</p>`
+            );
+          }
+          isValid = false;
+        } else {
+          $(".event-create-cover-input").next(".validation-error").remove();
+        }
+
+        // If any field is invalid, show a global toast and prevent form submission
+        if (!isValid) {
+          Toastify({
+            text: "لطفا موارد الزامی را تکمیل کنید",
+            duration: 3000,
+            gravity: "top", // `top` or `bottom`
+            position: "center", // `left`, `center` or `right`
+            backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
+            rtl: true, // For RTL languages like Persian
+          }).showToast();
+          return;
+        }
+
+        // Check if there is at least one session
+        const sessions = _this.getAllCards();
+        if (sessions.length === 0) {
+          Toastify({
+            text: "لطفا حداقل یک جلسه اضافه کنید",
+            duration: 3000,
+            gravity: "top", // `top` or `bottom`
+            position: "center", // `left`, `center` or `right`
+            backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
+            rtl: true, // For RTL languages like Persian
+          }).showToast();
+          return;
+        }
+
+        // Check if there is at least one ticket
+        const tickets = _this.getAllTickets();
+        if (tickets.length === 0) {
+          Toastify({
+            text: "لطفا حداقل یک بلیط اضافه کنید",
+            duration: 3000,
+            gravity: "top", // `top` or `bottom`
+            position: "center", // `left`, `center` or `right`
+            backgroundColor: "linear-gradient(to right, #ff5f6d, #ffc371)",
+            rtl: true, // For RTL languages like Persian
+          }).showToast();
+          return;
+        }
+
         const formData = new FormData(this);
 
         const _formData = $(this).serializeArray();

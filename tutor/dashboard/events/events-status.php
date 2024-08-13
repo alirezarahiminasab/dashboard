@@ -61,7 +61,7 @@ $results = [];
 
 $decoded = json_decode($fetch_results, true);
 if (json_last_error() === JSON_ERROR_NONE) {
-    // error_log(print_r($decoded, true));
+    error_log(print_r($decoded, true));
     
     if ($decoded['status'] === 'success') {
         $results = $decoded['data']['events'];
