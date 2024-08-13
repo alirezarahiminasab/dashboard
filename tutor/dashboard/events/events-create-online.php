@@ -6,7 +6,6 @@ use TUTOR\Input;
 get_header();
 ?>
 
-
 <?php
 class EventManager {
     private $event_id;
