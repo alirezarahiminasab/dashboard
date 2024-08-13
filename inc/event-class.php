@@ -11,6 +11,7 @@ class Events
         // Add new actions for each API request
         add_action('wp_ajax_create_event', [$this, 'create_event']);
         add_action('wp_ajax_get_shops', [$this, 'get_shops']);
+        add_action('wp_ajax_get_stats', [$this, 'get_stats']);
         // add_action('wp_ajax_get_my_events', [$this, 'get_my_events']);
         // add_action('wp_ajax_get_event', [$this, 'get_event']);
         // add_action('wp_ajax_update_event', [$this, 'update_event']);
@@ -179,7 +180,72 @@ class Events
             wp_send_json_error(['message' => $e->getMessage()]);
         }
     }
-    
+
+    // // Method to get stats
+    // public function get_stats()
+    // {
+    //     $sort = $_POST['sort'];
+    //     try {
+    //         $result = EventUtil::callApi('shops/stats?sort='.$sort, [], 'GET');
+    //         wp_send_json_success($result);
+    //         // wp_send_json_success($result);
+    //     } catch (Exception $e) {
+    //         wp_send_json_error(['message' => $e->getMessage()]);
+    //     }
+    // }
+
+    public function get_stats()
+{
+    $sort = $_POST['sort'];
+    ob_start(); // Start output buffering
+
+    try {
+        // Call the API to fetch the stats based on the sorting criteria
+        $result = EventUtil::callApi('shops/stats?sort='.$sort, [], 'GET');
+        $decoded = json_decode($result, true);
+
+        if ($decoded && $decoded['status'] === 'success') {
+            $results = $decoded['data']['stats'];
+
+            // Generate the HTML for the statistics table rows
+            if (is_array($results) && count($results)) : 
+                foreach ($results as $event) : 
+                    ?>
+                    <div class="event-statistics-footer-item" data-students="<?php echo $event['count'] ?>">
+                        <span>
+                            <p>
+                                <?php echo $event['title'] ?>
+                            </p>
+                        </span>
+                        <span>
+                            <p>
+                                <?php echo $event['count'] ?>
+                            </p>
+                        </span>
+                        <span>
+                            <p>
+                                <?php echo $event['totalIncome'] ?>
+                            </p>
+                        </span>
+                    </div>
+                    <?php 
+                endforeach; 
+            endif;
+        } else {
+            // Handle API error
+            echo '<p>' . esc_html__('Error fetching data.', 'edumall-child') . '</p>';
+        }
+    } catch (Exception $e) {
+        // Handle exception
+        echo '<p>' . esc_html__('An error occurred: ', 'edumall-child') . $e->getMessage() . '</p>';
+    }
+
+    $html = ob_get_clean(); // Capture the output buffer and clean it
+
+    wp_send_json_success(['html' => $html]); // Send the HTML as a JSON response
+}
+
+
     public function fetch_user_meta($userId) {
         return [
             'full_name' => get_user_meta($userId, 'first_name', true) . " " .  get_user_meta($userId, 'last_name', true),

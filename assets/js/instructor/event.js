@@ -333,32 +333,34 @@ gsap.registerPlugin(ScrollTrigger);
         .on("click", function (e) {
           const sortType = $(this).data("sort"); // Get the sort type from data-sort attribute of clicked radio button
 
-          // Select and sort the div elements based on data attribute specified by sortType
-          const sortedElements = $el.eventStatistics
-            .find(".event-statistics-footer-item")
-            .sort(function (a, b) {
-              // Convert data values to integers if they are numeric and compare for descending order
-              return (
-                parseInt($(b).data(sortType)) - parseInt($(a).data(sortType))
-              );
-            });
+          const formData = new FormData();
 
-          // Select the container that wraps the items to be sorted
-          const container = $(".event-statistics-footer-wrap");
-          container.empty(); // Clear existing content in the container
+          formData.append("action", "get_stats");
+          formData.append("sort", sortType);
 
-          // Append sorted elements back to the container
-          sortedElements.each(function () {
-            container.append(this);
-          });
-
-          const tl = gsap.timeline();
-          tl.to($(".event-statistics-sort-wrap"), {
-            y: "100%",
-            duration: 0.3,
-          });
-          tl.to($(".event-statistics-sort"), {
-            display: "none",
+          $.ajax({
+            url: ajax_object.ajax_url,
+            type: "POST",
+            data: formData,
+            processData: false, // Required for FormData
+            contentType: false, // Required for FormData
+            beforeSend() {
+              // $(".event-create-pre-dropdown").html("");
+              // $(".event-create-pre-wrap-input").append(
+              //   "<span class='loader'></span>"
+              // );
+            },
+            success: function (response) {
+              if (response.success) {
+                // Replace the content of event-statistics-footer-wrap with the new HTML
+                $(".event-statistics-footer-wrap").html(response.data.html);
+              } else {
+                console.error("Error in response:", response);
+              }
+            },
+            error: function (response) {
+              console.error(response);
+            },
           });
         });
     };

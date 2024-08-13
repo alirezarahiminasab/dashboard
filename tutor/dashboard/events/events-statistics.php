@@ -108,13 +108,13 @@ $instructor_id = get_current_user_id();
             </div>
             <div class="event-statistics-sort-wrap-radio">
                 <span>
-                    <input type="radio" name="event-statistics-sort-radio" class="event-statistics-sort-radio" data-sort="students" data-author-id="<?php echo $instructor_id ?>">
+                    <input type="radio" name="event-statistics-sort-radio" class="event-statistics-sort-radio" data-sort="count" data-author-id="<?php echo $instructor_id ?>">
                     <p>
                         <?php esc_html_e('تعداد فراگیران', 'edumall-child'); ?>
                     </p>
                 </span>
                 <span>
-                    <input type="radio" name="event-statistics-sort-radio" class="event-statistics-sort-radio" data-sort="earn" data-author-id="<?php echo $instructor_id ?>">
+                    <input type="radio" name="event-statistics-sort-radio" class="event-statistics-sort-radio" data-sort="totalIncome" data-author-id="<?php echo $instructor_id ?>">
                     <p>
                         <?php esc_html_e('کل درآمد', 'edumall-child'); ?>
                     </p>
