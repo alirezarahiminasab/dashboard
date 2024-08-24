@@ -23,24 +23,24 @@
       @apply border border-[color:var(--Primary-500,#C22E58)] text-[color:var(--Primary-500,#C22E58)] border-solid rounded-lg text-center text-sm font-medium leading-[110%];
     }
 
-    .btn-pink-fill {
+    .event-create-btn-pink-fill {
       @include pink-fill();
       @apply py-4;
     }
 
-    .btn-pink-outline {
+    .event-create-btn-pink-outline {
       @include pink-outline();
       @apply py-4;
     }
 
-    .dash-line {
+    .event-create-dash-line {
       @apply top-0 bottom-0 right-0 m-auto w-full h-fit;
       content: "";
       border-bottom: 1px #adb5bd dashed;
     }
 
     // TODO
-    .card-type1 {
+    .event-create-card-type1 {
       @apply rounded-[8px_0px_8px_8px] bg-white flex flex-col gap-4 border border-[color:var(--Neutral-400,#CED4DA)] border-solid overflow-hidden text-xs font-medium;
 
       span {
@@ -51,10 +51,10 @@
         @apply h-4 w-4;
       }
 
-      .more {
+      .event-create-more {
         @apply w-full [background:var(--Neutral-100,#F8F9FA)] p-3 font-normal flex justify-between;
 
-        .column {
+        .event-create-column {
           @apply flex flex-col gap-3;
           span {
             @apply flex gap-1;
@@ -63,7 +63,7 @@
       }
     }
 
-    .card-type2 {
+    .event-create-card-type2 {
       @apply rounded-[8px_0px_8px_8px] bg-white flex flex-col gap-4 border border-[color:var(--Neutral-400,#CED4DA)] border-solid overflow-hidden text-sm font-normal;
 
       span {
@@ -72,60 +72,39 @@
         img {
           @apply h-8 w-8;
 
-          &.with-black-border {
+          &.event-create-with-black-border {
             @apply p-1.5 border border-[color:var(--Generic-Black,#121212)] rounded-lg border-solid;
           }
-          &.with-pink-border {
+          &.event-create-with-pink-border {
             @apply p-1.5 border border-[color:var(--Error-500,#F62E2E)] rounded-lg border-solid;
           }
         }
       }
     }
 
-    .column-2fr-1fr {
+    .event-create-column-2fr-1fr {
       @apply grid gap-4;
       grid-template-columns: 2fr 1fr;
     }
 
-    .column-1fr-1fr {
+    .event-create-column-1fr-1fr {
       @apply grid gap-x-4 gap-y-10 grid-cols-2;
     }
 
-    .column-2fr-1fr-1fr {
+    .event-create-column-2fr-1fr-1fr {
       @apply grid gap-4;
       grid-template-columns: 1.5fr 1fr 1fr;
     }
 
-    .input-time {
+    .event-create-input-time {
       @apply text-center;
       &::placeholder {
         @apply text-center;
       }
     }
 
-    .free-ticket-description {
+    .event-create-free-ticket-description {
       @apply text-sm text-[color:var(--Secondary-500,#015372)];
-    }
-
-    .loader {
-      @apply absolute top-0 bottom-0 m-auto left-10;
-      width: 16px;
-      height: 16px;
-      border: 2px solid #121212;
-      border-bottom-color: transparent;
-      border-radius: 50%;
-      display: inline-block;
-      box-sizing: border-box;
-      animation: rotation 1s linear infinite;
-    }
-
-    @keyframes rotation {
-      0% {
-        transform: rotate(0deg);
-      }
-      100% {
-        transform: rotate(360deg);
-      }
     }
 
     h1 {
@@ -141,7 +120,7 @@
       &.event-create-cover-input {
         @apply hidden flex-col justify-center items-center gap-5 border border-[color:var(--Generic-Black,#121212)] [background:var(--Generic-White,#FFF)] pt-10 pb-8 rounded-lg border-dashed cursor-pointer;
 
-        &.logo {
+        &.event-create-logo {
           @apply gap-3;
         }
 
@@ -158,7 +137,7 @@
           @apply px-8 py-4;
         }
 
-        p.small {
+        p.event-create-small {
           @apply text-[color:var(--Neutral-700,#495057)] text-xs;
         }
       }
@@ -269,63 +248,6 @@
 
         // SECTION
 
-        &.event-create-goals {
-          @apply gap-6;
-
-          a {
-            @apply border border-[color:var(--Primary-500,#C22E58)] px-8 py-4 rounded-lg border-solid;
-            @apply text-[color:var(--Primary-500,#C22E58)] text-center text-xs font-medium leading-[110%];
-          }
-
-          .event-create-goals-wrap {
-            @apply flex flex-col gap-4;
-          }
-        }
-
-        &.event-create-pre {
-          @apply gap-4 mt-10;
-
-          .event-create-pre-wrap {
-            @apply flex flex-col gap-2;
-
-            &-input {
-              @apply relative;
-
-              img {
-                @apply absolute top-0 bottom-0 left-3 h-fit m-auto;
-              }
-            }
-          }
-
-          .event-create-pre-dropdown {
-            @apply absolute bg-white p-3 w-full rounded-lg hidden flex-col gap-2 z-50;
-
-            &.active {
-              @apply flex;
-            }
-          }
-
-          .event-create-pre-list {
-            @apply hidden flex-wrap gap-4 mt-2;
-
-            &.active {
-              @apply flex;
-            }
-
-            span {
-              @apply flex items-center gap-2 [background:var(--Neutral-200,#E9ECEF)] p-3 rounded-lg;
-
-              p {
-                @apply text-[color:var(--Generic-Black,#121212)]  text-xs font-normal leading-[110%];
-              }
-
-              svg {
-                @apply cursor-pointer;
-              }
-            }
-          }
-        }
-
         &.event-create-tags {
           .event-create-tags-list {
             @apply flex flex-wrap items-center gap-4;
@@ -418,7 +340,7 @@
 
   //SECTION
   &-tickets {
-    .disabled {
+    .event-create-disabled {
       @apply [background:var(--Neutral-200,#E9ECEF)] text-[color:var(--Neutral-500,#ADB5BD)] border-0 pointer-events-none;
     }
   }

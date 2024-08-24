@@ -224,7 +224,7 @@ if ($event_id) {
 
                     <h2 for="date-time">زمان و مکان رویداد</h2>
 
-                    <div class="column-2fr-1fr">
+                    <div class="event-create-column-2fr-1fr">
 
 
                         <div class="event-create-section-inner-input">
@@ -233,7 +233,7 @@ if ($event_id) {
                             </label>
                             <div class="event-create-section-inner-input-wrap">
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/arrow-down.svg'?>" alt="">
-                                <input name="event-create-start-date" data-jdp data-jdp-only-date type="text" class="input-time"
+                                <input name="event-create-start-date" data-jdp data-jdp-only-date type="text" 
                                     placeholder="تاریخ شروع" _require value="<?php echo $is_edit ? jdate('Y/m/d', $event_data['startDateTime'], 'none', 'Asia/Tehran', 'en') : ''; ?>">
                             </div>
                         </div>
@@ -242,7 +242,7 @@ if ($event_id) {
                             <label for="start-time">
                                 ساعت شروع <sup>*</sup>
                             </label>
-                            <input name="event-create-start-time" data-jdp data-jdp-only-time type="text" placeholder="00:00" class="input-time" _require value="<?php echo $is_edit ? jdate('H:i', $event_data['startDateTime'], 'none', 'Asia/Tehran', 'en') : ''; ?>">
+                            <input name="event-create-start-time" data-jdp data-jdp-only-time type="text" placeholder="00:00" class="event-create-input-time" _require value="<?php echo $is_edit ? jdate('H:i', $event_data['startDateTime'], 'none', 'Asia/Tehran', 'en') : ''; ?>">
                         </div>
 
                         <div class="event-create-section-inner-input">
@@ -251,7 +251,7 @@ if ($event_id) {
                             </label>
                             <div class="event-create-section-inner-input-wrap">
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/arrow-down.svg'?>" alt="">
-                                <input name="event-create-finish-date" data-jdp data-jdp-only-date type="text" class="input-time"
+                                <input name="event-create-finish-date" data-jdp data-jdp-only-date type="text" 
                                     placeholder="تاریخ پایان" _require value="<?php echo $is_edit ? jdate('Y/m/d', $event_data['finishDateTime'], 'none', 'Asia/Tehran', 'en') : ''; ?>">
                             </div>
                         </div>
@@ -260,8 +260,8 @@ if ($event_id) {
                             <label for="start-time">
                                 ساعت پایان <sup>*</sup>
                             </label>
-                            <input name="event-create-finish-time" data-jdp data-jdp-only-time type="text" placeholder="00:00" class="input-time" _require value="<?php echo $is_edit ? jdate('H:i', $event_data['finishDateTime'], 'none', 'Asia/Tehran', 'en') : ''; ?>">
-                            <!-- <input class="input-time" maxlength="5" type="text" placeholder="00:00"> -->
+                            <input name="event-create-finish-time" data-jdp data-jdp-only-time type="text" placeholder="00:00" class="event-create-input-time" _require value="<?php echo $is_edit ? jdate('H:i', $event_data['finishDateTime'], 'none', 'Asia/Tehran', 'en') : ''; ?>">
+                            <!-- <input  maxlength="5" type="text" placeholder="00:00"> -->
                         </div>
 
 
@@ -326,7 +326,7 @@ if ($event_id) {
                         <textarea name="event-create-session-description" id="event-create-description-extra" rows="6"></textarea>
                     </div>
 
-                    <div class="column-2fr-1fr-1fr">
+                    <div class="event-create-column-2fr-1fr-1fr">
                         <div class="event-create-section-inner-input">
                             <label for="start-date">
                                 تاریخ جلسه <sup>*</sup>
@@ -344,14 +344,14 @@ if ($event_id) {
                                 ساعت شروع <sup>*</sup>
                             </label>
 
-                            <input name="event-create-session-start-time" data-jdp data-jdp-only-time type="text" placeholder="00:00" class="input-time" _require>
+                            <input name="event-create-session-start-time" data-jdp data-jdp-only-time type="text" placeholder="00:00" class="event-create-input-time" _require>
 
                         </div>
                         <div class="event-create-section-inner-input">
                             <label for="start-time">
                                 ساعت پایان <sup>*</sup>
                             </label>
-                            <input name="event-create-session-finish-time" data-jdp data-jdp-only-time type="text" placeholder="00:00" class="input-time" _require>
+                            <input name="event-create-session-finish-time" data-jdp data-jdp-only-time type="text" placeholder="00:00" class="event-create-input-time" _require>
                         </div>
                     </div>
 
@@ -378,11 +378,11 @@ if ($event_id) {
                         </label>
                         <input type="text" name="event-create-platform-link" placeholder="لینک پلتفرم" _require>
                     </div>
-                    <div class="column-1fr-1fr mt-4">
-                        <a class="btn-pink-fill btn-submit">
+                    <div class="event-create-column-1fr-1fr mt-4">
+                        <a class="event-create-btn-pink-fill event-create-btn-submit">
                             ذخیره</a>
 
-                        <a class="btn-pink-outline btn-cancel ">
+                        <a class="event-create-btn-pink-outline event-create-btn-cancel ">
                             انصراف</a>
                     </div>
                 </div>
@@ -393,22 +393,22 @@ if ($event_id) {
                         جلسات رویداد
                     </h2>
 
-                    <a class="btn-pink-fill event-create-add-content">
+                    <a class="event-create-btn-pink-fill event-create-add-content">
                         + ایجاد جلسه</a>
 
-                    <span class="dash-line"></span>
+                    <span class="event-create-dash-line"></span>
 
 
-                    <div id="base-card-template" class="card-type1" style="display: none;">
+                    <div id="base-card-template" class="event-create-card-type1" style="display: none;">
                         <div class="flex justify-between p-3">
                             <p ref="event-create-session-title"></p>
                             <span>
-                            <img class="h-fit edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
-                            <img class="h-fit delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
+                            <img class="h-fit event-create-edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
+                            <img class="h-fit event-create-delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
                             </span>
                         </div>
-                        <div class="more">
-                            <div class="column">
+                        <div class="event-create-more">
+                            <div class="event-create-column">
                             <span>
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/3d-cube-scan.png'?>" alt="">
                                 <p ref="event-create-session-platform"></p>
@@ -418,7 +418,7 @@ if ($event_id) {
                                 <p>فعال</p>
                             </span>
                             </div>
-                            <div class="column">
+                            <div class="event-create-column">
                             <span>
                                 <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
                                 <p ref="event-create-session-start-date"></p>
@@ -436,16 +436,16 @@ if ($event_id) {
                     if($is_edit){                    
                     $session_counter = 1; // Initialize counter for sessions
                     foreach ($event_data['sessions'] as $session): ?>
-                        <div class="card-type1" data-id="<?php echo $session_counter; ?>">
+                        <div class="event-create-card-type1" data-id="<?php echo $session_counter; ?>">
                             <div class="flex justify-between p-3">
                                 <p ref="event-create-session-title"><?php echo esc_html($session['title']); ?></p>
                                 <span>
-                                    <img class="h-fit edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
-                                    <img class="h-fit delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
+                                    <img class="h-fit event-create-edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
+                                    <img class="h-fit event-create-delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
                                 </span>
                             </div>
-                            <div class="more">
-                                <div class="column">
+                            <div class="event-create-more">
+                                <div class="event-create-column">
                                     <span>
                                         <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/3d-cube-scan.png'?>" alt="">
                                         <p ref="event-create-session-platform"><?php echo esc_html($session['platform']); ?></p>
@@ -455,7 +455,7 @@ if ($event_id) {
                                         <p>فعال</p>
                                     </span>
                                 </div>
-                                <div class="column">
+                                <div class="event-create-column">
                                     <span>
                                         <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
                                         <p ref="event-create-session-start-date"><?php echo jdate('Y/m/d - H:i', $session['startDateTime'], 'none', 'Asia/Tehran', 'en'); ?></p>
@@ -513,9 +513,9 @@ if ($event_id) {
                         <input type="number" name="event-create-ticket-price" placeholder="مبلغ بلیط">
                     </div>
 
-                    <p class="free-ticket-description">برای تعریف بلیط رایگان، مبلغ 0 را وارد کنید</p>
+                    <p class="event-create-free-ticket-description">برای تعریف بلیط رایگان، مبلغ 0 را وارد کنید</p>
 
-                    <div class="column-1fr-1fr">
+                    <div class="event-create-column-1fr-1fr">
                         <div class="event-create-section-inner-input">
                             <label for="start-date">
                                 تاریخ شروع فروش <sup>*</sup>
@@ -538,14 +538,12 @@ if ($event_id) {
                             </div>
                         </div>
 
-                        <a class="btn-pink-fill btn-submit">
+                        <a class="event-create-btn-pink-fill event-create-btn-submit">
                             ذخیره بلیط</a>
 
-                        <a class="btn-pink-outline btn-cancel disabled">
+                        <a class="event-create-btn-pink-outline event-create-btn-cancel event-create-disabled">
                             انصراف</a>
                     </div>
-                    <!-- <a class="btn-pink-fill event-create-extract-content">
-                        ذخیره بلیط</a> -->
                 </div>
 
 
@@ -554,21 +552,21 @@ if ($event_id) {
                         بلیط ها
                     </h2>
 
-                    <a class="btn-pink-fill event-create-add-content">
+                    <a class="event-create-btn-pink-fill event-create-add-content">
                         + افزودن بلیط</a>
 
-                    <span class="dash-line"></span>
+                    <span class="event-create-dash-line"></span>
 
-                    <div id="base-ticket-card-template" class="card-type1" style="display: none;">
+                    <div id="base-ticket-card-template" class="event-create-card-type1" style="display: none;">
                         <div class="flex justify-between p-3">
                             <p ref="event-create-ticket-title"></p>
                             <span>
-                                <img class="h-fit edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
-                                <img class="h-fit delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
+                                <img class="h-fit event-create-edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
+                                <img class="h-fit event-create-delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
                             </span>
                         </div>
-                        <div class="more">
-                            <div class="column">
+                        <div class="event-create-more">
+                            <div class="event-create-column">
                                 <span>
                                     <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/profile-2user.png'?>" alt="">
                                     <p ref="event-create-ticket-number"></p>
@@ -578,7 +576,7 @@ if ($event_id) {
                                     <p ref="event-create-ticket-price"></p>
                                 </span>
                             </div>
-                            <div class="column">
+                            <div class="event-create-column">
                                 <span>
                                     <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
                                     <p ref="event-create-sale-start-date"></p>
@@ -597,16 +595,16 @@ if ($event_id) {
 
                     $ticket_counter = 1; // Initialize counter for tickets
                     foreach ($tickets as $ticket): ?>
-                        <div class="card-type1 " data-id="<?php echo $ticket_counter; ?>">
+                        <div class="event-create-card-type1 " data-id="<?php echo $ticket_counter; ?>">
                             <div class="flex justify-between p-3">
                                 <p ref="event-create-ticket-title"><?php echo esc_html($ticket['title']); ?></p>
                                 <span>
-                                    <img class="h-fit edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
-                                    <img class="h-fit delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
+                                    <img class="h-fit event-create-edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
+                                    <img class="h-fit event-create-delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
                                 </span>
                             </div>
-                            <div class="more">
-                                <div class="column">
+                            <div class="event-create-more">
+                                <div class="event-create-column">
                                     <span>
                                         <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/profile-2user.png'?>" alt="">
                                         <p ref="event-create-ticket-number"><?php echo esc_html($ticket['count']); ?></p>
@@ -616,7 +614,7 @@ if ($event_id) {
                                         <p ref="event-create-ticket-price"><?php echo esc_html(number_format($ticket['price'])); ?> تومان</p>
                                     </span>
                                 </div>
-                                <div class="column">
+                                <div class="event-create-column">
                                     <span>
                                         <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/calendar-2.png'?>" alt="">
                                         <p ref="event-create-sale-start-date"><?php echo jdate('Y/m/d - H:i', $ticket['startDateTime'], 'none', 'Asia/Tehran', 'en'); ?></p>
@@ -677,11 +675,11 @@ if ($event_id) {
                             لوگو
                         </p>
 
-                        <label for="event-create-logo" class="event-create-logo-input logo active">
+                        <label for="event-create-logo" class="event-create-logo-input event-create-logo active">
                             <img src="<?php echo get_stylesheet_directory_uri().'/assets/images/export.svg'?>" alt="">
                             <p>برای آپلود لوگو اینجا کلیک کنید
                             </p>
-                            <p class="small">حجم: حداکثر 2 مگابایت</p>
+                            <p class="event-create-small">حجم: حداکثر 2 مگابایت</p>
                         </label>
 
                         <div class="event-create-logo-uploaded ">
@@ -699,11 +697,11 @@ if ($event_id) {
 
 
 
-                    <div class="column-1fr-1fr mt-4">
-                        <a class="btn-pink-fill btn-submit">
+                    <div class="event-create-column-1fr-1fr mt-4">
+                        <a class="event-create-btn-pink-fill event-create-btn-submit">
                             ذخیره</a>
 
-                        <a class="btn-pink-outline btn-cancel ">
+                        <a class="event-create-btn-pink-outline event-create-btn-cancel ">
                             انصراف</a>
                     </div>
 
@@ -715,20 +713,20 @@ if ($event_id) {
                         همراهان
                     </h2>
 
-                    <a class="btn-pink-fill event-create-add-content">
+                    <a class="event-create-btn-pink-fill event-create-add-content">
                         + افزودن همراه</a>
 
-                    <span class="dash-line"></span>
+                    <span class="event-create-dash-line"></span>
 
-                    <div id="base-companion-card-template" class="card-type2" style="display: none;">
+                    <div id="base-companion-card-template" class="event-create-card-type2" style="display: none;">
                         <div class="flex justify-between p-3">
                             <span>
                                 <img src="<?php echo tutor()->url . 'assets/images/placeholder.svg'?>" class="rounded-full" ref="event-create-companion-logo">
                                 <p ref="event-create-companion-name"></p>
                             </span>
                             <span>
-                                <img class="with-black-border edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
-                                <img class="with-pink-border delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
+                                <img class="event-create-with-black-border event-create-edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
+                                <img class="event-create-with-pink-border event-create-delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
                             </span>
                         </div>
                     </div>
@@ -738,15 +736,15 @@ if ($event_id) {
                     if($is_edit){                    
                     $companion_counter = 1; // Initialize counter for companions
                     foreach ($event_data['companions'] as $companion): ?>
-                        <div class="card-type2 " data-id="<?php echo $companion_counter; ?>">
+                        <div class="event-create-card-type2 " data-id="<?php echo $companion_counter; ?>">
                             <div class="flex justify-between p-3">
                                 <span>
                                     <img src="<?php echo esc_attr(!empty($companion['logoURL'])?$companion['logoURL']:tutor()->url . 'assets/images/placeholder.svg'); ?>" class="rounded-full" ref="event-create-companion-logo">
                                     <p ref="event-create-companion-name"><?php echo esc_html($companion['name']); ?></p>
                                 </span>
                                 <span>
-                                    <img class="with-black-border edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
-                                    <img class="with-pink-border delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
+                                    <img class="event-create-with-black-border event-create-edit-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/edit-2.png'?>" alt="">
+                                    <img class="event-create-with-pink-border event-create-delete-card" src="<?php echo get_stylesheet_directory_uri().'/assets/images/trash.png'?>" alt="">
                                 </span>
                             </div>
                         </div>

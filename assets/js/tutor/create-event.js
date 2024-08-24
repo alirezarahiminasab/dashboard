@@ -10,9 +10,6 @@ console.log("_js file");
 (function ($) {
   "use strict";
 
-  let chapterWrap = $(".course-create-chapter:last").clone();
-  const questionBox = $(".course-create-questions-input").clone();
-
   class CardManager {
     constructor() {
       this.editingCardId = null; // To track the card being edited
@@ -352,7 +349,9 @@ console.log("_js file");
       if (this.editingCardId) {
         // Update existing card
         this.updateCard(this.editingCardId, cardData);
-        const cardElement = $(`.card-type1[data-id="${this.editingCardId}"]`);
+        const cardElement = $(
+          `.event-create-card-type1[data-id="${this.editingCardId}"]`
+        );
         cardElement
           .find('[ref="event-create-session-title"]')
           .text(sessionTitleValue);
@@ -425,20 +424,22 @@ console.log("_js file");
         sessionForm.find("input, select, textarea").val(""); // Clear form fields
       });
 
-      sessionForm.on("click", ".btn-submit", (e) => {
+      sessionForm.on("click", ".event-create-btn-submit", (e) => {
         this.addOrUpdateSessionCard();
       });
 
-      sessionForm.on("click", ".btn-cancel", () => {
-        if (sessionFull.find(".card-type1").length > 0) {
+      sessionForm.on("click", ".event-create-btn-cancel", () => {
+        if (sessionFull.find(".event-create-card-type1").length > 0) {
           this.setActiveSection("eventSessionsFull");
         } else {
           this.setActiveSection("eventSessions");
         }
       });
 
-      sessionFull.on("click", ".edit-card", (e) => {
-        const cardId = $(e.currentTarget).closest(".card-type1").data("id");
+      sessionFull.on("click", ".event-create-edit-card", (e) => {
+        const cardId = $(e.currentTarget)
+          .closest(".event-create-card-type1")
+          .data("id");
         const cardData = this.getCard(cardId);
 
         this.editingCardId = cardId;
@@ -468,13 +469,15 @@ console.log("_js file");
         this.setActiveSection("eventSessionsForm");
       });
 
-      sessionFull.on("click", ".delete-card", (e) => {
-        const cardId = $(e.currentTarget).closest(".card-type1").data("id");
+      sessionFull.on("click", ".event-create-delete-card", (e) => {
+        const cardId = $(e.currentTarget)
+          .closest(".event-create-card-type1")
+          .data("id");
         this.deleteCard(cardId);
-        $(e.currentTarget).closest(".card-type1").remove();
+        $(e.currentTarget).closest(".event-create-card-type1").remove();
 
         // Check if all cards are deleted
-        if (sessionFull.find(".card-type1").length <= 1) {
+        if (sessionFull.find(".event-create-card-type1").length <= 1) {
           this.setActiveSection("eventSessions");
         }
       });
@@ -506,7 +509,7 @@ console.log("_js file");
         this.updateCompanion(this.editingCompanionId, companionData);
 
         const cardElement = $(
-          `.card-type2[data-id="${this.editingCompanionId}"]`
+          `.event-create-card-type2[data-id="${this.editingCompanionId}"]`
         );
         cardElement
           .find('p[ref="event-create-companion-name"]')
@@ -572,12 +575,12 @@ console.log("_js file");
         this.setActiveSection("eventCompanionLogoInput");
       });
 
-      companionForm.on("click", ".btn-submit", (e) => {
+      companionForm.on("click", ".event-create-btn-submit", (e) => {
         this.addOrUpdateCompanionCard();
       });
 
-      companionForm.on("click", ".btn-cancel", () => {
-        if (companionFull.find(".card-type2").length > 1) {
+      companionForm.on("click", ".event-create-btn-cancel", () => {
+        if (companionFull.find(".event-create-card-type2").length > 1) {
           this.setActiveSection("eventCompanionsFull");
         } else {
           this.setActiveSection("eventCompanions");
@@ -592,9 +595,9 @@ console.log("_js file");
         companionForm.find("input").val("");
       });
 
-      companionFull.on("click", ".edit-card", (e) => {
+      companionFull.on("click", ".event-create-edit-card", (e) => {
         const companionId = $(e.currentTarget)
-          .closest(".card-type2")
+          .closest(".event-create-card-type2")
           .data("id");
         const companionData = this.getCompanion(companionId);
 
@@ -623,14 +626,14 @@ console.log("_js file");
         this.setActiveSection("eventCompanionsForm");
       });
 
-      companionFull.on("click", ".delete-card", (e) => {
+      companionFull.on("click", ".event-create-delete-card", (e) => {
         const companionId = $(e.currentTarget)
-          .closest(".card-type2")
+          .closest(".event-create-card-type2")
           .data("id");
         this.deleteCompanion(companionId);
-        $(e.currentTarget).closest(".card-type2").remove();
+        $(e.currentTarget).closest(".event-create-card-type2").remove();
 
-        if (companionFull.find(".card-type2").length < 2) {
+        if (companionFull.find(".event-create-card-type2").length < 2) {
           this.setActiveSection("eventCompanions");
         }
       });
@@ -677,7 +680,7 @@ console.log("_js file");
       if (this.editingTicketId) {
         this.updateTicket(this.editingTicketId, ticketData);
         const ticketElement = $(
-          `.card-type1[data-id="${this.editingTicketId}"]`
+          `.event-create-card-type1[data-id="${this.editingTicketId}"]`
         );
         ticketElement
           .find('[ref="event-create-ticket-title"]')
@@ -725,11 +728,11 @@ console.log("_js file");
       const ticketForm = this.elements.eventTicketsForm;
       const ticketFull = this.elements.eventTicketsFull;
 
-      ticketForm.on("click", ".btn-submit", (e) => {
+      ticketForm.on("click", ".event-create-btn-submit", (e) => {
         this.addOrUpdateTicketCard();
       });
 
-      ticketForm.on("click", ".btn-cancel", () => {
+      ticketForm.on("click", ".event-create-btn-cancel", () => {
         this.setActiveSection("eventTicketsFull");
       });
 
@@ -737,17 +740,23 @@ console.log("_js file");
         this.editingTicketId = null;
         ticketForm.find("input").val("");
 
-        if (ticketFull.find(".card-type1").length > 1) {
-          ticketForm.find(".btn-cancel").removeClass("disabled");
+        if (ticketFull.find(".event-create-card-type1").length > 1) {
+          ticketForm
+            .find(".event-create-btn-cancel")
+            .removeClass("event-create-disabled");
         } else {
-          ticketForm.find(".btn-cancel").addClass("disabled");
+          ticketForm
+            .find(".event-create-btn-cancel")
+            .addClass("event-create-disabled");
         }
 
         this.setActiveSection("eventTicketsForm");
       });
 
-      ticketFull.on("click", ".edit-card", (e) => {
-        const ticketId = $(e.currentTarget).closest(".card-type1").data("id");
+      ticketFull.on("click", ".event-create-edit-card", (e) => {
+        const ticketId = $(e.currentTarget)
+          .closest(".event-create-card-type1")
+          .data("id");
         const ticketData = this.getTicket(ticketId);
 
         this.editingTicketId = ticketId;
@@ -767,19 +776,25 @@ console.log("_js file");
         ticketForm
           .find(`[name="event-create-sale-finish-date"]`)
           .val(ticketData.saleFinishDate);
-        ticketForm.find(".btn-cancel").removeClass("disabled");
+        ticketForm
+          .find(".event-create-btn-cancel")
+          .removeClass("event-create-disabled");
         this.setActiveSection("eventTicketsForm");
       });
 
-      ticketFull.on("click", ".delete-card", (e) => {
-        const ticketId = $(e.currentTarget).closest(".card-type1").data("id");
+      ticketFull.on("click", ".event-create-delete-card", (e) => {
+        const ticketId = $(e.currentTarget)
+          .closest(".event-create-card-type1")
+          .data("id");
         this.deleteTicket(ticketId);
-        $(e.currentTarget).closest(".card-type1").remove();
+        $(e.currentTarget).closest(".event-create-card-type1").remove();
 
-        if (ticketFull.find(".card-type1").length < 2) {
+        if (ticketFull.find(".event-create-card-type1").length < 2) {
           this.editingTicketId = null;
           ticketForm.find("input").val("");
-          ticketForm.find(".btn-cancel").addClass("disabled");
+          ticketForm
+            .find(".event-create-btn-cancel")
+            .addClass("event-create-disabled");
           this.setActiveSection("eventTicketsForm");
         }
       });
