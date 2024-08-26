@@ -1,4 +1,4 @@
-.instructor-event {
+.event-status {
   @apply bg-[#F3F3F4];
 
   &-wrap {
@@ -10,11 +10,11 @@
       &-button {
         @apply flex justify-center items-center border border-[color:var(--Generic-Black,#121212)] rounded-lg border-solid;
 
-        &.instructor-event-filter-btn {
+        &.event-status-filter-btn {
           @apply p-3 gap-2;
         }
 
-        &.instructor-event-sort-btn {
+        &.event-status-sort-btn {
           span:nth-child(2) {
             @apply flex gap-2 items-center p-3 border-r-[color:var(--Neutral-900,#212529)] border-r border-solid;
           }
@@ -43,7 +43,7 @@
             @apply w-12 h-11  rounded-[4px_0px_4px_4px];
           }
 
-          .instructor-event-dropdown-parent {
+          .event-status-dropdown-parent {
             &-icon {
               @apply absolute left-3 top-3 w-4 h-4 cursor-pointer;
             }
@@ -67,10 +67,10 @@
                 @apply text-[color:var(--Generic-Black,#121212)] text-center text-xs font-normal;
               }
 
-              .instructor-event-dropdown-item {
+              .event-status-dropdown-item {
                 @apply flex items-center gap-2 w-full;
 
-                #instructor-event-dropdown-item-delete {
+                #event-status-dropdown-item-delete {
                   @apply text-[color:var(--Error-500,#F62E2E)];
                 }
               }
@@ -89,7 +89,7 @@
             @apply text-[color:var(--Secondary-500,#015372)] text-center  text-xs font-normal;
           }
 
-          .declined-contact {
+          .event-status-declined-contact {
             @apply flex justify-between;
 
             &-item {
@@ -101,7 +101,7 @@
         &-meta {
           @apply flex justify-between items-center [background:var(--Neutral-100,#F8F9FA)] p-3 rounded-[0px_0px_8px_8px];
 
-          .instructor-event-metadata {
+          .event-status-metadata {
             @apply flex justify-between w-full;
             &-status {
               @apply flex items-center gap-1;
@@ -109,15 +109,15 @@
               p {
                 @apply text-center text-[10px] font-medium;
 
-                &.pending {
+                &.event-status-pending {
                   @apply text-[color:var(--Warning-500,#EC8909)];
                 }
 
-                &.published {
+                &.event-status-approve {
                   @apply text-[color:var(--Warning-500,#1DAB45)];
                 }
 
-                &.declined {
+                &.event-status-reject {
                   @apply text-[color:var(--Warning-500,#F62E2E)];
                 }
               }
@@ -180,7 +180,7 @@
           @apply text-[color:var(--Generic-Black,#121212)] text-center text-sm font-medium;
         }
 
-        .sort-header {
+        .filter-header {
           &-logo {
             @apply absolute left-0 right-0 m-auto w-8 h-8;
           }
@@ -219,7 +219,7 @@
         @apply justify-self-start col-span-1 text-[color:var(--Generic-Black,#121212)] text-center text-sm font-medium;
       }
 
-      .sort-header {
+      .event-status-sort-header {
         &-logo {
           @apply h-auto justify-self-center col-span-1 w-8;
         }

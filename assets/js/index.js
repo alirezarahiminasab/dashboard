@@ -17,4 +17,4 @@ import "./persianDatepicker.min";
 import "./search";
 import "./modules/support/comment";
 import "./modules/jalalidatepicker";
-import "./tutor/create-event";
+import "./tutor/event-create";

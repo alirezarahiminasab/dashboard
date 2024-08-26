@@ -1,85 +1,93 @@
 <?php
-// require_once __DIR__ . '\\event-module\\sample.php'; // Include the required classes
 require_once __DIR__ . '\\event-module\\util.php' ; 
 require_once get_stylesheet_directory() . '\\inc\\date-conversion.php' ; 
 
 class Events
 {
-    // Initialize the class
-    function __construct()
-    {
-        // Add new actions for each API request
+    function __construct() {
         add_action('wp_ajax_create_event', [$this, 'create_event']);
         add_action('wp_ajax_get_shops', [$this, 'get_shops']);
         add_action('wp_ajax_get_stats', [$this, 'get_stats']);
-        // add_action('wp_ajax_get_my_events', [$this, 'get_my_events']);
-        // add_action('wp_ajax_get_event', [$this, 'get_event']);
-        // add_action('wp_ajax_update_event', [$this, 'update_event']);
-        // add_action('wp_ajax_delete_event', [$this, 'delete_event']);
-        // add_action('wp_ajax_search_event', [$this, 'search_event']);
-        // add_action('wp_ajax_create_user', [$this, 'create_user']);
-        // add_action('wp_ajax_get_all_users', [$this, 'get_all_users']);
-        // add_action('wp_ajax_update_user', [$this, 'update_user']);
-        // add_action('wp_ajax_create_discount', [$this, 'create_discount']);
-        // add_action('wp_ajax_get_all_discounts_by_event', [$this, 'get_all_discounts_by_event']);
-        // add_action('wp_ajax_get_all_tickets_by_event', [$this, 'get_all_tickets_by_event']);
-        // add_action('wp_ajax_create_shop', [$this, 'create_shop']);
-        // add_action('wp_ajax_get_stats', [$this, 'get_stats']);
-        // add_action('wp_ajax_create_comment', [$this, 'create_comment']);
-        // add_action('wp_ajax_get_all_comments', [$this, 'get_all_comments']);
-        // add_action('wp_ajax_update_comment', [$this, 'update_comment']);
-        // add_action('wp_ajax_get_all_rates', [$this, 'get_all_rates']);
-        // add_action('wp_ajax_add_rate', [$this, 'add_rate']);
-        // add_action('wp_ajax_update_rate', [$this, 'update_rate']);
-        // add_action('wp_ajax_test', [$this, 'test_']);
+        add_action('wp_ajax_delete_event', [$this, 'delete_event']);
     }
 
-    public function upload_image($file_data,$file_name){
-        $file_name = sanitize_file_name($file_name);
-
-        // Decode the base64 file data
-        $file_data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $file_data));
-
-        // Get the WordPress upload directory
-        $upload_dir = wp_upload_dir();
-        $unique_file_name = wp_unique_filename($upload_dir['path'], $file_name);
-        $upload_path = $upload_dir['path'] . '/' . $unique_file_name;
-
-        // Save the file
-        if (file_put_contents($upload_path, $file_data) !== false) {
-            // Get the uploaded file's URL
-            $uploaded_url = $upload_dir['url'] . '/' . $unique_file_name;
-            return $uploaded_url;
-            
+    public function delete_event() {
+        $eventID = $_POST['eventID'];
+        try {
+            $result = EventUtil::callApi('events/'.$eventID, [], 'DELETE');
+            wp_send_json_success($result);
+        } catch (Exception $e) {
+            wp_send_json_error(['message' => $e->getMessage()]);
         }
-        return "";
     }
 
-        // Method to create an event
-    public function create_event()
-    {
+    public function get_shops() {
+        $eventID = $_POST['eventID'];
+        try {
+            $result = EventUtil::callApi('shops/students?eventID='.$eventID, [], 'GET');
+            $content = $this->selected_event($result);
+            wp_send_json_success($content);
+        } catch (Exception $e) {
+            wp_send_json_error(['message' => $e->getMessage()]);
+        }
+    }
+
+
+
+    public function get_stats() {
+        $sort = $_POST['sort'];
+        ob_start(); // Start output buffering
+
+        try {
+            // Call the API to fetch the stats based on the sorting criteria
+            $result = EventUtil::callApi('shops/stats?sort='.$sort, [], 'GET');
+            $decoded = json_decode($result, true);
+
+            if ($decoded && $decoded['status'] === 'success') {
+                $results = $decoded['data']['stats'];
+
+                // Generate the HTML for the statistics table rows
+                if (is_array($results) && count($results)) : 
+                    foreach ($results as $event) : 
+                        ?>
+                        <div class="event-statistics-footer-item" data-students="<?php echo $event['count'] ?>">
+                            <span>
+                                <p>
+                                    <?php echo $event['title'] ?>
+                                </p>
+                            </span>
+                            <span>
+                                <p>
+                                    <?php echo $event['count'] ?>
+                                </p>
+                            </span>
+                            <span>
+                                <p>
+                                    <?php echo $event['totalIncome'] ?>
+                                </p>
+                            </span>
+                        </div>
+                        <?php 
+                    endforeach; 
+                endif;
+            } else {
+                // Handle API error
+                echo '<p>' . esc_html__('Error fetching data.', 'edumall-child') . '</p>';
+            }
+        } catch (Exception $e) {
+            // Handle exception
+            echo '<p>' . esc_html__('An error occurred: ', 'edumall-child') . $e->getMessage() . '</p>';
+        }
+
+        $html = ob_get_clean(); // Capture the output buffer and clean it
+        wp_send_json_success(['html' => $html]); // Send the HTML as a JSON response
+    }
+
+    public function create_event() {
         try {
             $event_create_cover_URL = "";
             $event_create_cover_data = $_POST['event-create-cover-data']; 
             $event_create_cover_fileName = $_POST['event-create-cover-fileName']; 
-
-            // if(){
-                // // URL of the file
-                // $file_url = 'https://www.modir-shabake.com/wp-content/uploads/2019/10/java-programming.jpg';
-                // $file_url = $event_create_cover_data;
-                // $upload_dir = wp_upload_dir();
-                // $file_path = str_replace($upload_dir['baseurl'], $upload_dir['basedir'], $file_url);
-                // error_log(print_r($file_url,true));
-                // error_log(print_r($upload_dir,true));
-                // error_log(print_r($file_path,true));
-
-                // // Check if the file exists
-                // if (file_exists($file_path)) {
-                //     echo 'File exists.';
-                // } else {
-                //     echo 'File does not exist.';
-                // }
-
 
             if($event_create_cover_fileName === "from_database" || $event_create_cover_fileName === "empty" ){
                 $event_create_cover_URL = $event_create_cover_data;
@@ -166,85 +174,22 @@ class Events
     }
 
 
-
-    // Method to get shops by event ID
-    public function get_shops()
-    {
-        $eventID = $_POST['eventID'];
-        try {
-            $result = EventUtil::callApi('shops/students?eventID='.$eventID, [], 'GET');
-            $content = $this->selected_event($result);
-            wp_send_json_success($content);
-            // wp_send_json_success($result);
-        } catch (Exception $e) {
-            wp_send_json_error(['message' => $e->getMessage()]);
+    public function upload_image($file_data,$file_name) {
+        $file_name = sanitize_file_name($file_name);
+        // Decode the base64 file data
+        $file_data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $file_data));
+        // Get the WordPress upload directory
+        $upload_dir = wp_upload_dir();
+        $unique_file_name = wp_unique_filename($upload_dir['path'], $file_name);
+        $upload_path = $upload_dir['path'] . '/' . $unique_file_name;
+        // Save the file
+        if (file_put_contents($upload_path, $file_data) !== false) {
+            // Get the uploaded file's URL
+            $uploaded_url = $upload_dir['url'] . '/' . $unique_file_name;
+            return $uploaded_url;            
         }
+        return "";
     }
-
-    // // Method to get stats
-    // public function get_stats()
-    // {
-    //     $sort = $_POST['sort'];
-    //     try {
-    //         $result = EventUtil::callApi('shops/stats?sort='.$sort, [], 'GET');
-    //         wp_send_json_success($result);
-    //         // wp_send_json_success($result);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    public function get_stats()
-{
-    $sort = $_POST['sort'];
-    ob_start(); // Start output buffering
-
-    try {
-        // Call the API to fetch the stats based on the sorting criteria
-        $result = EventUtil::callApi('shops/stats?sort='.$sort, [], 'GET');
-        $decoded = json_decode($result, true);
-
-        if ($decoded && $decoded['status'] === 'success') {
-            $results = $decoded['data']['stats'];
-
-            // Generate the HTML for the statistics table rows
-            if (is_array($results) && count($results)) : 
-                foreach ($results as $event) : 
-                    ?>
-                    <div class="event-statistics-footer-item" data-students="<?php echo $event['count'] ?>">
-                        <span>
-                            <p>
-                                <?php echo $event['title'] ?>
-                            </p>
-                        </span>
-                        <span>
-                            <p>
-                                <?php echo $event['count'] ?>
-                            </p>
-                        </span>
-                        <span>
-                            <p>
-                                <?php echo $event['totalIncome'] ?>
-                            </p>
-                        </span>
-                    </div>
-                    <?php 
-                endforeach; 
-            endif;
-        } else {
-            // Handle API error
-            echo '<p>' . esc_html__('Error fetching data.', 'edumall-child') . '</p>';
-        }
-    } catch (Exception $e) {
-        // Handle exception
-        echo '<p>' . esc_html__('An error occurred: ', 'edumall-child') . $e->getMessage() . '</p>';
-    }
-
-    $html = ob_get_clean(); // Capture the output buffer and clean it
-
-    wp_send_json_success(['html' => $html]); // Send the HTML as a JSON response
-}
-
 
     public function fetch_user_meta($userId) {
         return [
@@ -259,8 +204,8 @@ class Events
     public function selected_event($students)
     {
         $default_thumbnail_src =
-"data:/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NjAiIGhlaWdodD0iNDgwIiBmaWxsPSJub25lIj48cGF0aCBmaWxsPSIjRUZGMUY3IiBkPSJNMCAwaDc2MHY0ODBIMHoiLz48cGF0aCBmaWxsPSIjRTNFNkVCIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0zNDguOSAzMjAuNTdhMzAgMzAgMCAwIDAtNDIuNy0yLjFMMTMxIDQ3OS44MmgzNjBMMzQ4LjkgMzIwLjU3WiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PHBhdGggZmlsbD0iI0MwQzNDQiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNTQwLjk5IDIzOS44YTMwIDMwIDAgMCAwLTQ0LjA1LS4zNUwyNzEgNDc5LjgyaDQ4OC41MUw1NDAuOTkgMjM5LjhaIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIG9wYWNpdHk9Ii4zIi8+PHBhdGggZmlsbD0iI0NEQ0ZENSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTg2LjUgMTg4YTQ1LjUgNDUuNSAwIDEgMCAwLTkxIDQ1LjUgNDUuNSAwIDAgMCAwIDkxWiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PC9zdmc+";
-
+            "data:/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI3NjAiIGhlaWdodD0iNDgwIiBmaWxsPSJub25lIj48cGF0aCBmaWxsPSIjRUZGMUY3IiBkPSJNMCAwaDc2MHY0ODBIMHoiLz48cGF0aCBmaWxsPSIjRTNFNkVCIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0zNDguOSAzMjAuNTdhMzAgMzAgMCAwIDAtNDIuNy0yLjFMMTMxIDQ3OS44MmgzNjBMMzQ4LjkgMzIwLjU3WiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PHBhdGggZmlsbD0iI0MwQzNDQiIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNNTQwLjk5IDIzOS44YTMwIDMwIDAgMCAwLTQ0LjA1LS4zNUwyNzEgNDc5LjgyaDQ4OC41MUw1NDAuOTkgMjM5LjhaIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIG9wYWNpdHk9Ii4zIi8+PHBhdGggZmlsbD0iI0NEQ0ZENSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMTg2LjUgMTg4YTQ1LjUgNDUuNSAwIDEgMCAwLTkxIDQ1LjUgNDUuNSAwIDAgMCAwIDkxWiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PC9zdmc+";
+        
 
         $decoded = json_decode($students, true);
         if (json_last_error() !== JSON_ERROR_NONE) {    
@@ -331,229 +276,6 @@ class Events
         $output = ob_get_clean();
         return $output;
     }
-
-    // // Method to get my events
-    // public function get_my_events()
-    // {
-    //     try {
-    //         // $result = EventService::getMyEvents();
-    //         $result = EventUtil::callApi('events/me', [], 'GET');
-    //         wp_send_json_success($result);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-
-    // // Method to get all events
-    // public function get_all_events()
-    // {
-    //     try {
-    //         $result = CallSample::getAllEvents();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to get a specific event
-    // public function get_event()
-    // {
-    //     try {
-    //         $result = CallSample::getEvent();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to update an event
-    // public function update_event()
-    // {
-    //     try {
-    //         $result = CallSample::updateEvent();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to delete an event
-    // public function delete_event()
-    // {
-    //     try {
-    //         $result = CallSample::deleteEvent();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to search for events
-    // public function search_event()
-    // {
-    //     try {
-    //         $result = CallSample::searchEvent();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to create a user
-    // public function create_user()
-    // {
-    //     try {
-    //         $result = CallSample::createUser();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to get all users
-    // public function get_all_users()
-    // {
-    //     try {
-    //         $result = CallSample::getAllUsers();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to update a user
-    // public function update_user()
-    // {
-    //     try {
-    //         $result = CallSample::updateUser();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to create a discount
-    // public function create_discount()
-    // {
-    //     try {
-    //         $result = CallSample::createDiscount();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to get all discounts by event ID
-    // public function get_all_discounts_by_event()
-    // {
-    //     try {
-    //         $result = CallSample::getAllDiscountsByEvent();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to get all tickets by event ID
-    // public function get_all_tickets_by_event()
-    // {
-    //     try {
-    //         $result = CallSample::getAllTicketsByEvent();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to create a shop
-    // public function create_shop()
-    // {
-    //     try {
-    //         $result = CallSample::createShop();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-
-    // // Method to get stats
-    // public function get_stats()
-    // {
-    //     try {
-    //         $result = CallSample::getStats();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to create a comment
-    // public function create_comment()
-    // {
-    //     try {
-    //         $result = CallSample::createComment();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to get all comments with date filters
-    // public function get_all_comments()
-    // {
-    //     try {
-    //         $result = CallSample::getAllComments();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to update a comment
-    // public function update_comment()
-    // {
-    //     try {
-    //         $result = CallSample::updateComment();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to get all rates of events
-    // public function get_all_rates()
-    // {
-    //     try {
-    //         $result = CallSample::getAllRates();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to add a rate
-    // public function add_rate()
-    // {
-    //     try {
-    //         $result = CallSample::addRate();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
-
-    // // Method to update a rate
-    // public function update_rate()
-    // {
-    //     try {
-    //         $result = CallSample::updateRate();
-    //         wp_send_json_success(['message' => $result]);
-    //     } catch (Exception $e) {
-    //         wp_send_json_error(['message' => $e->getMessage()]);
-    //     }
-    // }
 }
 
 $events = new Events();
